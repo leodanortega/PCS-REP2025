@@ -8,7 +8,8 @@
   </information>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
-    <jar href="ConstruccionFinal.jar" size="2349" download="eager" />
+    <jar href="ConstruccionFinal.jar" size="2830071" download="eager" />
+    <jar href="lib\mysql-connector-j-9.2.0.jar" size="2609756" download="eager" />
   </resources>
   <jfx:javafx-desc  width="800" height="600" main-class="construccionfinal.ConstruccionFinal"  name="ConstruccionFinal" />
   <update check="always"/>
