@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.geometry.Pos?>
+
+<AnchorPane xmlns:fx="http://javafx.com/fxml"
+            xmlns="http://javafx.com/javafx"
+            fx:controller="construccionfinal.controladores.RegistrarOV.FXMLConfirmacionDatosController" prefHeight="350.0" prefWidth="500.0">
+
+    <VBox spacing="20" alignment="CENTER"
+          AnchorPane.topAnchor="20" AnchorPane.bottomAnchor="20"
+          AnchorPane.leftAnchor="20" AnchorPane.rightAnchor="20">
+
+        <children>
+            <Label text="¿Los datos ingresados son correctos?"
+                   style="-fx-font-size: 16px; -fx-font-weight: bold;" />
+
+            <GridPane hgap="10" vgap="10">
+                <columnConstraints>
+                    <ColumnConstraints halignment="RIGHT"/>
+                    <ColumnConstraints hgrow="ALWAYS"/>
+                </columnConstraints>
+
+                <children>
+                    <Label text="Nombre:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                    <Label fx:id="lblNombre" GridPane.rowIndex="0" GridPane.columnIndex="1"
+                           style="-fx-font-style: italic;"/>
+
+                    <Label text="Correo:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                    <Label fx:id="lblCorreo" GridPane.rowIndex="1" GridPane.columnIndex="1"
+                           style="-fx-font-style: italic;"/>
+
+                    <Label text="Descripción:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                    <Label fx:id="lblDescripcion" GridPane.rowIndex="2" GridPane.columnIndex="1"
+                           style="-fx-font-style: italic;"/>
+
+                    <Label text="RFC:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+                    <Label fx:id="lblRFC" GridPane.rowIndex="3" GridPane.columnIndex="1"
+                           style="-fx-font-style: italic;"/>
+
+                    <Label text="Teléfono:" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+                    <Label fx:id="lblTelefono" GridPane.rowIndex="4" GridPane.columnIndex="1"
+                           style="-fx-font-style: italic;"/>
+
+                    <Label text="Tipo:" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
+                    <Label fx:id="lblTipo" GridPane.rowIndex="5" GridPane.columnIndex="1"
+                           style="-fx-font-style: italic;"/>
+                </children>
+            </GridPane>
+
+            <HBox spacing="40" alignment="CENTER">
+                <children>
+                    <Button text="Aceptar" onAction="#clicAceptar"/>
+                    <Button text="Modificar" onAction="#clicModificar"/>
+                </children>
+            </HBox>
+        </children>
+
+        <padding>
+            <Insets top="20" bottom="20" left="30" right="30"/>
+        </padding>
+    </VBox>
+</AnchorPane>

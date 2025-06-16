@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<AnchorPane xmlns:fx="http://javafx.com/fxml"
+            xmlns="http://javafx.com/javafx"
+            fx:controller="construccionfinal.controladores.FXMLRegistrarResponsableController"
+            prefHeight="500.0" prefWidth="600.0">
+
+    <VBox spacing="20" layoutX="40.0" layoutY="20.0"
+          AnchorPane.leftAnchor="20" AnchorPane.rightAnchor="20"
+          AnchorPane.topAnchor="20" AnchorPane.bottomAnchor="20">
+
+        <children>
+            <Label text="Registrar Responsable de Proyecto"
+                   style="-fx-font-size: 18px; -fx-font-weight: bold;" />
+
+            <GridPane hgap="10" vgap="10">
+                <columnConstraints>
+                    <ColumnConstraints halignment="RIGHT"/>
+                    <ColumnConstraints hgrow="ALWAYS"/>
+                </columnConstraints>
+
+                <children>
+                    <Label text="Nombre:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                    <TextField fx:id="tfNombre" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+                    <Label text="Apellido Paterno:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                    <TextField fx:id="tfApePaterno" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+                    <Label text="Apellido Materno:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                    <TextField fx:id="tfApeMaterno" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+                    <Label text="Correo:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+                    <TextField fx:id="tfCorreo" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+
+                    <Label text="Teléfono:" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+                    <TextField fx:id="tfTelefono" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+
+                    <Label text="Puesto:" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
+                    <TextField fx:id="tfPuesto" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
+                </children>
+            </GridPane>
+
+            <Separator/>
+
+            <HBox spacing="30" alignment="CENTER">
+                <children>
+                    <Button text="Registrar" onAction="#clicRegistrar"/>
+                    <Button text="Salir" onAction="#clicSalir"/>
+                </children>
+            </HBox>
+        </children>
+
+        <padding>
+            <Insets top="15" right="20" bottom="15" left="20"/>
+        </padding>
+    </VBox>
+</AnchorPane>

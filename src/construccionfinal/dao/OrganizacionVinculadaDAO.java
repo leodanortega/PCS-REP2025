@@ -122,4 +122,13 @@ public class OrganizacionVinculadaDAO {
 
         return lista;
     }
+
+    public static boolean hayConexion() {
+        try (Connection conn = ConexionBD.abrirConexion()) {
+            return conn != null && !conn.isClosed();
+        } catch (SQLException e) {
+            return false;
+        }
+    }
+
 }

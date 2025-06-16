@@ -1,0 +1,179 @@
+package construccionfinal.dao;
+
+import construccionfinal.conexionbd.ConexionBD;
+import construccionfinal.modelo.pojo.ResponsableProyecto;
+
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
+
+public class ResponsableProyectoDAO {
+
+    public List<ResponsableProyecto> listar() {
+        List<ResponsableProyecto> lista = new ArrayList<>();
+        String sql = "SELECT * FROM responsableproyecto";
+
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        try {
+            con = ConexionBD.abrirConexion();
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                ResponsableProyecto rp = new ResponsableProyecto();
+                rp.setIdResponsable(rs.getInt("idResponsable"));
+                rp.setNombre(rs.getString("nombre"));
+                rp.setApePaterno(rs.getString("apePaterno"));
+                rp.setApeMaterno(rs.getString("apeMaterno"));
+                rp.setCorreo(rs.getString("correo"));
+                rp.setTelefono(rs.getString("telefono"));
+                rp.setPuesto(rs.getString("puesto"));
+                rp.setIdOrganizacion(rs.getInt("idOrganizacion"));
+                lista.add(rp);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (ps != null) ps.close();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        }
+        return lista;
+    }
+
+    public boolean agregar(ResponsableProyecto rp) {
+        String sql = "INSERT INTO responsableproyecto(nombre, apePaterno, apeMaterno, correo, telefono, puesto, idOrganizacion) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        Connection con = null;
+        PreparedStatement ps = null;
+
+        try {
+            con = ConexionBD.abrirConexion();
+            ps = con.prepareStatement(sql);
+
+            ps.setString(1, rp.getNombre());
+            ps.setString(2, rp.getApePaterno());
+            ps.setString(3, rp.getApeMaterno());
+            ps.setString(4, rp.getCorreo());
+            ps.setString(5, rp.getTelefono());
+            ps.setString(6, rp.getPuesto());
+            ps.setInt(7, rp.getIdOrganizacion());
+
+            int filas = ps.executeUpdate();
+            return filas > 0;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        } finally {
+            try {
+                if (ps != null) ps.close();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        }
+    }
+
+    public boolean modificar(ResponsableProyecto rp) {
+        String sql = "UPDATE responsableproyecto SET nombre = ?, apePaterno = ?, apeMaterno = ?, correo = ?, telefono = ?, puesto = ?, idOrganizacion = ? WHERE idResponsable = ?";
+        Connection con = null;
+        PreparedStatement ps = null;
+
+        try {
+            con = ConexionBD.abrirConexion();
+            ps = con.prepareStatement(sql);
+
+            ps.setString(1, rp.getNombre());
+            ps.setString(2, rp.getApePaterno());
+            ps.setString(3, rp.getApeMaterno());
+            ps.setString(4, rp.getCorreo());
+            ps.setString(5, rp.getTelefono());
+            ps.setString(6, rp.getPuesto());
+            ps.setInt(7, rp.getIdOrganizacion());
+            ps.setInt(8, rp.getIdResponsable());
+
+            int filas = ps.executeUpdate();
+            return filas > 0;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        } finally {
+            try {
+                if (ps != null) ps.close();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        }
+    }
+
+    public boolean eliminar(int idResponsable) {
+        String sql = "DELETE FROM responsableproyecto WHERE idResponsable = ?";
+        Connection con = null;
+        PreparedStatement ps = null;
+
+        try {
+            con = ConexionBD.abrirConexion();
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, idResponsable);
+
+            int filas = ps.executeUpdate();
+            return filas > 0;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        } finally {
+            try {
+                if (ps != null) ps.close();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        }
+    }
+
+    public List<ResponsableProyecto> buscarPorNombre(String nombreBusqueda) {
+        List<ResponsableProyecto> lista = new ArrayList<>();
+        String sql = "SELECT * FROM responsableproyecto WHERE nombre LIKE ?";
+
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        try {
+            con = ConexionBD.abrirConexion();
+            ps = con.prepareStatement(sql);
+            ps.setString(1, "%" + nombreBusqueda + "%");
+
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                ResponsableProyecto rp = new ResponsableProyecto();
+                rp.setIdResponsable(rs.getInt("idResponsable"));
+                rp.setNombre(rs.getString("nombre"));
+                rp.setApePaterno(rs.getString("apePaterno"));
+                rp.setApeMaterno(rs.getString("apeMaterno"));
+                rp.setCorreo(rs.getString("correo"));
+                rp.setTelefono(rs.getString("telefono"));
+                rp.setPuesto(rs.getString("puesto"));
+                rp.setIdOrganizacion(rs.getInt("idOrganizacion"));
+                lista.add(rp);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (ps != null) ps.close();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        }
+        return lista;
+    }
+}
