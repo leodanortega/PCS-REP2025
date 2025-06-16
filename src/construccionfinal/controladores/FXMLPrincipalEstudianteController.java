@@ -14,7 +14,7 @@ import javafx.fxml.Initializable;
  *
  * @author leona
  */
-public class FXMLPrincipalCoordinadorController implements Initializable {
+public class FXMLPrincipalEstudianteController implements Initializable {
 
     /**
      * Initializes the controller class.
@@ -23,10 +23,6 @@ public class FXMLPrincipalCoordinadorController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
     }    
-
-    void inicializarInformacion(Usuario usuarioSesion) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
 
     void setUsuario(Usuario usuarioSesion) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody

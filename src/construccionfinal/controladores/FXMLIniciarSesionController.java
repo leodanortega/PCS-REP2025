@@ -27,11 +27,6 @@ import construccionfinal.dao.InicioSesionDAO;
 import construccionfinal.modelo.pojo.Usuario;
 import construccionfinal.utilidades.Utilidad;
 
-/**
- * FXML Controller class
- *
- * @author lizbello
- */
 public class FXMLIniciarSesionController implements Initializable {
 
     @FXML
@@ -42,24 +37,25 @@ public class FXMLIniciarSesionController implements Initializable {
     private Label lbErrorUsuario;
     @FXML
     private Label lbErrorPassword;
-
-    /**
-     * Initializes the controller class.
-     */
+    private Usuario usuario;
+    private ConexionBD ConexionBD;
+   
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-                
+        
     }    
 
     @FXML
     private void btnClicVerificarSesion(ActionEvent event) {
         String username = tfUsuario.getText();
         String password = tfPassword.getText();
-        
-        if(validarCampos(username, password))
-            validarCredenciales(username, password);
-        
+
+        if (validarCampos(username, password)) {
+            Usuario usuarioSesion = validarCredenciales(username, password);
+            if (usuarioSesion != null) {
+                irPantallaPrincipal(usuarioSesion);
+            }
+        }
     }
     
     private boolean validarCampos(String username, String password){
@@ -81,43 +77,72 @@ public class FXMLIniciarSesionController implements Initializable {
         return camposValidos;
     }
     
-    private void validarCredenciales(String username, String password){
-        
-        try{
+    private Usuario validarCredenciales(String username, String password){
+        try {
             Usuario usuarioSesion = InicioSesionDAO.verificarCredenciales(username, password);
-            
-            if(usuarioSesion != null){
-                //TODO flujo normal
-                Utilidad.mostrarAlertaSimple(Alert.AlertType.INFORMATION, "Credenciales correctas", "Bienvenid@ " + usuarioSesion.toString() + " al sistema");
-                irPantallaPrincipal(usuarioSesion);
-            } else{
-                //TODO flujo alterno 1
-                Utilidad.mostrarAlertaSimple(Alert.AlertType.WARNING, "Credenciales incorrectas", "Usuario y/o contraseña incorrectos, por favor verifica tu informacion");
+            if (usuarioSesion != null) {
+                Utilidad.mostrarAlertaSimple(
+                        Alert.AlertType.INFORMATION,
+                        "Credenciales correctas",
+                        String.format("Bienvenido(a) %s", usuarioSesion.toString()));
+                return usuarioSesion;
+            } else {
+                Utilidad.mostrarAlertaSimple(
+                        Alert.AlertType.WARNING,
+                        "Credenciales incorrectas",
+                        "El usuario y/o contraseña no coinciden. Inténtelo de nuevo.");
+                return null;
             }
         } catch (SQLException ex) {
-            //TODO EXcepcion 1
-            Utilidad.mostrarAlertaSimple(Alert.AlertType.ERROR, "Problemas de conexión", ex.getMessage());
-            
+            Utilidad.mostrarAlertaSimple(
+                    Alert.AlertType.ERROR,
+                    "Problema de conexión",
+                    ex.getMessage());
+            return null;
         }
     }
     
     private void irPantallaPrincipal(Usuario usuarioSesion){
         try {
-            Stage escenarioBase = (Stage) tfPassword.getScene().getWindow();
-            //Parent vista = FXMLLoader.load(JavaFXAppEscolar.class.getResource("vista/FXMLPrincipal.fxml"));
-            FXMLLoader cargador = new FXMLLoader(ConstruccionFinal.class.getResource("vistas/FXMLPrincipalCoordinador.fxml"));
+            Stage escenarioBase = (Stage) tfUsuario.getScene().getWindow();
+            FXMLLoader cargador;
+
+            // Determina qué vista cargar según el tipo de usuario
+            if (usuarioSesion.getRol() == "coordinador") { 
+                cargador = new FXMLLoader(getClass().getResource("/vistas/FXMLPrincipalCoordinador.fxml"));
+            } else if (usuarioSesion.getRol() == "estudiante") { 
+                cargador = new FXMLLoader(getClass().getResource("/vistas/FXMLPrincipalEstudiante.fxml"));
+            }else if (usuarioSesion.getRol() == "evaluador"){
+                cargador = new FXMLLoader(getClass().getResource("/vistas/FXMLPrincipalEvaluador.fxml"));
+            }else if (usuarioSesion.getRol() == "profesor"){
+                cargador = new FXMLLoader(getClass().getResource("/vistas/FXMLPrincipalProfesor.fxml"));
+            }else {
+                System.err.println("Tipo de usuario desconocido.");
+                return;
+            }
+
             Parent vista = cargador.load();
-            FXMLPrincipalCoordinadorController controlador = cargador.getController();
-            controlador.inicializarInformacion(usuarioSesion);
+
+            // Asigna el usuario al controlador correspondiente
+            Object controlador = cargador.getController();
+            if (controlador instanceof FXMLPrincipalCoordinadorController) {
+            ((FXMLPrincipalCoordinadorController) controlador).setUsuario(usuarioSesion);
+            } else if (controlador instanceof FXMLPrincipalEstudianteController) {
+                ((FXMLPrincipalEstudianteController) controlador).setUsuario(usuarioSesion);
+            } else if (controlador instanceof FXMLPrincipalEvaluadorController) {
+                ((FXMLPrincipalEvaluadorController) controlador).setUsuario(usuarioSesion);
+            } else if (controlador instanceof FXMLPrincipalProfesorController) {
+                ((FXMLPrincipalProfesorController) controlador).setUsuario(usuarioSesion);
+            }
+
             Scene escenaPrincipal = new Scene(vista);
             escenarioBase.setScene(escenaPrincipal);
-            escenarioBase.setTitle("Home");
+            escenarioBase.setTitle("Pantalla Principal");
             escenarioBase.show();
         } catch (IOException ex) {
             ex.printStackTrace();
+            System.err.println("Error al cargar la pantalla principal.");
         }
-        
     }
-    
 }
 
