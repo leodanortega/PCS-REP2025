@@ -16,16 +16,14 @@ import javafx.fxml.Initializable;
  */
 public class FXMLPrincipalEstudianteController implements Initializable {
 
-    /**
-     * Initializes the controller class.
-     */
+    private Usuario usuario;
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-    }    
+    }
 
     void setUsuario(Usuario usuarioSesion) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        this.usuario=usuario;
     }
     
 }

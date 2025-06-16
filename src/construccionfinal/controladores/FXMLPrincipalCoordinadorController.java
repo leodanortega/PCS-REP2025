@@ -1,35 +1,65 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMLController.java to edit this template
- */
 package construccionfinal.controladores;
 
+import java.io.IOException;
+
 import construccionfinal.modelo.pojo.Usuario;
-import java.net.URL;
-import java.util.ResourceBundle;
-import javafx.fxml.Initializable;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Label;
+import javafx.stage.Stage;
 
-/**
- * FXML Controller class
- *
- * @author leona
- */
-public class FXMLPrincipalCoordinadorController implements Initializable {
+public class FXMLPrincipalCoordinadorController {
 
-    /**
-     * Initializes the controller class.
-     */
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-    }    
-
-    void inicializarInformacion(Usuario usuarioSesion) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
+    @FXML
+    private Label lblNombreUsuario;
+    private Usuario usuario;
 
     void setUsuario(Usuario usuarioSesion) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        this.usuario=usuario;
+        if (usuario != null && usuario.getNombre() != null) {
+            lblNombreUsuario.setText("Usuario: " + usuario.getNombre());
+        }
     }
-    
+
+    @FXML
+    private void btnCerrarSesion(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/construccionfinal/vistas/FXMLIniciarSesion.fxml"));
+            Parent root = loader.load();
+            Stage stage = new Stage();
+            stage.setTitle("Inicio de Sesión");
+            stage.setScene(new Scene(root));
+            stage.show();
+
+            // Cierra la ventana actual
+            Stage actual = (Stage) lblNombreUsuario.getScene().getWindow();
+            actual.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    @FXML
+    private void btnRegistrarOrganizacion(ActionEvent event) {
+        abrirNuevaVentana("/construccionfinal/vistas/FXMLRegistrarOV.fxml", "Registrar Organización Vinculada");
+    }
+
+
+    private void abrirNuevaVentana(String rutaFXML, String titulo) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(rutaFXML));
+            Parent root = loader.load();
+            Stage stage = new Stage();
+            stage.setTitle(titulo);
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.err.println("No se pudo abrir la ventana: " + rutaFXML);
+        }
+    }
 }
