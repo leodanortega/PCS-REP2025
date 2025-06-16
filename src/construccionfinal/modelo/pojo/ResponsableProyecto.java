@@ -10,6 +10,7 @@ public class ResponsableProyecto {
     private String telefono;
     private String puesto;
     private int idOrganizacion;
+    private OrganizacionVinculada organizacionVinculada;
 
     public ResponsableProyecto() {
     }
@@ -88,6 +89,14 @@ public class ResponsableProyecto {
 
     public void setIdOrganizacion(int idOrganizacion) {
         this.idOrganizacion = idOrganizacion;
+    }
+
+    public OrganizacionVinculada getOrganizacionVinculada() {
+        return organizacionVinculada;
+    }
+
+    public void setOrganizacionVinculada(OrganizacionVinculada seleccionada) {
+        this.organizacionVinculada = seleccionada;
     }
 
     @Override

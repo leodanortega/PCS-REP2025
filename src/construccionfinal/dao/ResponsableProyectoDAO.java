@@ -11,7 +11,7 @@ public class ResponsableProyectoDAO {
 
     public List<ResponsableProyecto> listar() {
         List<ResponsableProyecto> lista = new ArrayList<>();
-        String sql = "SELECT * FROM responsableproyecto";
+        String sql = "SELECT * FROM responsable_proyecto";
 
         Connection con = null;
         PreparedStatement ps = null;
@@ -48,7 +48,7 @@ public class ResponsableProyectoDAO {
     }
 
     public boolean agregar(ResponsableProyecto rp) {
-        String sql = "INSERT INTO responsableproyecto(nombre, apePaterno, apeMaterno, correo, telefono, puesto, idOrganizacion) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO responsable_proyecto(nombre, apePaterno, apeMaterno, correo, telefono, puesto, idOrganizacion) VALUES (?, ?, ?, ?, ?, ?, ?)";
         Connection con = null;
         PreparedStatement ps = null;
 
@@ -80,7 +80,7 @@ public class ResponsableProyectoDAO {
     }
 
     public boolean modificar(ResponsableProyecto rp) {
-        String sql = "UPDATE responsableproyecto SET nombre = ?, apePaterno = ?, apeMaterno = ?, correo = ?, telefono = ?, puesto = ?, idOrganizacion = ? WHERE idResponsable = ?";
+        String sql = "UPDATE responsable_proyecto SET nombre = ?, apePaterno = ?, apeMaterno = ?, correo = ?, telefono = ?, puesto = ?, idOrganizacion = ? WHERE idResponsable = ?";
         Connection con = null;
         PreparedStatement ps = null;
 
@@ -113,7 +113,7 @@ public class ResponsableProyectoDAO {
     }
 
     public boolean eliminar(int idResponsable) {
-        String sql = "DELETE FROM responsableproyecto WHERE idResponsable = ?";
+        String sql = "DELETE FROM responsable_proyecto WHERE idResponsable = ?";
         Connection con = null;
         PreparedStatement ps = null;
 
@@ -139,7 +139,7 @@ public class ResponsableProyectoDAO {
 
     public List<ResponsableProyecto> buscarPorNombre(String nombreBusqueda) {
         List<ResponsableProyecto> lista = new ArrayList<>();
-        String sql = "SELECT * FROM responsableproyecto WHERE nombre LIKE ?";
+        String sql = "SELECT * FROM responsable_proyecto WHERE nombre LIKE ?";
 
         Connection con = null;
         PreparedStatement ps = null;
@@ -175,5 +175,13 @@ public class ResponsableProyectoDAO {
             }
         }
         return lista;
+    }
+
+    public static boolean hayConexion() {
+        try (Connection conn = ConexionBD.abrirConexion()) {
+            return conn != null && !conn.isClosed();
+        } catch (SQLException e) {
+            return false;
+        }
     }
 }

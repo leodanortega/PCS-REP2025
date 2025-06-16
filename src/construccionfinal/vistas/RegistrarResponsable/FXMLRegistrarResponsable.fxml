@@ -6,7 +6,7 @@
 
 <AnchorPane xmlns:fx="http://javafx.com/fxml"
             xmlns="http://javafx.com/javafx"
-            fx:controller="construccionfinal.controladores.FXMLRegistrarResponsableController"
+            fx:controller="construccionfinal.controladores.RegistrarResponsable.FXMLRegistrarResponsableController"
             prefHeight="500.0" prefWidth="600.0">
 
     <VBox spacing="20" layoutX="40.0" layoutY="20.0"

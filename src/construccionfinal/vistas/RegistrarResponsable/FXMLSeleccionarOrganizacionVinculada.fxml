@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="500" prefWidth="700" style="-fx-background-color: #f4f4f4;" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml/1" fx:controller="construccionfinal.controladores.RegistrarResponsable.FXMLSeleccionarOrganizacionVinculadaController">
+
+    <!-- Título -->
+    <Label layoutX="20" layoutY="15" style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #333;" text="Seleccionar Organización Vinculada" />
+
+    <!-- Campo de búsqueda -->
+    <TextField fx:id="txtBuscar" layoutX="20" layoutY="60" prefWidth="660" promptText="Buscar organización por nombre" style="-fx-font-size: 14px; -fx-background-radius: 5; -fx-border-radius: 5;" />
+
+    <!-- Tabla de Organizaciones -->
+    <TableView fx:id="tablaOrganizaciones" layoutX="20" layoutY="100" prefHeight="320" prefWidth="660" style="-fx-background-color: white; -fx-border-color: #ccc; -fx-border-radius: 5;">
+        <columns>
+            <TableColumn fx:id="colNombre" prefWidth="150" text="Nombre" />
+            <TableColumn fx:id="colCorreo" prefWidth="150" text="Correo" />
+            <TableColumn fx:id="colRFC" prefWidth="100" text="RFC" />
+            <TableColumn fx:id="colTelefono" prefWidth="120" text="Teléfono" />
+            <TableColumn fx:id="colTipo" prefWidth="120" text="Tipo" />
+        </columns>
+    </TableView>
+
+    <!-- Botones Aceptar y Cancelar -->
+    <HBox alignment="CENTER" layoutX="250.0" layoutY="433.0" prefHeight="45" spacing="30">
+        <children>
+            <Button fx:id="btnAceptar" onAction="#clicAceptar" prefHeight="35" prefWidth="120" style="-fx-background-color: #5cb85c; -fx-text-fill: white; -fx-font-size: 14px; -fx-font-weight: bold;" text="✅ Aceptar" />
+            <Button fx:id="btnCancelar" onAction="#clicCancelar" prefHeight="35" prefWidth="120" style="-fx-background-color: #d9534f; -fx-text-fill: white; -fx-font-size: 14px; -fx-font-weight: bold;" text="❌ Cancelar" />
+        </children>
+    </HBox>
+
+</AnchorPane>

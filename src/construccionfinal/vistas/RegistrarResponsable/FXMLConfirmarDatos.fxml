@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.geometry.Pos?>
+
+<AnchorPane xmlns:fx="http://javafx.com/fxml"
+            xmlns="http://javafx.com/javafx"
+            fx:controller="construccionfinal.controladores.RegistrarResponsable.FXMLConfirmarDatosController"
+            prefHeight="420.0" prefWidth="650.0">
+
+    <VBox spacing="15" alignment="CENTER"
+          AnchorPane.topAnchor="20" AnchorPane.bottomAnchor="20"
+          AnchorPane.leftAnchor="20" AnchorPane.rightAnchor="20">
+
+        <children>
+            <Label text="¿Los datos ingresados son correctos?"
+                   style="-fx-font-size: 16px; -fx-font-weight: bold;" />
+
+            <Label text="El responsable será asignado a la organización vinculada seleccionada."
+                   wrapText="true"
+                   style="-fx-font-size: 13px; -fx-font-style: italic;" />
+
+            <HBox spacing="40" alignment="TOP_CENTER">
+                <children>
+
+                    <!-- Grid: Responsable -->
+                    <GridPane hgap="10" vgap="10">
+                        <columnConstraints>
+                            <ColumnConstraints halignment="RIGHT"/>
+                            <ColumnConstraints hgrow="ALWAYS"/>
+                        </columnConstraints>
+                        <children>
+                            <Label text="Nombre:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                            <Label fx:id="lblNombre" GridPane.rowIndex="0" GridPane.columnIndex="1"
+                                   style="-fx-font-style: italic;"/>
+
+                            <Label text="Apellido Paterno:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                            <Label fx:id="lblApePaterno" GridPane.rowIndex="1" GridPane.columnIndex="1"
+                                   style="-fx-font-style: italic;"/>
+
+                            <Label text="Apellido Materno:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                            <Label fx:id="lblApeMaterno" GridPane.rowIndex="2" GridPane.columnIndex="1"
+                                   style="-fx-font-style: italic;"/>
+
+                            <Label text="Correo:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+                            <Label fx:id="lblCorreoResponsable" GridPane.rowIndex="3" GridPane.columnIndex="1"
+                                   style="-fx-font-style: italic;"/>
+
+                            <Label text="Teléfono:" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+                            <Label fx:id="lblTelefonoResponsable" GridPane.rowIndex="4" GridPane.columnIndex="1"
+                                   style="-fx-font-style: italic;"/>
+
+                            <Label text="Puesto:" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
+                            <Label fx:id="lblPuesto" GridPane.rowIndex="5" GridPane.columnIndex="1"
+                                   style="-fx-font-style: italic;"/>
+                        </children>
+                    </GridPane>
+
+                    <!-- Grid: Organización -->
+                    <GridPane hgap="10" vgap="10">
+                        <columnConstraints>
+                            <ColumnConstraints halignment="RIGHT"/>
+                            <ColumnConstraints hgrow="ALWAYS"/>
+                        </columnConstraints>
+                        <children>
+                            <Label text="Nombre:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                            <Label fx:id="lblNombreOrg" GridPane.rowIndex="0" GridPane.columnIndex="1"
+                                   style="-fx-font-style: italic;"/>
+
+                            <Label text="Correo:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                            <Label fx:id="lblCorreoOrg" GridPane.rowIndex="1" GridPane.columnIndex="1"
+                                   style="-fx-font-style: italic;"/>
+
+                            <Label text="RFC:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                            <Label fx:id="lblRFC" GridPane.rowIndex="2" GridPane.columnIndex="1"
+                                   style="-fx-font-style: italic;"/>
+
+                            <Label text="Teléfono:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+                            <Label fx:id="lblTelefonoOrg" GridPane.rowIndex="3" GridPane.columnIndex="1"
+                                   style="-fx-font-style: italic;"/>
+
+                            <Label text="Tipo:" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+                            <Label fx:id="lblTipo" GridPane.rowIndex="4" GridPane.columnIndex="1"
+                                   style="-fx-font-style: italic;"/>
+                        </children>
+                    </GridPane>
+                </children>
+            </HBox>
+
+            <!-- Botones -->
+            <HBox spacing="40" alignment="CENTER">
+                <children>
+                    <Button text="Aceptar" onAction="#clicAceptar"/>
+                    <Button text="Modificar" onAction="#clicModificar"/>
+                </children>
+            </HBox>
+        </children>
+
+        <padding>
+            <Insets top="20" bottom="20" left="30" right="30"/>
+        </padding>
+    </VBox>
+</AnchorPane>

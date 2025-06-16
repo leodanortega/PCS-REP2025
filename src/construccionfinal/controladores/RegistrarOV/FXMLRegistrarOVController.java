@@ -1,6 +1,5 @@
-package construccionfinal.controladores;
+package construccionfinal.controladores.RegistrarOV;
 
-import construccionfinal.controladores.RegistrarOV.*;
 import construccionfinal.dao.OrganizacionVinculadaDAO;
 import construccionfinal.modelo.pojo.OrganizacionVinculada;
 import construccionfinal.utilidades.Utilidad;
@@ -14,7 +13,6 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.sql.SQLException;
 
 public class FXMLRegistrarOVController {
 
@@ -32,7 +30,6 @@ public class FXMLRegistrarOVController {
 
     @FXML
     private void clicRegistrar(ActionEvent event) {
-        // Validación básica
         if (tfNombre.getText().isEmpty() || tfCorreo.getText().isEmpty() ||
                 tfDescripcion.getText().isEmpty() || tfRFC.getText().isEmpty() ||
                 tfTelefono.getText().isEmpty() || cbTipo.getValue() == null) {
@@ -41,7 +38,17 @@ public class FXMLRegistrarOVController {
             return;
         }
 
-        // Crear objeto con los datos actuales
+        if (!OrganizacionVinculadaDAO.hayConexion()) {
+            mostrarAlerta(Alert.AlertType.ERROR, "Sin conexión", "Error: No hay conexión con la base de datos");
+            return;
+        }
+
+        OrganizacionVinculadaDAO dao = new OrganizacionVinculadaDAO();
+        if (dao.existeNombre(tfNombre.getText())) {
+            mostrarAlerta(Alert.AlertType.WARNING, "Nombre duplicado", "Ya existe una organización registrada con ese nombre.");
+            return;
+        }
+
         OrganizacionVinculada nueva = new OrganizacionVinculada();
         nueva.setNombre(tfNombre.getText());
         nueva.setCorreo(tfCorreo.getText());
@@ -51,12 +58,6 @@ public class FXMLRegistrarOVController {
         nueva.setTipo(cbTipo.getValue());
 
         try {
-            // Validar conexión a base de datos antes de continuar
-            if (!OrganizacionVinculadaDAO.hayConexion()) {
-                mostrarAlerta(Alert.AlertType.ERROR, "Sin conexión", "Error: No hay conexión con la base de datos");
-                return;
-            }
-
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/construccionfinal/vistas/RegistrarOV/FXMLConfirmacionDatos.fxml"));
             Parent root = loader.load();
 
@@ -70,7 +71,7 @@ public class FXMLRegistrarOVController {
             stage.showAndWait();
 
             if (controller.isConfirmado()) {
-                boolean exito = new OrganizacionVinculadaDAO().agregar(nueva);
+                boolean exito = dao.agregar(nueva);
                 if (exito) {
                     mostrarAlerta(Alert.AlertType.INFORMATION, "Registro exitoso", "La organización Vinculada se registró con éxito");
                     limpiarCampos();

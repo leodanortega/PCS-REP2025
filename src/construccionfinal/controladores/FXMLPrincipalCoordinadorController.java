@@ -45,7 +45,7 @@ public class FXMLPrincipalCoordinadorController {
 
     @FXML
     private void btnRegistrarOrganizacion(ActionEvent event) {
-        abrirNuevaVentana("/construccionfinal/vistas/FXMLRegistrarOV.fxml", "Registrar Organización Vinculada");
+        abrirNuevaVentana("/construccionfinal/vistas/RegistrarOV/FXMLRegistrarOV.fxml", "Registrar Organización Vinculada");
     }
 
 
@@ -61,5 +61,9 @@ public class FXMLPrincipalCoordinadorController {
             e.printStackTrace();
             System.err.println("No se pudo abrir la ventana: " + rutaFXML);
         }
+    }
+
+    public void btnRegistrarResponsable(ActionEvent actionEvent) {
+        abrirNuevaVentana("/construccionfinal/vistas/RegistrarResponsable/FXMLRegistrarResponsable.fxml", "Registrar Responsable de proyecto");
     }
 }

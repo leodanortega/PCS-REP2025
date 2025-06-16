@@ -123,6 +123,24 @@ public class OrganizacionVinculadaDAO {
         return lista;
     }
 
+    public boolean existeNombre(String nombre) {
+        String sql = "SELECT COUNT(*) FROM organizacion_vinculada WHERE nombre = ?";
+        try (Connection con = ConexionBD.abrirConexion();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setString(1, nombre);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    int count = rs.getInt(1);
+                    return count > 0;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
     public static boolean hayConexion() {
         try (Connection conn = ConexionBD.abrirConexion()) {
             return conn != null && !conn.isClosed();
