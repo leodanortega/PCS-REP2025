@@ -3,7 +3,9 @@ package construccionfinal.controladores.EvaluarOV;
 import construccionfinal.dao.EvaluacionOVDAO;
 import construccionfinal.dao.ExpedienteDAO;
 import construccionfinal.modelo.pojo.*;
+import construccionfinal.utilidades.Utilidad;
 import construccionfinal.utilidades.UtilidadImagen;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -71,7 +73,9 @@ public class FXMLConfirmarDatosController implements Initializable {
 
     @FXML
     private void clicCancelar() {
-        ((Stage) vbCriteriosEvaluados.getScene().getWindow()).close();
+        Stage stage = (Stage) vbCriteriosEvaluados.getScene().getWindow();
+        Utilidad.mostrarAlertaConfirmacion("Salir", "¿Estás seguro de que deseas cancelar la evaluación?");
+        stage.close();
     }
 
     @FXML

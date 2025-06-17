@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="487.0" prefWidth="807.0" style="-fx-background-color: #f4f4f4;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="construccionfinal.controladores.EvaluarEstudiante.FXMLEstudiantesPorEvaluarController">
+   <children>
+   
+       <!-- Título -->
+       <Label layoutX="20" layoutY="15" style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #333;" text="Seleccionar Estudiante" />
+   
+       <!-- Campo de búsqueda -->
+       <TextField fx:id="txtBuscar" layoutX="20" layoutY="60" prefHeight="30.0" prefWidth="840.0" promptText="Buscar estudiante por nombre o matrícula" style="-fx-font-size: 14px; -fx-background-radius: 5; -fx-border-radius: 5;" />
+   
+       <!-- Tabla de Estudiantes -->
+       <TableView fx:id="tablaEstudiantes" layoutX="20" layoutY="100" prefHeight="325.0" prefWidth="867.0" style="-fx-background-color: white; -fx-border-color: #ccc; -fx-border-radius: 5;">
+           <columns>
+               <TableColumn fx:id="colNombre" prefWidth="150" text="Nombre" />
+               <TableColumn fx:id="colApellidoPaterno" prefWidth="150" text="Apellido Paterno" />
+               <TableColumn fx:id="colApellidoMaterno" prefWidth="150" text="Apellido Materno" />
+               <TableColumn fx:id="colCorreo" prefWidth="150" text="Correo" />
+               <TableColumn fx:id="colTelefono" prefWidth="120" text="Teléfono" />
+               <TableColumn fx:id="colMatricula" prefWidth="119.0" text="Matrícula" />
+           </columns>
+       </TableView>
+   
+       <!-- Botones Evaluar y Salir -->
+       <HBox alignment="CENTER" layoutX="250.0" layoutY="433.0" prefHeight="45" spacing="30">
+           <children>
+               <Button fx:id="btnEvaluar" onAction="#clicEvaluar" prefHeight="35" prefWidth="120" style="-fx-background-color: #5cb85c; -fx-text-fill: white; -fx-font-size: 14px; -fx-font-weight: bold;" text=" Evaluar" />
+               <Button fx:id="btnSalir" onAction="#clicSalir" prefHeight="35" prefWidth="120" style="-fx-background-color: #d9534f; -fx-text-fill: white; -fx-font-size: 14px; -fx-font-weight: bold;" text=" Salir" />
+           </children>
+       </HBox>
+   </children>
+
+</AnchorPane>

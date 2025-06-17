@@ -11,7 +11,7 @@ import java.util.List;
 public class CriterioEvaluacionResultadoDAO {
 
     public static boolean guardarResultados(int idEvaluacionOV, List<CriterioEvaluacionResultado> resultados) {
-        String query = "INSERT INTO criterio_evaluacion_resultado (idEvaluacionOV, idCriterio, puntajeObtenido) VALUES (?, ?, ?)";
+        String query = "INSERT INTO criterio_evaluacion_resultado (idEvaluacion, idCriterio, puntajeObtenido) VALUES (?, ?, ?)";
 
         try (Connection conn = ConexionBD.abrirConexion();
              PreparedStatement stmt = conn.prepareStatement(query)) {
