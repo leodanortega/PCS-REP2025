@@ -129,7 +129,7 @@ public class FXMLConfirmarDatosController implements Initializable {
 
     private double calcularPuntajeTotal() {
         int sumaTotal = respuestas.values().stream().mapToInt(Integer::intValue).sum();
-        return sumaTotal / 10.0; // Dividimos entre 10 para obtener el puntaje final
+        return sumaTotal / 10.0;
     }
 
     private int obtenerIdExpediente() {

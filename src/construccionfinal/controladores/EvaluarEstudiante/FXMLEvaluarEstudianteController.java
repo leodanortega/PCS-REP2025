@@ -1,6 +1,7 @@
 package construccionfinal.controladores.EvaluarEstudiante;
 
 import construccionfinal.dao.CriterioEvaluacionResultadoDAO;
+import construccionfinal.dao.CriterioPresentacionResultadoDAO;
 import construccionfinal.dao.CriteriosPresentacionDAO;
 import construccionfinal.dao.EvaluacionPresentacionDAO;
 import construccionfinal.modelo.pojo.CriterioEvaluacion;
@@ -135,15 +136,18 @@ public class FXMLEvaluarEstudianteController {
                         entry.getKey().getIdCriterio(),
                         entry.getValue()
                 ))
+
                 .collect(Collectors.toList());
 
-        boolean guardadoResultados = CriterioEvaluacionResultadoDAO.guardarResultados(idEvaluacion, resultados);
+        boolean guardadoResultados = CriterioPresentacionResultadoDAO.guardarResultados(idEvaluacion, resultados);
+
 
         if (!guardadoResultados) {
             mostrarAlerta("La evaluación se guardó, pero ocurrió un error al guardar los resultados.");
         } else {
             mostrarAlerta("Evaluación de presentación y resultados guardados correctamente.");
-            cerrarVentana();
+            Stage stage = (Stage) tablaEvaluacion.getScene().getWindow();
+            stage.close();
         }
     }
 
@@ -172,4 +176,5 @@ public class FXMLEvaluarEstudianteController {
         alerta.setContentText(mensaje);
         alerta.showAndWait();
     }
+    
 }

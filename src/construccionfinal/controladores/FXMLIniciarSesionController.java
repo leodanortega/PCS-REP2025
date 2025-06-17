@@ -13,6 +13,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import construccionfinal.dao.InicioSesionDAO;
@@ -24,7 +25,7 @@ public class FXMLIniciarSesionController implements Initializable {
     @FXML
     private TextField tfUsuario;
     @FXML
-    private TextField tfPassword;
+    private PasswordField tfPassword;
     @FXML
     private Label lbErrorUsuario;
     @FXML
@@ -37,15 +38,22 @@ public class FXMLIniciarSesionController implements Initializable {
 
     @FXML
     private void btnClicVerificarSesion(ActionEvent event) {
-        String username = tfUsuario.getText();
-        String password = tfPassword.getText();
+        String username = tfUsuario.getText().trim();
+        String password = tfPassword.getText().trim();
 
         if (validarCampos(username, password)) {
             Usuario usuarioSesion = validarCredenciales(username, password);
             if (usuarioSesion != null) {
                 irPantallaPrincipal(usuarioSesion);
+            } else {
+                limpiarCampos();
             }
         }
+    }
+
+    private void limpiarCampos() {
+        tfUsuario.clear();
+        tfPassword.clear();
     }
 
     private boolean validarCampos(String username, String password){
@@ -137,4 +145,5 @@ public class FXMLIniciarSesionController implements Initializable {
             System.err.println("No se pudo abrir la ventana: " + rutaFXML);
         }
     }
+
 }

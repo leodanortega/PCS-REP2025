@@ -11,7 +11,7 @@
     <top>
         <HBox alignment="CENTER_LEFT" spacing="20" style="-fx-background-color: #2C3E50; -fx-padding: 12 20 12 20; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 5, 0.3, 0, 2);">
             <children>
-                <Label style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: white;" text="SGPP - Panel Estudiante" />
+                <Label style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: white;" text="SGPP - Panel Evaluador" />
                 <HBox alignment="CENTER_RIGHT" spacing="10" style="-fx-background-color: transparent;" BorderPane.alignment="CENTER_RIGHT">
                     <children>
                         <Button onAction="#btnCerrarSesion" style="-fx-background-color: purple; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5; -fx-padding: 6 12;" text="Cerrar Sesión" />

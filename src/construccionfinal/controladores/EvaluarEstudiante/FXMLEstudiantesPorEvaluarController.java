@@ -79,10 +79,17 @@ public class FXMLEstudiantesPorEvaluarController {
 
     @FXML
     private void clicSalir() {
-        Stage stage = (Stage) tablaEstudiantes.getScene().getWindow();
-        Utilidad.mostrarAlertaConfirmacion("Salir", "¿Estás seguro de que deseas cancelar la evaluación?");
-        stage.close();
+        Alert alerta = new Alert(Alert.AlertType.CONFIRMATION);
+        alerta.setTitle("Confirmación");
+        alerta.setHeaderText(null);
+        alerta.setContentText("¿Estás seguro de que deseas cancelar la evaluación?");
+
+        if (alerta.showAndWait().orElse(ButtonType.CANCEL) == ButtonType.OK) {
+            Stage stage = (Stage) tablaEstudiantes.getScene().getWindow();
+            stage.close();
+        }
     }
+
 
     private void cerrarVentana() {
         Stage stage = (Stage) tablaEstudiantes.getScene().getWindow();

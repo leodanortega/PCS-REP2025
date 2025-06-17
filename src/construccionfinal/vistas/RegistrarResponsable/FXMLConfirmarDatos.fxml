@@ -8,25 +8,25 @@
 <AnchorPane xmlns:fx="http://javafx.com/fxml"
             xmlns="http://javafx.com/javafx"
             fx:controller="construccionfinal.controladores.RegistrarResponsable.FXMLConfirmarDatosController"
-            prefHeight="420.0" prefWidth="650.0">
+            prefHeight="500.0" prefWidth="750.0">
 
-    <VBox spacing="15" alignment="CENTER"
-          AnchorPane.topAnchor="20" AnchorPane.bottomAnchor="20"
-          AnchorPane.leftAnchor="20" AnchorPane.rightAnchor="20">
+    <VBox spacing="20" alignment="CENTER"
+          AnchorPane.topAnchor="25" AnchorPane.bottomAnchor="25"
+          AnchorPane.leftAnchor="30" AnchorPane.rightAnchor="30">
 
         <children>
             <Label text="¿Los datos ingresados son correctos?"
-                   style="-fx-font-size: 16px; -fx-font-weight: bold;" />
+                   style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #2C3E50;" />
 
             <Label text="El responsable será asignado a la organización vinculada seleccionada."
                    wrapText="true"
-                   style="-fx-font-size: 13px; -fx-font-style: italic;" />
+                   style="-fx-font-size: 14px; -fx-font-style: italic; -fx-text-fill: #555;" />
 
-            <HBox spacing="40" alignment="TOP_CENTER">
+            <HBox spacing="50" alignment="TOP_CENTER">
                 <children>
 
                     <!-- Grid: Responsable -->
-                    <GridPane hgap="10" vgap="10">
+                    <GridPane hgap="15" vgap="12">
                         <columnConstraints>
                             <ColumnConstraints halignment="RIGHT"/>
                             <ColumnConstraints hgrow="ALWAYS"/>
@@ -59,7 +59,7 @@
                     </GridPane>
 
                     <!-- Grid: Organización -->
-                    <GridPane hgap="10" vgap="10">
+                    <GridPane hgap="15" vgap="12">
                         <columnConstraints>
                             <ColumnConstraints halignment="RIGHT"/>
                             <ColumnConstraints hgrow="ALWAYS"/>
@@ -90,16 +90,20 @@
             </HBox>
 
             <!-- Botones -->
-            <HBox spacing="40" alignment="CENTER">
+            <HBox spacing="50" alignment="CENTER">
                 <children>
-                    <Button text="Aceptar" onAction="#clicAceptar"/>
-                    <Button text="Modificar" onAction="#clicModificar"/>
+                    <Button text="✅ Aceptar" onAction="#clicAceptar"
+                            style="-fx-background-color: #28a745; -fx-text-fill: white; -fx-font-size: 16px; -fx-font-weight: bold; -fx-background-radius: 10; -fx-padding: 10 20;"/>
+
+                    <Button text="✏️ Modificar" onAction="#clicModificar"
+                            style="-fx-background-color: #007bff; -fx-text-fill: white; -fx-font-size: 16px; -fx-font-weight: bold; -fx-background-radius: 10; -fx-padding: 10 20;"/>
                 </children>
             </HBox>
         </children>
 
         <padding>
-            <Insets top="20" bottom="20" left="30" right="30"/>
+            <Insets top="25" bottom="25" left="35" right="35"/>
         </padding>
     </VBox>
+
 </AnchorPane>

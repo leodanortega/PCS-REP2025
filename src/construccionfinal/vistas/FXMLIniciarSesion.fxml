@@ -1,60 +1,60 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.scene.image.*?>
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
+<?import javafx.scene.effect.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="construccionfinal.controladores.FXMLIniciarSesionController">
+<AnchorPane id="AnchorPane" prefHeight="700.0" prefWidth="900.0" style="-fx-background-color: #dddddd;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="construccionfinal.controladores.FXMLIniciarSesionController">
+
    <children>
-      <AnchorPane layoutX="6.0" prefHeight="406.0" prefWidth="350.0">
+
+      <!-- Contenedor principal con sombra -->
+      <AnchorPane layoutX="225.0" layoutY="100.0" prefHeight="420.0" prefWidth="450.0" style="-fx-background-color: #ffffff;">
+         <effect>
+            <DropShadow color="#c4c9c4" offsetX="2.0" offsetY="2.0" spread="0.3" />
+         </effect>
          <children>
-            <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="75.0" layoutY="128.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../recursos/Try.jpeg" />
-               </image>
-            </ImageView>
+            <!-- Barra superior azul -->
+            <AnchorPane layoutX="0.0" layoutY="-1.0" prefHeight="35.0" prefWidth="450.0" style="-fx-background-color: #015aaa;">
+               <children>
+                  <Label layoutX="20.0" layoutY="8.0" text="Sistema de Gestión de Prácticas Profesionales" textFill="WHITE">
+                     <font>
+                        <Font name="Avenir Medium" size="16.0" />
+                     </font>
+                  </Label>
+               </children>
+            </AnchorPane>
+
+            <!-- Texto de Bienvenida -->
+            <Label layoutX="120.0" layoutY="60.0" style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #333333;" text="Bienvenid@ al sistema" />
+
+            <!-- Campos de usuario y contraseña -->
+            <Label layoutX="75.0" layoutY="130.0" text="Usuario" textFill="#015aaa">
+               <font>
+                  <Font name="Avenir Medium" size="14.0" />
+               </font>
+            </Label>
+            <TextField fx:id="tfUsuario" layoutX="75.0" layoutY="155.0" prefHeight="30.0" prefWidth="300.0" promptText="Tu usuario" />
+
+            <Label layoutX="75.0" layoutY="210.0" text="Contraseña" textFill="#015aaa">
+               <font>
+                  <Font name="Avenir Medium" size="14.0" />
+               </font>
+            </Label>
+            <PasswordField fx:id="tfPassword" layoutX="75.0" layoutY="235.0" prefHeight="30.0" prefWidth="300.0" promptText="********" />
+
+            <!-- Mensajes de error -->
+            <Label fx:id="lbErrorUsuario" layoutX="80.0" layoutY="190.0" prefHeight="20.0" prefWidth="270.0" textFill="RED" />
+            <Label fx:id="lbErrorPassword" layoutX="80.0" layoutY="270.0" prefHeight="20.0" prefWidth="270.0" textFill="RED" />
+
+            <!-- Botón de ingreso -->
+            <Button layoutX="165.0" layoutY="320.0" mnemonicParsing="false" onAction="#btnClicVerificarSesion" style="-fx-background-color: #01ab4b; -fx-text-fill: white; -fx-font-size: 15px;" text="Ingresar" />
+
          </children>
       </AnchorPane>
-      <AnchorPane layoutX="341.0" prefHeight="406.0" prefWidth="350.0" style="-fx-background-color: #B3CDE0;">
-         <children>
-            <Label layoutX="113.0" layoutY="45.0" text="Bienvenid@">
-               <font>
-                  <Font name="Avenir Medium" size="24.0" />
-               </font>
-            </Label>
-            <Label layoutX="120.0" layoutY="80.0" text="Ingresa tu usuario">
-               <font>
-                  <Font name="Avenir Light" size="14.0" />
-               </font>
-            </Label>
-            <TextField fx:id="tfUsuario" layoutX="95.0" layoutY="161.0" promptText="greatUser" />
-            <TextField fx:id="tfPassword" layoutX="95.0" layoutY="240.0" promptText="p4ssw0rd" />
-            <Button layoutX="148.0" layoutY="307.0" mnemonicParsing="false" onAction="#btnClicVerificarSesion" text="Ingresar" />
-            <Label layoutX="98.0" layoutY="144.0" text="Usuario">
-               <font>
-                  <Font name="Avenir Light" size="13.0" />
-               </font>
-            </Label>
-            <Label layoutX="95.0" layoutY="223.0" text="Contraseña">
-               <font>
-                  <Font name="Avenir Light" size="13.0" />
-               </font>
-            </Label>
-            <Label fx:id="lbErrorUsuario" layoutX="97.0" layoutY="188.0" textFill="#dd5555">
-               <font>
-                  <Font size="11.0" />
-               </font>
-            </Label>
-            <Label fx:id="lbErrorPassword" layoutX="97.0" layoutY="267.0" textFill="#dd5555">
-               <font>
-                  <Font size="11.0" />
-               </font>
-            </Label>
-         </children>
-      </AnchorPane>
+
    </children>
 </AnchorPane>

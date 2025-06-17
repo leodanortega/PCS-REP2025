@@ -89,6 +89,6 @@ public class FXMLPrincipalCoordinadorController {
 
     @FXML
     private void clicEstudiantes(ActionEvent event) {
-        abrirNuevaVentana("/construccionfinal/vistas/ExpedienteEstudiante/FXMLListaEstudiantes.fxml", "Estudiantes");
+        abrirNuevaVentana("/construccionfinal/vistas/Expediente/FXMLListaEstudiantes.fxml", "Estudiantes");
     }
 }

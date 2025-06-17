@@ -1,78 +1,86 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.geometry.Pos?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="construccionfinal.controladores.RegistrarProyecto.FXMLConfirmarDatosProyectoController">
-<center>
-      <GridPane alignment="CENTER" hgap="50.0" BorderPane.alignment="CENTER">
-        <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-        </columnConstraints>
-        <rowConstraints>
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="100.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-        </rowConstraints>
-         <children>
-            <Label text="Organizacion Vinculada" />
-            <Label text="Responsable de Proyecto" GridPane.columnIndex="1" />
-            <Label text="Nombre" GridPane.rowIndex="2" />
-            <Label text="Departamento" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <Label text="Descripcion" GridPane.rowIndex="4" />
-            <Label text="Metodologia" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-            <Label text="Espacios" GridPane.halignment="RIGHT" GridPane.rowIndex="6" GridPane.valignment="CENTER" />
-            <Label fx:id="lbNombre" alignment="TOP_CENTER" contentDisplay="CENTER" prefHeight="21.0" prefWidth="246.0" GridPane.rowIndex="3" GridPane.valignment="TOP" />
-            <Label fx:id="lbDepartamento" prefHeight="21.0" prefWidth="252.0" GridPane.columnIndex="1" GridPane.rowIndex="3" GridPane.valignment="TOP" />
-            <Label fx:id="lbDescripcion" prefHeight="21.0" prefWidth="250.0" GridPane.rowIndex="5" />
-            <Label fx:id="lbMetodologia" prefHeight="21.0" prefWidth="248.0" GridPane.columnIndex="1" GridPane.rowIndex="5" GridPane.valignment="TOP" />
-            <Label fx:id="lbEspacios" prefHeight="21.0" prefWidth="50.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-            <Label fx:id="lbOrganizacionVinculada" prefHeight="21.0" prefWidth="246.0" GridPane.rowIndex="1" />
-            <Label fx:id="lbResponsableProyecto" prefHeight="21.0" prefWidth="248.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-         </children>
-         <BorderPane.margin>
-            <Insets />
-         </BorderPane.margin>
-      </GridPane>
-   </center>
-   <top>
-      <AnchorPane prefHeight="100.0" prefWidth="100.0" BorderPane.alignment="CENTER">
-         <children>
-            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="259.0" layoutY="40.0" text="¿Confirmar Datos?" textAlignment="CENTER" />
-         </children>
-      </AnchorPane>
-   </top>
-   <left>
-      <AnchorPane prefHeight="100.0" prefWidth="50.0" BorderPane.alignment="CENTER" />
-   </left>
-   <right>
-      <AnchorPane prefHeight="100.0" prefWidth="50.0" BorderPane.alignment="CENTER" />
-   </right>
-   <bottom>
-      <GridPane alignment="CENTER" prefHeight="100.0" prefWidth="100.0" BorderPane.alignment="CENTER">
-        <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-        </columnConstraints>
-        <rowConstraints>
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-        </rowConstraints>
-         <children>
-            <Button mnemonicParsing="false" onAction="#clicCancelar" text="Cancelar" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
-            <Button mnemonicParsing="false" onAction="#clicAceptar" text="Aceptar" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
-         </children>
-         <BorderPane.margin>
-            <Insets bottom="20.0" />
-         </BorderPane.margin>
-      </GridPane>
-   </bottom>
+<BorderPane prefHeight="600.0" prefWidth="750.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="construccionfinal.controladores.RegistrarProyecto.FXMLConfirmarDatosProyectoController">
+
+    <!-- Barra superior con título centrado -->
+    <top>
+        <AnchorPane prefHeight="80.0" BorderPane.alignment="CENTER">
+            <children>
+                <Label layoutX="250.0" layoutY="25.0"
+                       text="Confirmar Datos del Proyecto"
+                       style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #2C3E50;" />
+            </children>
+        </AnchorPane>
+    </top>
+
+    <!-- Contenido centrado -->
+    <center>
+        <VBox spacing="20" alignment="CENTER">
+            <children>
+
+                <!-- Grid de datos centrado -->
+                <GridPane hgap="25" vgap="18" alignment="CENTER">
+                    <columnConstraints>
+                        <ColumnConstraints halignment="CENTER" maxWidth="300.0" minWidth="200.0" prefWidth="250.0" />
+                        <ColumnConstraints hgrow="ALWAYS" maxWidth="350.0" minWidth="200.0" prefWidth="300.0" />
+                    </columnConstraints>
+                    <children>
+                        <Label text="Organización Vinculada:" GridPane.columnIndex="0" GridPane.rowIndex="0"
+                               style="-fx-font-size: 18px; -fx-font-weight: bold;" />
+                        <Label fx:id="lbOrganizacionVinculada" GridPane.columnIndex="1" GridPane.rowIndex="0"
+                               style="-fx-font-size: 18px; -fx-font-style: italic;" />
+
+                        <Label text="Responsable de Proyecto:" GridPane.columnIndex="0" GridPane.rowIndex="1"
+                               style="-fx-font-size: 18px; -fx-font-weight: bold;" />
+                        <Label fx:id="lbResponsableProyecto" GridPane.columnIndex="1" GridPane.rowIndex="1"
+                               style="-fx-font-size: 18px; -fx-font-style: italic;" />
+
+                        <Label text="Nombre del Proyecto:" GridPane.columnIndex="0" GridPane.rowIndex="2"
+                               style="-fx-font-size: 18px; -fx-font-weight: bold;" />
+                        <Label fx:id="lbNombre" GridPane.columnIndex="1" GridPane.rowIndex="2"
+                               style="-fx-font-size: 18px; -fx-font-style: italic;" />
+
+                        <Label text="Departamento:" GridPane.columnIndex="0" GridPane.rowIndex="3"
+                               style="-fx-font-size: 18px; -fx-font-weight: bold;" />
+                        <Label fx:id="lbDepartamento" GridPane.columnIndex="1" GridPane.rowIndex="3"
+                               style="-fx-font-size: 18px; -fx-font-style: italic;" />
+
+                        <Label text="Descripción:" GridPane.columnIndex="0" GridPane.rowIndex="4"
+                               style="-fx-font-size: 18px; -fx-font-weight: bold;" />
+                        <Label fx:id="lbDescripcion" GridPane.columnIndex="1" GridPane.rowIndex="4"
+                               style="-fx-font-size: 18px; -fx-font-style: italic;" />
+
+                        <Label text="Metodología:" GridPane.columnIndex="0" GridPane.rowIndex="5"
+                               style="-fx-font-size: 18px; -fx-font-weight: bold;" />
+                        <Label fx:id="lbMetodologia" GridPane.columnIndex="1" GridPane.rowIndex="5"
+                               style="-fx-font-size: 18px; -fx-font-style: italic;" />
+
+                        <Label text="Espacios Disponibles:" GridPane.columnIndex="0" GridPane.rowIndex="6"
+                               style="-fx-font-size: 18px; -fx-font-weight: bold;" />
+                        <Label fx:id="lbEspacios" GridPane.columnIndex="1" GridPane.rowIndex="6"
+                               style="-fx-font-size: 18px; -fx-font-style: italic;" />
+                    </children>
+                </GridPane>
+
+            </children>
+        </VBox>
+    </center>
+
+    <!-- Botones más accesibles y centrados -->
+    <bottom>
+        <HBox alignment="CENTER" spacing="50" BorderPane.alignment="CENTER">
+            <children>
+                <Button onAction="#clicAceptar" style="-fx-background-color: #28a745; -fx-text-fill: white; -fx-font-size: 18px; -fx-font-weight: bold; -fx-background-radius: 10; -fx-padding: 10 20;" text="✅ Aceptar" />
+
+                <Button onAction="#clicCancelar" style="-fx-background-color: #dc3545; -fx-text-fill: white; -fx-font-size: 18px; -fx-font-weight: bold; -fx-background-radius: 10; -fx-padding: 10 20;" text="❌ Cancelar" />
+            </children>
+        </HBox>
+    </bottom>
+
 </BorderPane>
