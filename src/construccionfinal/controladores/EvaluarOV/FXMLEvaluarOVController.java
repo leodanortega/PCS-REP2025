@@ -114,7 +114,6 @@ public class FXMLEvaluarOVController implements Initializable {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/construccionfinal/vistas/EvaluarOV/FXMLConfirmarDatos.fxml"));
             Parent root = loader.load();
 
-            // Obtén el controlador correctamente
             FXMLConfirmarDatosController controller = loader.getController();
             if (controller == null) {
                 System.err.println("Error: No se pudo obtener el controlador de FXMLConfirmarDatosController.");

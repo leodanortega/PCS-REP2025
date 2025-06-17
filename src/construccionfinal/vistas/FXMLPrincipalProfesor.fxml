@@ -27,7 +27,6 @@
             <children>
                 <Label style="-fx-font-size: 18px; -fx-text-fill: #34495e; -fx-font-weight: bold;" text="Opciones del sistema" />
                 <Label fx:id="lblNombreUsuario" layoutX="20.0" layoutY="20.0" style="-fx-font-size: 14px;" text="Usuario: " />
-                <Button fx:id="btnEvaluarEstudiante" onAction="#btnEvaluarEstudiante" style="-fx-background-color: #3498db; -fx-text-fill: white; -fx-background-radius: 8; -fx-font-weight: bold; -fx-font-size: 14px; -fx-padding: 8 16;" text="Evaluar estudiante" />
             </children>
         </VBox>
     </left>

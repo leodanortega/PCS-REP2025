@@ -1,8 +1,8 @@
 package construccionfinal.controladores.EvaluarEstudiante;
 
-import construccionfinal.controladores.EvaluarEstudiante.FXMLEvaluarEstudianteController;
 import construccionfinal.dao.EstudianteDAO;
 import construccionfinal.modelo.pojo.Estudiante;
+import construccionfinal.utilidades.Utilidad;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -79,7 +79,9 @@ public class FXMLEstudiantesPorEvaluarController {
 
     @FXML
     private void clicSalir() {
-        cerrarVentana();
+        Stage stage = (Stage) tablaEstudiantes.getScene().getWindow();
+        Utilidad.mostrarAlertaConfirmacion("Salir", "¿Estás seguro de que deseas cancelar la evaluación?");
+        stage.close();
     }
 
     private void cerrarVentana() {
@@ -100,7 +102,6 @@ public class FXMLEstudiantesPorEvaluarController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(rutaFXML));
             Parent root = loader.load();
 
-            // Obtener el controlador y pasarle el estudiante seleccionado
             FXMLEvaluarEstudianteController controller = loader.getController();
             controller.inicializarDatos(estudiante);
 

@@ -42,8 +42,6 @@ public class FXMLPrincipalCoordinadorController {
             stage.setTitle("Inicio de Sesión");
             stage.setScene(new Scene(root));
             stage.show();
-
-            // Cierra la ventana actual
             Stage actual = (Stage) lblNombreUsuario.getScene().getWindow();
             actual.close();
         } catch (IOException e) {

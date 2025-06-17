@@ -27,7 +27,6 @@ public class FXMLPrincipalEstudianteController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // Aquí podrías inicializar algo si es necesario
     }
 
     public void setUsuario(Usuario usuarioSesion) {
@@ -42,7 +41,6 @@ public class FXMLPrincipalEstudianteController implements Initializable {
 
             FXMLEvaluarOVController controller = loader.getController();
 
-            // Obtener el estudiante desde la base de datos
             EstudianteDAO estudianteDAO = new EstudianteDAO();
             Estudiante estudiante = estudianteDAO.buscarPorId(usuario.getIdUsuario());
 
@@ -51,7 +49,6 @@ public class FXMLPrincipalEstudianteController implements Initializable {
                 return;
             }
 
-            // Obtener el proyecto real del estudiante
             ProyectoDAO proyectoDAO = new ProyectoDAO();
             Proyecto proyecto = proyectoDAO.buscarPorEstudiante(estudiante.getIdUsuario());
 
@@ -60,11 +57,7 @@ public class FXMLPrincipalEstudianteController implements Initializable {
 
             ResponsableProyectoDAO responsableDAO = new ResponsableProyectoDAO();
             ResponsableProyecto responsable = responsableDAO.buscarPorId(proyecto.getIdResponsable());
-
-            // Obtener los criterios de evaluación desde la base de datos
             List<CriterioEvaluacion> criterios = CriterioEvaluacionOVDAO.obtenerTodos();
-
-            // Pasar los datos reales al controlador
             controller.setDatos(estudiante, proyecto, org, responsable, criterios);
 
             Stage stage = new Stage();
@@ -89,7 +82,6 @@ public class FXMLPrincipalEstudianteController implements Initializable {
             stage.setScene(new Scene(root));
             stage.show();
 
-            // Cerrar la ventana actual
             Stage actual = (Stage) lblNombreUsuario.getScene().getWindow();
             actual.close();
         } catch (IOException e) {

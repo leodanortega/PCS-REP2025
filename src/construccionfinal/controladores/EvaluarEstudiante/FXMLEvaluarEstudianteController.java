@@ -1,6 +1,5 @@
 package construccionfinal.controladores.EvaluarEstudiante;
 
-import construccionfinal.dao.CriterioEvaluacionOVDAO;
 import construccionfinal.dao.CriterioEvaluacionResultadoDAO;
 import construccionfinal.dao.CriteriosPresentacionDAO;
 import construccionfinal.dao.EvaluacionPresentacionDAO;
@@ -8,6 +7,7 @@ import construccionfinal.modelo.pojo.CriterioEvaluacion;
 import construccionfinal.modelo.pojo.CriterioEvaluacionObservable;
 import construccionfinal.modelo.pojo.CriterioEvaluacionResultado;
 import construccionfinal.modelo.pojo.Estudiante;
+import construccionfinal.utilidades.Utilidad;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -99,13 +99,15 @@ public class FXMLEvaluarEstudianteController {
     @FXML
     private void clicEvaluar() {
         int idExpediente = obtenerIdExpediente();
+
         if (idExpediente == -1) {
             mostrarAlerta("No se encontró un expediente válido para el estudiante.");
             return;
         }
 
-        // 🔹 Convertimos `CriterioEvaluacionObservable` a `CriterioEvaluacion`
+        java.sql.Date fechaActual = new java.sql.Date(System.currentTimeMillis());
         Map<CriterioEvaluacion, Integer> respuestasEvaluacion = new HashMap<>();
+
         for (Map.Entry<CriterioEvaluacionObservable, Integer> entry : respuestas.entrySet()) {
             CriterioEvaluacion criterio = new CriterioEvaluacion(
                     entry.getKey().getIdCriterio(),
@@ -115,35 +117,42 @@ public class FXMLEvaluarEstudianteController {
             respuestasEvaluacion.put(criterio, entry.getValue());
         }
 
-        java.sql.Date fechaActual = new java.sql.Date(System.currentTimeMillis());
-        int idEvaluacion = EvaluacionPresentacionDAO.guardarEvaluacion(respuestasEvaluacion, "Evaluación presentación", fechaActual, idExpediente);
+        // Ahora llamamos a guardarEvaluacion con los tipos correctos
+        int idEvaluacion = EvaluacionPresentacionDAO.guardarEvaluacion(
+                respuestasEvaluacion, "Evaluación presentación", fechaActual, idExpediente);
 
         if (idEvaluacion == -1) {
             mostrarAlerta("Ocurrió un error al guardar la evaluación.");
             return;
         }
 
+        System.out.println("ID Evaluación guardado: " + idEvaluacion);
 
+        // Generamos resultados con idEvaluacion
         List<CriterioEvaluacionResultado> resultados = respuestasEvaluacion.entrySet().stream()
-                .map(entry -> new CriterioEvaluacionResultado(idEvaluacion, entry.getKey().getIdCriterio(), entry.getValue()))
+                .map(entry -> new CriterioEvaluacionResultado(
+                        idEvaluacion,
+                        entry.getKey().getIdCriterio(),
+                        entry.getValue()
+                ))
                 .collect(Collectors.toList());
 
         boolean guardadoResultados = CriterioEvaluacionResultadoDAO.guardarResultados(idEvaluacion, resultados);
 
         if (!guardadoResultados) {
-            mostrarAlerta("Ocurrió un error al guardar los resultados de evaluación.");
+            mostrarAlerta("La evaluación se guardó, pero ocurrió un error al guardar los resultados.");
         } else {
-            mostrarAlerta("Evaluación y resultados guardados correctamente.");
+            mostrarAlerta("Evaluación de presentación y resultados guardados correctamente.");
             cerrarVentana();
         }
     }
+
 
     private int obtenerIdExpediente() {
         return construccionfinal.dao.ExpedienteDAO
                 .obtenerExpedientePorEstudiante(estudiante.getIdUsuario())
                 .getIdExpediente();
     }
-
 
     @FXML
     private void clicSalir() {
@@ -152,6 +161,7 @@ public class FXMLEvaluarEstudianteController {
 
     private void cerrarVentana() {
         Stage stage = (Stage) tablaEvaluacion.getScene().getWindow();
+        Utilidad.mostrarAlertaConfirmacion("Salir", "¿Estás seguro de que deseas cancelar la evaluación?");
         stage.close();
     }
 
