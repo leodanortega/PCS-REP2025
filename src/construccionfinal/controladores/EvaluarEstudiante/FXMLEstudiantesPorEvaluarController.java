@@ -57,7 +57,7 @@ public class FXMLEstudiantesPorEvaluarController {
     }
 
     private void cargarEstudiantes() {
-        List<Estudiante> lista = estudianteDAO.listar();
+        List<Estudiante> lista = estudianteDAO.listarEstudiantesSinEvaluacion();
         tablaEstudiantes.setItems(FXCollections.observableArrayList(lista));
     }
 
@@ -82,7 +82,7 @@ public class FXMLEstudiantesPorEvaluarController {
         Alert alerta = new Alert(Alert.AlertType.CONFIRMATION);
         alerta.setTitle("Confirmación");
         alerta.setHeaderText(null);
-        alerta.setContentText("¿Estás seguro de que deseas cancelar la evaluación?");
+        alerta.setContentText("¿Estás seguro de que deseas cancelar la operación?");
 
         if (alerta.showAndWait().orElse(ButtonType.CANCEL) == ButtonType.OK) {
             Stage stage = (Stage) tablaEstudiantes.getScene().getWindow();

@@ -102,10 +102,6 @@ public class FXMLEvaluarOVController implements Initializable {
             Utilidad.mostrarAlertaSimple(Alert.AlertType.WARNING, "Datos inválidos", "Existen campos inválidos o incompletos, por favor verifica tu información");
             return;
         }
-        System.out.println("Respuestas capturadas:");
-        for (Map.Entry<CriterioEvaluacion, Integer> entry : respuestas.entrySet()) {
-            System.out.println(entry.getKey().getDescripcion() + ": " + entry.getValue());
-        }
         abrirConfirmacionEvaluacion(respuestas);
     }
 

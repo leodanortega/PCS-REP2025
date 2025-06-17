@@ -84,7 +84,7 @@ public class FXMLConfirmarDatosController implements Initializable {
     private void clicGuardar() {
         int idExpediente = obtenerIdExpediente();
         if (idExpediente == -1) {
-            mostrarAlerta("Error: No se encontró un expediente válido para el estudiante.");
+            mostrarAlerta("Error: No cuentas con un expediente para poder realizar esta operación.");
             return;
         }
 

@@ -89,10 +89,16 @@ public class FXMLRegistrarOVController {
 
 
     @FXML
-    private void clicSalir(ActionEvent event) {
-        Stage stage = (Stage) tfNombre.getScene().getWindow();
-        Utilidad.mostrarAlertaConfirmacion("Salir", "¿Seguro que quieres salir?");
-        stage.close();
+    private void clicSalir() {
+        Alert alerta = new Alert(Alert.AlertType.CONFIRMATION);
+        alerta.setTitle("Confirmación");
+        alerta.setHeaderText(null);
+        alerta.setContentText("¿Seguro que quieres salir?");
+
+        if (alerta.showAndWait().orElse(ButtonType.CANCEL) == ButtonType.OK) {
+            Stage stage = (Stage) tfNombre.getScene().getWindow();
+            stage.close();
+        }
     }
 
     private void mostrarAlerta(Alert.AlertType tipo, String titulo, String contenido) {

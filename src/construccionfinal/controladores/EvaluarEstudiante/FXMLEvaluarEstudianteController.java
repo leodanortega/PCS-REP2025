@@ -1,6 +1,5 @@
 package construccionfinal.controladores.EvaluarEstudiante;
 
-import construccionfinal.dao.CriterioEvaluacionResultadoDAO;
 import construccionfinal.dao.CriterioPresentacionResultadoDAO;
 import construccionfinal.dao.CriteriosPresentacionDAO;
 import construccionfinal.dao.EvaluacionPresentacionDAO;
@@ -8,7 +7,6 @@ import construccionfinal.modelo.pojo.CriterioEvaluacion;
 import construccionfinal.modelo.pojo.CriterioEvaluacionObservable;
 import construccionfinal.modelo.pojo.CriterioEvaluacionResultado;
 import construccionfinal.modelo.pojo.Estudiante;
-import construccionfinal.utilidades.Utilidad;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -35,8 +33,6 @@ public class FXMLEvaluarEstudianteController {
     private TableColumn<CriterioEvaluacionObservable, RadioButton> colBasicoUmbral;
     @FXML
     private TableColumn<CriterioEvaluacionObservable, RadioButton> colNoCompetente;
-    @FXML
-    private TextArea txtObservaciones;
 
     private Estudiante estudiante;
     private Map<CriterioEvaluacionObservable, Integer> respuestas = new HashMap<>();
@@ -101,6 +97,11 @@ public class FXMLEvaluarEstudianteController {
     private void clicEvaluar() {
         int idExpediente = obtenerIdExpediente();
 
+        if (!todosCriteriosContestados()) {
+            mostrarAlerta("Debes seleccionar una opción para cada criterio antes de enviar la evaluación.");
+            return;
+        }
+
         if (idExpediente == -1) {
             mostrarAlerta("No se encontró un expediente válido para el estudiante.");
             return;
@@ -118,7 +119,6 @@ public class FXMLEvaluarEstudianteController {
             respuestasEvaluacion.put(criterio, entry.getValue());
         }
 
-        // Ahora llamamos a guardarEvaluacion con los tipos correctos
         int idEvaluacion = EvaluacionPresentacionDAO.guardarEvaluacion(
                 respuestasEvaluacion, "Evaluación presentación", fechaActual, idExpediente);
 
@@ -151,6 +151,10 @@ public class FXMLEvaluarEstudianteController {
         }
     }
 
+    private boolean todosCriteriosContestados() {
+        return respuestas.size() == tablaEvaluacion.getItems().size() && !respuestas.containsValue(null);
+    }
+
 
     private int obtenerIdExpediente() {
         return construccionfinal.dao.ExpedienteDAO
@@ -160,13 +164,15 @@ public class FXMLEvaluarEstudianteController {
 
     @FXML
     private void clicSalir() {
-        cerrarVentana();
-    }
+        Alert alerta = new Alert(Alert.AlertType.CONFIRMATION);
+        alerta.setTitle("Confirmación");
+        alerta.setHeaderText(null);
+        alerta.setContentText("¿Estás seguro de que deseas cancelar la evaluación?");
 
-    private void cerrarVentana() {
-        Stage stage = (Stage) tablaEvaluacion.getScene().getWindow();
-        Utilidad.mostrarAlertaConfirmacion("Salir", "¿Estás seguro de que deseas cancelar la evaluación?");
-        stage.close();
+        if (alerta.showAndWait().orElse(ButtonType.CANCEL) == ButtonType.OK) {
+            Stage stage = (Stage) tablaEvaluacion.getScene().getWindow();
+            stage.close();
+        }
     }
 
     private void mostrarAlerta(String mensaje) {

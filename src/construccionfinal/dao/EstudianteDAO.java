@@ -14,9 +14,6 @@ import java.util.List;
 
 public class EstudianteDAO {
 
-    /**
-     * Busca un estudiante por su ID de usuario.
-     */
     public static Estudiante buscarPorId(int idUsuario) {
         Estudiante estudiante = null;
         String sql = "SELECT idUsuario, nombre, apePaterno, apeMaterno, identificador, correo, telefono " +
@@ -212,5 +209,42 @@ public class EstudianteDAO {
     }
 
     return lista;
-}
+    }
+
+    public static List<Estudiante> listarEstudiantesSinEvaluacion() {
+        List<Estudiante> lista = new ArrayList<>();
+        Connection conexion = ConexionBD.abrirConexion();
+
+        if (conexion != null) {
+            try {
+                String consulta = "SELECT u.idUsuario, u.nombre, u.apePaterno, u.apeMaterno, u.correo, u.telefono, u.identificador " +
+                        "FROM usuario u " +
+                        "JOIN expediente e ON u.idUsuario = e.idEstudiante " +
+                        "WHERE u.rol = 'estudiante' AND e.idExpediente NOT IN (SELECT idExpediente FROM evaluacion_presentacion)";
+
+                PreparedStatement stmt = conexion.prepareStatement(consulta);
+                ResultSet rs = stmt.executeQuery();
+
+                while (rs.next()) {
+                    Estudiante estudiante = new Estudiante();
+                    estudiante.setIdUsuario(rs.getInt("idUsuario"));
+                    estudiante.setNombre(rs.getString("nombre"));
+                    estudiante.setApePaterno(rs.getString("apePaterno"));
+                    estudiante.setApeMaterno(rs.getString("apeMaterno"));
+                    estudiante.setCorreo(rs.getString("correo"));
+                    estudiante.setTelefono(rs.getString("telefono"));
+                    estudiante.setIdentificador(rs.getString("identificador"));
+                    lista.add(estudiante);
+                }
+
+                rs.close();
+                stmt.close();
+                conexion.close();
+            } catch (SQLException ex) {
+                System.err.println("Error al listar estudiantes sin evaluación: " + ex.getMessage());
+            }
+        }
+
+        return lista;
+    }
 }
