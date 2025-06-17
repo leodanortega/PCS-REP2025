@@ -28,4 +28,14 @@ public class CriterioEvaluacionResultado {
     public void setPuntajeObtenido(double puntajeObtenido) {
         this.puntajeObtenido = puntajeObtenido;
     }
+    // ✅ Constructor vacío (necesario si se usa en algunas implementaciones)
+    public CriterioEvaluacionResultado() {}
+
+    // ✅ Constructor con parámetros, para que la conversión en `clicEvaluar()` funcione
+    public CriterioEvaluacionResultado(int idEvaluacion, int idCriterio, int puntajeObtenido) {
+        this.idEvaluacionOV = idEvaluacion;
+        this.idCriterio = idCriterio;
+        this.puntajeObtenido = puntajeObtenido;
+    }
+
 }

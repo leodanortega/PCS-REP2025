@@ -29,7 +29,7 @@ public class FXMLPrincipalCoordinadorController {
     void setUsuario(Usuario usuarioSesion) {
         this.usuario=usuario;
         if (usuario != null && usuario.getNombre() != null) {
-            lblNombreUsuario.setText("Usuario: " + usuario.getNombre());
+            lblNombreUsuario.setText(usuario.getNombre());
         }
     }
 

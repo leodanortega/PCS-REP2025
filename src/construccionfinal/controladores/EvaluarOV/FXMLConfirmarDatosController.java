@@ -1,8 +1,10 @@
 package construccionfinal.controladores.EvaluarOV;
 
+import construccionfinal.dao.CriterioEvaluacionResultadoDAO;
 import construccionfinal.dao.EvaluacionOVDAO;
 import construccionfinal.dao.ExpedienteDAO;
 import construccionfinal.modelo.pojo.*;
+import construccionfinal.utilidades.Utilidad;
 import construccionfinal.utilidades.UtilidadImagen;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -13,8 +15,10 @@ import javafx.stage.Stage;
 
 import java.io.File;
 import java.net.URL;
+import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
 
 public class FXMLConfirmarDatosController implements Initializable {
 
@@ -71,7 +75,9 @@ public class FXMLConfirmarDatosController implements Initializable {
 
     @FXML
     private void clicCancelar() {
-        ((Stage) vbCriteriosEvaluados.getScene().getWindow()).close();
+        Stage stage = (Stage) vbCriteriosEvaluados.getScene().getWindow();
+        Utilidad.mostrarAlertaConfirmacion("Salir", "¿Estás seguro de que deseas cancelar la evaluación?");
+        stage.close();
     }
 
     @FXML
@@ -85,6 +91,22 @@ public class FXMLConfirmarDatosController implements Initializable {
         int idEvaluacionOV = EvaluacionOVDAO.guardarEvaluacion(respuestas, "", idExpediente);
         if (idEvaluacionOV == -1) {
             mostrarAlerta("Error al guardar la evaluación.");
+            return;
+        }
+
+        List<CriterioEvaluacionResultado> resultados = respuestas.entrySet().stream()
+                .map(entry -> {
+                    CriterioEvaluacionResultado resultado = new CriterioEvaluacionResultado();
+                    resultado.setIdCriterio(entry.getKey().getIdCriterio());
+                    resultado.setPuntajeObtenido(entry.getValue());
+                    return resultado;
+                })
+                .collect(Collectors.toList());
+
+
+        boolean guardadoResultados = CriterioEvaluacionResultadoDAO.guardarResultados(idEvaluacionOV, resultados);
+        if (!guardadoResultados) {
+            mostrarAlerta("La evaluación se guardó, pero hubo un error al registrar los resultados individuales.");
             return;
         }
 
@@ -102,9 +124,10 @@ public class FXMLConfirmarDatosController implements Initializable {
         // Generar imagen con la ruta seleccionada por el usuario
         UtilidadImagen.generarImagen(archivoSeleccionado.getAbsolutePath(), estudiante, proyecto, organizacion, responsable, respuestas);
 
-        mostrarAlerta("Evaluación guardada y imagen generada correctamente.");
+        mostrarAlerta("Evaluación guardada y resultados registrados correctamente.");
         ((Stage) vbCriteriosEvaluados.getScene().getWindow()).close();
     }
+
 
     private double calcularPuntajeTotal() {
         int sumaTotal = respuestas.values().stream().mapToInt(Integer::intValue).sum();

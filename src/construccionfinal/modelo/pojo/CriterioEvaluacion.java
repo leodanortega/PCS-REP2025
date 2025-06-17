@@ -5,6 +5,12 @@ public class CriterioEvaluacion {
     private String nombreCriterio;
     private String descripcion;
 
+    public CriterioEvaluacion(int idCriterio, String nombreCriterio, String descripcion) {
+    }
+    public CriterioEvaluacion() {
+    }
+
+
     public void CriterioEvaluacionOV(int idCriterio, String nombreCriterio, String descripcion) {
         this.idCriterio = idCriterio;
         this.nombreCriterio = nombreCriterio;

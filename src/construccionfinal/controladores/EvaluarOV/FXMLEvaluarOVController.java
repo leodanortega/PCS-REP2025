@@ -1,6 +1,8 @@
 package construccionfinal.controladores.EvaluarOV;
 
+import construccionfinal.dao.OrganizacionVinculadaDAO;
 import construccionfinal.modelo.pojo.*;
+import construccionfinal.utilidades.Utilidad;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -81,7 +83,10 @@ public class FXMLEvaluarOVController implements Initializable {
     private void btnAceptar() {
         Map<CriterioEvaluacion, Integer> respuestas = new LinkedHashMap<>();
         boolean faltanRespuestas = false;
-
+        if (!OrganizacionVinculadaDAO.hayConexion()) {
+            mostrarAlerta(Alert.AlertType.ERROR, "Sin conexión", "Error: No hay conexión con la base de datos");
+            return;
+        }
         for (Map.Entry<CriterioEvaluacion, ToggleGroup> entry : criteriosToggleGroups.entrySet()) {
             Toggle seleccionado = entry.getValue().getSelectedToggle();
             if (seleccionado == null) {
@@ -94,7 +99,7 @@ public class FXMLEvaluarOVController implements Initializable {
         }
 
         if (faltanRespuestas) {
-            mostrarAlerta("Completa todos los criterios antes de enviar la evaluación.");
+            Utilidad.mostrarAlertaSimple(Alert.AlertType.WARNING, "Datos inválidos", "Existen campos inválidos o incompletos, por favor verifica tu información");
             return;
         }
         System.out.println("Respuestas capturadas:");
@@ -105,9 +110,6 @@ public class FXMLEvaluarOVController implements Initializable {
     }
 
     private void abrirConfirmacionEvaluacion(Map<CriterioEvaluacion, Integer> respuestas) {
-        System.out.println("Enviando respuestas a FXMLConfirmarDatosController:");
-        respuestas.forEach((criterio, valor) -> System.out.println(criterio.getDescripcion() + ": " + valor));
-
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/construccionfinal/vistas/EvaluarOV/FXMLConfirmarDatos.fxml"));
             Parent root = loader.load();
@@ -136,7 +138,9 @@ public class FXMLEvaluarOVController implements Initializable {
 
     @FXML
     private void btnCancelar() {
-        ((Stage) btnCancelar.getScene().getWindow()).close();
+        Stage stage = (Stage) btnCancelar.getScene().getWindow();
+        Utilidad.mostrarAlertaConfirmacion("Salir", "¿Estás seguro de que deseas cancelar la evaluación?");
+        stage.close();
     }
 
     private void mostrarAlerta(String mensaje) {
@@ -144,6 +148,14 @@ public class FXMLEvaluarOVController implements Initializable {
         alerta.setTitle("Evaluación");
         alerta.setHeaderText(null);
         alerta.setContentText(mensaje);
+        alerta.showAndWait();
+    }
+
+    private void mostrarAlerta(Alert.AlertType tipo, String titulo, String contenido) {
+        Alert alerta = new Alert(tipo);
+        alerta.setTitle(titulo);
+        alerta.setHeaderText(null);
+        alerta.setContentText(contenido);
         alerta.showAndWait();
     }
 }

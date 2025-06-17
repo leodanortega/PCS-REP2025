@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="699.0" prefWidth="1000.0" style="-fx-background-color: #f4f4f4;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="construccionfinal.controladores.EvaluarEstudiante.FXMLEvaluarEstudianteController">
+   <children>
+   
+       <!-- Título -->
+       <Label layoutX="20" layoutY="15" style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #333;" text="Evaluación de Estudiante" />
+   
+       <!-- Tabla de Evaluación -->
+       <TableView fx:id="tablaEvaluacion" layoutX="20.0" layoutY="60.0" prefHeight="431.0" prefWidth="947.0" style="-fx-background-color: white; -fx-border-color: #ccc; -fx-border-radius: 5;">
+           <columns>
+               <TableColumn fx:id="colCriterio" prefWidth="161.0" text="Criterio / Puntaje" />
+               <TableColumn fx:id="colCompetente" prefWidth="140.0" text="Competente (9-10)" />
+               <TableColumn fx:id="colIndependiente" prefWidth="129.0" text="Independiente (8-9)" />
+               <TableColumn fx:id="colBasicoAvanzado" prefWidth="90" text="Básico Avanzado (7-8)" />
+               <TableColumn fx:id="colBasicoUmbral" prefWidth="150.0" text="Básico Umbral (6-7)" />
+               <TableColumn fx:id="colNoCompetente" prefWidth="161.0" text="No Competente (5)" />
+           </columns>
+       </TableView>
+   
+       <!-- Campo de observaciones -->
+       <Label layoutX="20.0" layoutY="498.0" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #333;" text="Observaciones:" />
+       <TextArea fx:id="txtObservaciones" layoutX="20.0" layoutY="530.0" prefHeight="70" prefWidth="947.0" promptText="Escribe aquí las observaciones sobre el desempeño del estudiante..." style="-fx-font-size: 14px; -fx-border-radius: 5;" />
+   
+       <!-- Botones Evaluar y Salir -->
+       <HBox alignment="CENTER" layoutX="250.0" layoutY="530.0" prefHeight="45" spacing="30" />
+         <Button fx:id="btnEvaluar" layoutX="242.0" layoutY="624.0" onAction="#clicEvaluar" prefHeight="35" prefWidth="120" style="-fx-background-color: #5cb85c; -fx-text-fill: white; -fx-font-size: 14px; -fx-font-weight: bold;" text="Evaluar" />
+         <Button fx:id="btnSalir" layoutX="445.0" layoutY="622.0" onAction="#clicSalir" prefHeight="35" prefWidth="120" style="-fx-background-color: #d9534f; -fx-text-fill: white; -fx-font-size: 14px; -fx-font-weight: bold;" text="Salir" />
+   </children>
+
+</AnchorPane>

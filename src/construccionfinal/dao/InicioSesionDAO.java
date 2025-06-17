@@ -46,7 +46,7 @@ public class InicioSesionDAO {
         Usuario usuario = new Usuario();
         usuario.setIdUsuario(resultado.getInt("idUsuario"));
         usuario.setNombre(resultado.getString("nombre"));
-        usuario.setApeMaterno(resultado.getString("apePaterno"));
+        usuario.setApePaterno(resultado.getString("apePaterno"));
         usuario.setApeMaterno(resultado.getString("apeMaterno"));
         usuario.setCorreo(resultado.getString("correo"));
         usuario.setTelefono(resultado.getString("telefono"));
