@@ -1,11 +1,11 @@
 package construccionfinal.controladores.EvaluarOV;
 
+import construccionfinal.dao.CriterioEvaluacionResultadoDAO;
 import construccionfinal.dao.EvaluacionOVDAO;
 import construccionfinal.dao.ExpedienteDAO;
 import construccionfinal.modelo.pojo.*;
 import construccionfinal.utilidades.Utilidad;
 import construccionfinal.utilidades.UtilidadImagen;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -15,8 +15,10 @@ import javafx.stage.Stage;
 
 import java.io.File;
 import java.net.URL;
+import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
 
 public class FXMLConfirmarDatosController implements Initializable {
 
@@ -92,6 +94,22 @@ public class FXMLConfirmarDatosController implements Initializable {
             return;
         }
 
+        List<CriterioEvaluacionResultado> resultados = respuestas.entrySet().stream()
+                .map(entry -> {
+                    CriterioEvaluacionResultado resultado = new CriterioEvaluacionResultado();
+                    resultado.setIdCriterio(entry.getKey().getIdCriterio());
+                    resultado.setPuntajeObtenido(entry.getValue());
+                    return resultado;
+                })
+                .collect(Collectors.toList());
+
+
+        boolean guardadoResultados = CriterioEvaluacionResultadoDAO.guardarResultados(idEvaluacionOV, resultados);
+        if (!guardadoResultados) {
+            mostrarAlerta("La evaluación se guardó, pero hubo un error al registrar los resultados individuales.");
+            return;
+        }
+
         // Permitir que el usuario seleccione la ruta para guardar la imagen
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Guardar Evaluación como Imagen");
@@ -106,9 +124,10 @@ public class FXMLConfirmarDatosController implements Initializable {
         // Generar imagen con la ruta seleccionada por el usuario
         UtilidadImagen.generarImagen(archivoSeleccionado.getAbsolutePath(), estudiante, proyecto, organizacion, responsable, respuestas);
 
-        mostrarAlerta("Evaluación guardada y imagen generada correctamente.");
+        mostrarAlerta("Evaluación guardada y resultados registrados correctamente.");
         ((Stage) vbCriteriosEvaluados.getScene().getWindow()).close();
     }
+
 
     private double calcularPuntajeTotal() {
         int sumaTotal = respuestas.values().stream().mapToInt(Integer::intValue).sum();

@@ -11,8 +11,17 @@ import java.util.Map;
 
 public class EvaluacionOVDAO {
 
+    /**
+     * Guarda la evaluación de organización vinculada y devuelve el ID generado.
+     *
+     * @param respuestas     Mapa de criterios con su puntaje.
+     * @param comentarios    Comentarios generales de la evaluación.
+     * @param idExpediente   ID del expediente relacionado.
+     * @return ID generado de la evaluación o -1 si falló.
+     */
     public static int guardarEvaluacion(Map<CriterioEvaluacion, Integer> respuestas, String comentarios, int idExpediente) {
         double puntajeTotal = calcularPuntajeTotal(respuestas);
+        int idGenerado = -1;
 
         String query = "INSERT INTO evaluacion_organizacion_vinculada (puntajeTotalObtenido, comentarios, idExpediente) VALUES (?, ?, ?)";
 
@@ -27,7 +36,7 @@ public class EvaluacionOVDAO {
             if (rowsAffected > 0) {
                 try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
                     if (generatedKeys.next()) {
-                        return generatedKeys.getInt(1);
+                        idGenerado = generatedKeys.getInt(1);
                     }
                 }
             }
@@ -36,16 +45,14 @@ public class EvaluacionOVDAO {
             System.err.println("Error al guardar la evaluación OV: " + e.getMessage());
         }
 
-        return -1;
+        return idGenerado;
     }
 
+    /**
+     * Calcula el puntaje total a partir de los puntajes individuales.
+     */
     private static double calcularPuntajeTotal(Map<CriterioEvaluacion, Integer> respuestas) {
-        int sumaTotal = 0;
-
-        for (Integer puntaje : respuestas.values()) {
-            sumaTotal += puntaje;
-        }
-
-        return sumaTotal / 10.0; // Dividimos entre 10 para obtener el puntaje final
+        int sumaTotal = respuestas.values().stream().mapToInt(Integer::intValue).sum();
+        return sumaTotal / 10.0;
     }
 }
