@@ -11,7 +11,10 @@
       <Pane prefHeight="200.0" prefWidth="50.0" BorderPane.alignment="CENTER" />
    </left>
    <bottom>
-      <Pane prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+      <Pane prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button layoutX="541.0" layoutY="35.0" mnemonicParsing="false" onAction="#clicSubirDocumentosIniciales" text="Subir Documentos Iniciales" />
+         </children></Pane>
    </bottom>
    <right>
       <Pane prefHeight="200.0" prefWidth="50.0" BorderPane.alignment="CENTER" />
