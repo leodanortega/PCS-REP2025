@@ -149,4 +149,32 @@ public class OrganizacionVinculadaDAO {
         }
     }
 
+    public OrganizacionVinculada buscarPorId(int id) {
+        OrganizacionVinculada org = null;
+        String sql = "SELECT * FROM organizacion_vinculada WHERE idOrganizacion = ?";
+
+        try (Connection con = ConexionBD.abrirConexion();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setInt(1, id);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    org = new OrganizacionVinculada();
+                    org.setIdOrganizacion(rs.getInt("idOrganizacion"));
+                    org.setNombre(rs.getString("nombre"));
+                    org.setCorreo(rs.getString("correo"));
+                    org.setDescripcion(rs.getString("descripcion"));
+                    org.setRFC(rs.getString("RFC"));
+                    org.setTelefono(rs.getString("telefono"));
+                    org.setTipo(rs.getString("tipo"));
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return org;
+    }
 }

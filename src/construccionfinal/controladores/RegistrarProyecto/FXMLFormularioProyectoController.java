@@ -100,7 +100,7 @@ private void clicGuardar(ActionEvent event) {
         proyecto.setIdResponsable(responsable.getIdResponsable());
 
         // Cargar ventana de confirmación
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/construccionfinal/vistas/RegistrarProyecto/FXMLConfirmarDatosProyecto"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/construccionfinal/vistas/RegistrarProyecto/FXMLConfirmarDatosProyecto.fxml"));
         Parent root = loader.load();
 
         FXMLConfirmarDatosProyectoController controller = loader.getController();

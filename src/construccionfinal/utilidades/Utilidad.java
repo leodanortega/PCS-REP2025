@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package construccionfinal.utilidades;
 
 import java.io.File;
@@ -13,10 +9,6 @@ import javafx.scene.control.Control;
 import javafx.scene.control.DatePicker;
 import javafx.stage.Stage;
 
-/**
- *
- * @author leona
- */
 public class Utilidad {
     
     public static void mostrarAlertaSimple(Alert.AlertType tipo, String titulo, String contenido){

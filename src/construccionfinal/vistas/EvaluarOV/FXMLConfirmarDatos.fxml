@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.geometry.Pos?>
+
+<AnchorPane xmlns:fx="http://javafx.com/fxml"
+            xmlns="http://javafx.com/javafx"
+            fx:controller="construccionfinal.controladores.EvaluarOV.FXMLConfirmarDatosController"
+            prefHeight="500.0" prefWidth="600.0">
+
+    <VBox spacing="20" alignment="CENTER"
+          AnchorPane.topAnchor="20" AnchorPane.bottomAnchor="20"
+          AnchorPane.leftAnchor="20" AnchorPane.rightAnchor="20">
+
+        <Label text="Confirma tu evaluación"
+               style="-fx-font-size: 16px; -fx-font-weight: bold;" />
+
+        <Label fx:id="lblNombreAlumno" text="Nombre del alumno" />
+        <Label fx:id="lblMatricula" text="Matrícula" />
+        <Label fx:id="lblNombreProyecto" text="Nombre del proyecto" />
+        <Label fx:id="lblOrganizacion" text="Organización vinculada" />
+        <Label fx:id="lblResponsableProyecto" text="Responsable del proyecto" />
+
+        <!-- Sección de criterios y puntuación seleccionada -->
+        <ScrollPane fitToWidth="true">
+            <VBox spacing="15">
+                <children>
+                    <Label text="Criterios evaluados y puntuación:" style="-fx-font-weight: bold;" />
+                    <VBox fx:id="vbCriteriosEvaluados" spacing="10"/>
+                </children>
+            </VBox>
+        </ScrollPane>
+
+        <!-- Botones de acción -->
+        <HBox spacing="40" alignment="CENTER">
+            <children>
+                <Button text="Guardar" onAction="#clicGuardar"/>
+                <Button text="Cancelar" onAction="#clicCancelar"/>
+            </children>
+        </HBox>
+
+        <padding>
+            <Insets top="20" bottom="20" left="30" right="30"/>
+        </padding>
+
+    </VBox>
+
+</AnchorPane>

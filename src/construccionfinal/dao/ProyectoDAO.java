@@ -137,4 +137,35 @@ public class ProyectoDAO {
             return false;
         }
     }
+
+    public Proyecto buscarPorEstudiante(int idUsuario) {
+        Proyecto proyecto = null;
+        String sql = "SELECT * FROM proyecto WHERE idEstudiante = ? LIMIT 1"; // 🔹 Solo devuelve un proyecto
+
+        try (Connection con = ConexionBD.abrirConexion();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setInt(1, idUsuario);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) { // 🔹 Solo un resultado
+                    proyecto = new Proyecto();
+                    proyecto.setIdProyecto(rs.getInt("idProyecto"));
+                    proyecto.setNombre(rs.getString("nombre"));
+                    proyecto.setDescripcion(rs.getString("descripcion"));
+                    proyecto.setMetodologia(rs.getString("metodologia"));
+                    proyecto.setEspacios(rs.getString("espacios"));
+                    proyecto.setDepartamento(rs.getString("departamento"));
+                    proyecto.setIdResponsable(rs.getInt("idResponsable"));
+                    proyecto.setIdOrganizacion(rs.getInt("idOrganizacion"));
+
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return proyecto;
+    }
 }

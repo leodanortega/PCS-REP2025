@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.geometry.Pos?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns:fx="http://javafx.com/fxml"
+            xmlns="http://javafx.com/javafx"
+            fx:controller="construccionfinal.controladores.EvaluarOV.FXMLEvaluarOVController"
+            prefWidth="600" prefHeight="600">
+
+    <VBox spacing="15" alignment="CENTER"
+          AnchorPane.topAnchor="20" AnchorPane.bottomAnchor="20"
+          AnchorPane.leftAnchor="20" AnchorPane.rightAnchor="20">
+
+        <children>
+
+            <Label text="Evaluación de Organización Vinculada"
+                   style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
+
+            <!-- Datos del estudiante, proyecto y organización -->
+            <GridPane hgap="10" vgap="10">
+                <columnConstraints>
+                    <ColumnConstraints halignment="RIGHT"/>
+                    <ColumnConstraints hgrow="ALWAYS"/>
+                </columnConstraints>
+                <children>
+                    <Label text="Alumno:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                    <Label fx:id="lblNombreAlumno" GridPane.rowIndex="0" GridPane.columnIndex="1"
+                           style="-fx-font-style: italic;"/>
+
+                    <Label text="Matrícula:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                    <Label fx:id="lblMatricula" GridPane.rowIndex="1" GridPane.columnIndex="1"
+                           style="-fx-font-style: italic;"/>
+
+                    <Label text="Proyecto:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                    <Label fx:id="lblNombreProyecto" GridPane.rowIndex="2" GridPane.columnIndex="1"
+                           style="-fx-font-style: italic;"/>
+
+                    <Label text="Organización:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+                    <Label fx:id="lblOrganizacion" GridPane.rowIndex="3" GridPane.columnIndex="1"
+                           style="-fx-font-style: italic;"/>
+
+                    <Label text="Responsable del proyecto:" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+                    <Label fx:id="lblResponsableProyecto" GridPane.rowIndex="4" GridPane.columnIndex="1"
+                           style="-fx-font-style: italic;"/>
+                </children>
+            </GridPane>
+
+            <!-- Instrucción -->
+            <Label text="Evalúa del 1 al 5 a la organización vinculada"
+                   style="-fx-font-weight: bold;"/>
+
+            <!-- Criterios de evaluación dinámicos -->
+            <VBox fx:id="vbCriterios" spacing="10" alignment="CENTER_LEFT">
+                <children>
+                    <!-- Aquí se añadirán los criterios dinámicamente desde el controlador -->
+                </children>
+            </VBox>
+
+            <!-- Botones -->
+            <HBox spacing="40" alignment="CENTER">
+                <children>
+                    <Button fx:id="btnAceptar" text="Aceptar" onAction="#btnAceptar"/>
+                    <Button fx:id="btnCancelar" text="Cancelar" onAction="#btnCancelar"/>
+                </children>
+            </HBox>
+
+        </children>
+
+        <padding>
+            <Insets top="20" bottom="20" left="30" right="30"/>
+        </padding>
+    </VBox>
+</AnchorPane>

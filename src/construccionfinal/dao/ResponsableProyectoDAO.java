@@ -184,4 +184,34 @@ public class ResponsableProyectoDAO {
             return false;
         }
     }
+
+    public ResponsableProyecto buscarPorId(int id) {
+        ResponsableProyecto responsable = null;
+        String sql = "SELECT idResponsable, nombre, apePaterno, apeMaterno, correo, telefono, puesto, idOrganizacion FROM responsable_proyecto WHERE idResponsable = ?";
+
+        try (Connection con = ConexionBD.abrirConexion();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setInt(1, id);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    responsable = new ResponsableProyecto();
+                    responsable.setIdResponsable(rs.getInt("idResponsable"));
+                    responsable.setNombre(rs.getString("nombre"));
+                    responsable.setApePaterno(rs.getString("apePaterno"));
+                    responsable.setApeMaterno(rs.getString("apeMaterno"));
+                    responsable.setCorreo(rs.getString("correo"));
+                    responsable.setTelefono(rs.getString("telefono"));
+                    responsable.setPuesto(rs.getString("puesto"));
+                    responsable.setIdOrganizacion(rs.getInt("idOrganizacion"));
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return responsable;
+    }
 }
