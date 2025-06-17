@@ -1,7 +1,6 @@
 package construccionfinal.controladores.RegistrarResponsable;
 
 import construccionfinal.dao.ResponsableProyectoDAO;
-import construccionfinal.utilidades.Utilidad;
 import construccionfinal.modelo.pojo.OrganizacionVinculada;
 import construccionfinal.modelo.pojo.ResponsableProyecto;
 import javafx.fxml.FXML;
@@ -77,7 +76,7 @@ public class FXMLConfirmarDatosController {
 
     @FXML
     private void clicModificar() {
-        cerrarVentana(); // El usuario desea regresar a editar
+        cerrarVentana();
     }
 
     private void cerrarVentana() {

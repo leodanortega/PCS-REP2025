@@ -110,7 +110,6 @@ public class FXMLConfirmarDatosController implements Initializable {
             return;
         }
 
-        // Permitir que el usuario seleccione la ruta para guardar la imagen
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Guardar Evaluación como Imagen");
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Archivos PNG", "*.png"));
@@ -121,7 +120,6 @@ public class FXMLConfirmarDatosController implements Initializable {
             return;
         }
 
-        // Generar imagen con la ruta seleccionada por el usuario
         UtilidadImagen.generarImagen(archivoSeleccionado.getAbsolutePath(), estudiante, proyecto, organizacion, responsable, respuestas);
 
         mostrarAlerta("Evaluación guardada y resultados registrados correctamente.");

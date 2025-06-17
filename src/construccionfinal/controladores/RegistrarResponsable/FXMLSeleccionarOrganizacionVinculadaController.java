@@ -102,8 +102,6 @@ public class FXMLSeleccionarOrganizacionVinculadaController {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(rutaFXML));
             Parent root = loader.load();
-
-            // Obtener el controlador y pasarle el objeto
             FXMLConfirmarDatosController controller = loader.getController();
             controller.inicializarDatos(responsableProyecto);
 

@@ -116,8 +116,7 @@ private void clicAsignar(ActionEvent event) {
 
     if (asignado) {
         mostrarAlerta("Estudiante asignado correctamente al proyecto.");
-        // Opcional: actualizar tabla
-        cargarProyectos(); // si tienes ese método
+        cargarProyectos();
     } else {
         mostrarAlerta("No se pudo asignar el estudiante al proyecto.");
     }
@@ -129,7 +128,6 @@ private void mostrarAlerta(String mensaje) {
     alerta.showAndWait();
 }
 
-    
         private void mostrarAlerta(Alert.AlertType tipo, String titulo, String contenido) {
         Alert alerta = new Alert(tipo);
         alerta.setTitle(titulo);

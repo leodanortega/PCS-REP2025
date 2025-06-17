@@ -96,7 +96,6 @@ public class FXMLFormularioProyectoController implements Initializable {
         proyecto.setIdOrganizacion(ov.getIdOrganizacion());
         proyecto.setIdResponsable(responsable.getIdResponsable());
 
-        // ✅ Corrección clave: establecer objetos completos para visualización
         proyecto.setOrganizacionVinculada(ov);
         proyecto.setResponsableProyecto(responsable);
 
@@ -150,4 +149,3 @@ public class FXMLFormularioProyectoController implements Initializable {
         cbResponsables.getSelectionModel().clearSelection();
     }
 }
-
