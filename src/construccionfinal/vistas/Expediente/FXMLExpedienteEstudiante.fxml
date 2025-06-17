@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <top>
+      <Pane prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+   </top>
+   <left>
+      <Pane prefHeight="200.0" prefWidth="50.0" BorderPane.alignment="CENTER" />
+   </left>
+   <bottom>
+      <Pane prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+   </bottom>
+   <right>
+      <Pane prefHeight="200.0" prefWidth="50.0" BorderPane.alignment="CENTER" />
+   </right>
+   <center>
+      <ScrollPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <content>
+            <VBox prefHeight="520.0" prefWidth="1180.0">
+               <children>
+                  <Label text="Documentos Iniciales" />
+                  <TableView fx:id="tvDocumentosIniciales" prefHeight="200.0" prefWidth="200.0">
+                    <columns>
+                      <TableColumn fx:id="tcNombreDI" prefWidth="222.0" text="Nombre" />
+                      <TableColumn fx:id="tcEstadoDI" minWidth="0.0" prefWidth="193.0" text="Estado" />
+                        <TableColumn fx:id="tcTipoDI" minWidth="0.0" prefWidth="272.0" text="Tipo" />
+                        <TableColumn fx:id="tcFechaDI" prefWidth="283.0" text="Fecha" />
+                        <TableColumn fx:id="tcArchivoDI" prefWidth="209.0" text="Archivo" />
+                    </columns>
+                  </TableView>
+                  <Label text="Reportes" />
+                  <TableView fx:id="tvReportes" prefHeight="200.0" prefWidth="200.0">
+                    <columns>
+                      <TableColumn prefWidth="75.0" text="C1" />
+                      <TableColumn prefWidth="75.0" text="C2" />
+                    </columns>
+                  </TableView>
+                  <Label text="Documentos Finales" />
+                  <TableView fx:id="tvDocumentosFinales" prefHeight="200.0" prefWidth="200.0">
+                    <columns>
+                      <TableColumn prefWidth="75.0" text="C1" />
+                      <TableColumn prefWidth="75.0" text="C2" />
+                    </columns>
+                  </TableView>
+               </children>
+            </VBox>
+         </content>
+      </ScrollPane>
+   </center>
+</BorderPane>

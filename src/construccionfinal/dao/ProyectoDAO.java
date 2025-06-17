@@ -1,6 +1,7 @@
 package construccionfinal.dao;
 
 import construccionfinal.conexionbd.ConexionBD;
+import construccionfinal.modelo.pojo.Estudiante;
 import construccionfinal.modelo.pojo.OrganizacionVinculada;
 import construccionfinal.modelo.pojo.Proyecto;
 import construccionfinal.modelo.pojo.ResponsableProyecto;
@@ -245,6 +246,71 @@ public List<Proyecto> listar() {
         e.printStackTrace();
         return false;
     }
+}
+    
+    public static List<Estudiante> listarEstudiantesNoAsignados() {
+    List<Estudiante> lista = new ArrayList<>();
+    Connection conexion = ConexionBD.abrirConexion();
+
+    if (conexion != null) {
+        try {
+            String consulta = "SELECT u.idUsuario, u.nombre, u.apePaterno, u.apeMaterno, u.correo, u.telefono, u.identificador " +
+                              "FROM usuario u " +
+                              "WHERE u.rol = 'estudiante' AND u.idUsuario NOT IN (SELECT idEstudiante FROM proyecto WHERE idEstudiante IS NOT NULL)";
+            PreparedStatement stmt = conexion.prepareStatement(consulta);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                Estudiante estudiante = new Estudiante();
+                estudiante.setIdUsuario(rs.getInt("idUsuario"));
+                estudiante.setNombre(rs.getString("nombre"));
+                estudiante.setApePaterno(rs.getString("apePaterno"));
+                estudiante.setApeMaterno(rs.getString("apeMaterno"));
+                estudiante.setCorreo(rs.getString("correo"));
+                estudiante.setTelefono(rs.getString("telefono"));
+                estudiante.setIdentificador(rs.getString("identificador"));
+                lista.add(estudiante);
+            }
+
+            rs.close();
+            stmt.close();
+            conexion.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    return lista;
+}
+    
+    public List<Proyecto> listarProyectosNoAsignados() {
+    List<Proyecto> lista = new ArrayList<>();
+    Connection conexion = ConexionBD.abrirConexion();
+
+    if (conexion != null) {
+        try {
+            String consulta = "SELECT * FROM proyecto WHERE idEstudiante IS NULL";
+            PreparedStatement stmt = conexion.prepareStatement(consulta);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                Proyecto proyecto = new Proyecto();
+                proyecto.setIdProyecto(rs.getInt("idProyecto"));
+                proyecto.setNombre(rs.getString("nombre"));
+                proyecto.setDescripcion(rs.getString("descripcion"));
+                // ... otros campos
+                lista.add(proyecto);
+            }
+
+            rs.close();
+            stmt.close();
+            conexion.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    return lista;
 }
 
 }

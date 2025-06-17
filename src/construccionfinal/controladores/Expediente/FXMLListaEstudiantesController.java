@@ -1,4 +1,4 @@
-package construccionfinal.controladores.ExpedienteEstudiante;
+package construccionfinal.controladores.Expediente;
 
 import construccionfinal.dao.EstudianteDAO;
 import construccionfinal.modelo.pojo.Estudiante;
