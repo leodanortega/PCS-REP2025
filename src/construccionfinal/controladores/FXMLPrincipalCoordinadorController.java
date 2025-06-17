@@ -23,6 +23,8 @@ public class FXMLPrincipalCoordinadorController {
     private Button btnRegistrarResponsable;
     @FXML
     private Button btnRegistrarProyecto;
+    @FXML
+    private Button btnAsignar;
 
     void setUsuario(Usuario usuarioSesion) {
         this.usuario=usuario;
@@ -78,5 +80,10 @@ public class FXMLPrincipalCoordinadorController {
     @FXML
     private void clicRegistrarProyecto(ActionEvent actionEvent) {
         abrirNuevaVentana("/construccionfinal/vistas/RegistrarProyecto/FXMLFormularioProyecto.fxml", "Registrar Proyecto");
+    }
+
+    @FXML
+    private void clicAsignar(ActionEvent event) {
+        abrirNuevaVentana("/construccionfinal/vistas/AsignarEstudianteProyecto/FXMLAsignarEstudianteProyecto.fxml", "Asignar Estudiante a Proyecto");
     }
 }

@@ -1,21 +1,13 @@
-
 package construccionfinal.controladores.RegistrarProyecto;
 
 import construccionfinal.modelo.pojo.Proyecto;
-import java.net.URL;
-import java.util.ResourceBundle;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-public class FXMLConfirmarDatosProyectoController{
-    
-    private boolean confirmado = false;
+public class FXMLConfirmarDatosProyectoController {
 
     @FXML
     private Label lbOrganizacionVinculada;
@@ -32,23 +24,35 @@ public class FXMLConfirmarDatosProyectoController{
     @FXML
     private Label lbEspacios;
 
-     private Proyecto proyecto;
-     
-     public void setProyecto(Proyecto proy){
-         this.proyecto = proy;
-         lbOrganizacionVinculada.setText(proy.getOrganizacionVinculada().getNombre());
-         lbResponsableProyecto.setText(proy.getResponsableProyecto().getNombre() + " " + proy.getResponsableProyecto().getApePaterno() + " " + proy.getResponsableProyecto().getApeMaterno());
-         lbNombre.setText(proy.getNombre());
-         lbDepartamento.setText(proy.getDepartamento());
-         lbDescripcion.setText(proy.getDescripcion());
-         lbMetodologia.setText(proy.getMetodologia());
-         lbEspacios.setText(proy.getEspacios());
-     }
+    private boolean confirmado = false;
+    private Proyecto proyecto;
 
-     public boolean isConfirmado() {
+    public void setProyecto(Proyecto proyecto) {
+        this.proyecto = proyecto;
+
+        Platform.runLater(() -> {
+            if (proyecto != null && lbNombre != null) {
+                lbOrganizacionVinculada.setText(proyecto.getOrganizacionVinculada().getNombre());
+                lbResponsableProyecto.setText(
+                    proyecto.getResponsableProyecto().getNombre() + " " +
+                    proyecto.getResponsableProyecto().getApePaterno() + " " +
+                    proyecto.getResponsableProyecto().getApeMaterno()
+                );
+                lbNombre.setText(proyecto.getNombre());
+                lbDepartamento.setText(proyecto.getDepartamento());
+                lbDescripcion.setText(proyecto.getDescripcion());
+                lbMetodologia.setText(proyecto.getMetodologia());
+                lbEspacios.setText(proyecto.getEspacios());
+            } else {
+                System.err.println("Error: Proyecto o etiquetas no disponibles para asignar datos.");
+            }
+        });
+    }
+
+    public boolean isConfirmado() {
         return confirmado;
     }
-     
+
     @FXML
     private void clicCancelar(ActionEvent event) {
         confirmado = false;
@@ -60,9 +64,13 @@ public class FXMLConfirmarDatosProyectoController{
         confirmado = true;
         cerrarVentana();
     }
-    
+
     private void cerrarVentana() {
         Stage stage = (Stage) lbNombre.getScene().getWindow();
-        stage.close();
+        if (stage != null) {
+            stage.close();
+        } else {
+            System.err.println("Error: no se pudo cerrar la ventana, Stage es null.");
+        }
     }
 }

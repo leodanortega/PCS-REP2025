@@ -84,7 +84,6 @@ private void clicGuardar(ActionEvent event) {
         return;
     }
 
-    try {
         // Crear el objeto proyecto con los datos del formulario
         Proyecto proyecto = new Proyecto();
         proyecto.setNombre(tfNombre.getText());
@@ -98,7 +97,8 @@ private void clicGuardar(ActionEvent event) {
 
         proyecto.setIdOrganizacion(ov.getIdOrganizacion());
         proyecto.setIdResponsable(responsable.getIdResponsable());
-
+        
+        try{
         // Cargar ventana de confirmación
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/construccionfinal/vistas/RegistrarProyecto/FXMLConfirmarDatosProyecto.fxml"));
         Parent root = loader.load();
@@ -127,9 +127,6 @@ private void clicGuardar(ActionEvent event) {
     } catch (IOException e) {
         e.printStackTrace();
         mostrarAlerta(Alert.AlertType.ERROR, "Error de carga", "No se pudo cargar la ventana de confirmación.");
-    } catch (Exception e) {
-        e.printStackTrace();
-        mostrarAlerta(Alert.AlertType.ERROR, "Excepción", "Ocurrió un error inesperado:\n" + e.getMessage());
     }
 }
 

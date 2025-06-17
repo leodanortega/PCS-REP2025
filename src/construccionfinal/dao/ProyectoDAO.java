@@ -1,7 +1,9 @@
 package construccionfinal.dao;
 
 import construccionfinal.conexionbd.ConexionBD;
+import construccionfinal.modelo.pojo.OrganizacionVinculada;
 import construccionfinal.modelo.pojo.Proyecto;
+import construccionfinal.modelo.pojo.ResponsableProyecto;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -27,6 +29,7 @@ public class ProyectoDAO {
                 p.setDepartamento(rs.getString("departamento"));
                 p.setIdResponsable(rs.getInt("idResponsable"));
                 p.setIdOrganizacion(rs.getInt("idOrganizacion"));
+                p.setIdEstudiante(rs.getInt("idEstudiante"));
                 lista.add(p);
             }
 
@@ -168,4 +171,69 @@ public class ProyectoDAO {
 
         return proyecto;
     }
+    public static List<Proyecto> obtenerTodos() {
+    List<Proyecto> lista = new ArrayList<>();
+    String sql = "SELECT p.*, " +
+                 "rp.nombre AS nombreResponsable, rp.apePaterno AS apePaternoResponsable, rp.apeMaterno AS apeMaternoResponsable, " +
+                 "o.nombre AS nombreOrganizacion " +
+                 "FROM proyecto p " +
+                 "INNER JOIN responsableproyecto rp ON p.idResponsable = rp.idResponsable " +
+                 "INNER JOIN organizacion o ON p.idOrganizacion = o.idOrganizacion";
+
+    try (Connection con = ConexionBD.abrirConexion();
+         PreparedStatement ps = con.prepareStatement(sql);
+         ResultSet rs = ps.executeQuery()) {
+
+        while (rs.next()) {
+            Proyecto p = new Proyecto();
+            p.setIdProyecto(rs.getInt("idProyecto"));
+            p.setNombre(rs.getString("nombre"));
+            p.setDescripcion(rs.getString("descripcion"));
+            p.setMetodologia(rs.getString("metodologia"));
+            p.setEspacios(rs.getString("espacios"));
+            p.setDepartamento(rs.getString("departamento"));
+            p.setIdResponsable(rs.getInt("idResponsable"));
+            p.setIdOrganizacion(rs.getInt("idOrganizacion"));
+
+            // Construir objeto ResponsableProyecto
+            ResponsableProyecto responsable = new ResponsableProyecto();
+            responsable.setIdResponsable(rs.getInt("idResponsable"));
+            responsable.setNombre(rs.getString("nombreResponsable"));
+            responsable.setApePaterno(rs.getString("apePaternoResponsable"));
+            responsable.setApeMaterno(rs.getString("apeMaternoResponsable"));
+            p.setResponsableProyecto(responsable);
+
+            // Construir objeto Organizacion
+            OrganizacionVinculada organizacion = new OrganizacionVinculada();
+            organizacion.setIdOrganizacion(rs.getInt("idOrganizacion"));
+            organizacion.setNombre(rs.getString("nombreOrganizacion"));
+            p.setOrganizacionVinculada(organizacion);
+
+            lista.add(p);
+        }
+
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+
+    return lista;
+}
+
+    public boolean asignarEstudianteAProyecto(int idProyecto, int idEstudiante) {
+    String sql = "UPDATE proyecto SET idEstudiante = ? WHERE idProyecto = ? AND (idEstudiante IS NULL OR idEstudiante = 0)";
+
+    try (Connection con = ConexionBD.abrirConexion();
+         PreparedStatement ps = con.prepareStatement(sql)) {
+
+        ps.setInt(1, idEstudiante);
+        ps.setInt(2, idProyecto);
+
+        return ps.executeUpdate() > 0;
+
+    } catch (SQLException e) {
+        e.printStackTrace();
+        return false;
+    }
+}
+
 }

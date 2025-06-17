@@ -19,11 +19,13 @@ public class Proyecto {
     private String descripcion;
     private String metodologia;
     private String espacios;
+    
+    private int idEstudiante;
 
     public Proyecto() {
     }
 
-    public Proyecto(int idOrganizacion, int idResponsable, int idProyecto, String nombre, String departamento, String descripcion, String metodologia, String espacios) {
+    public Proyecto(int idOrganizacion, int idResponsable, int idProyecto, String nombre, String departamento, String descripcion, String metodologia, String espacios, int idEstudiante) {
         this.idOrganizacion = idOrganizacion;
         this.idResponsable = idResponsable;
         this.idProyecto = idProyecto;
@@ -32,6 +34,7 @@ public class Proyecto {
         this.descripcion = descripcion;
         this.metodologia = metodologia;
         this.espacios = espacios;
+        this.idEstudiante = idEstudiante;
     }
 
     public int getIdOrganizacion() {
@@ -113,6 +116,14 @@ public class Proyecto {
     public void setEspacios(String espacios) {
         this.espacios = espacios;
     }
+    
+    public int getIdEstudiante() {
+    return idEstudiante;
+}
+
+public void setIdEstudiante(int idEstudiante) {
+    this.idEstudiante = idEstudiante;
+}
 
     @Override
     public String toString() {

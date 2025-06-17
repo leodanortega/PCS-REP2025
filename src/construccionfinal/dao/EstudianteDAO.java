@@ -7,6 +7,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class EstudianteDAO {
 
@@ -38,5 +40,32 @@ public class EstudianteDAO {
 
         return estudiante;
     }
+    
+    public static List<Estudiante> obtenerTodos() {
+    List<Estudiante> estudiantes = new ArrayList<>();
+    String sql = "SELECT * FROM usuario WHERE rol = 'estudiante'";
+
+    try (Connection con = ConexionBD.abrirConexion();
+         PreparedStatement ps = con.prepareStatement(sql);
+         ResultSet rs = ps.executeQuery()) {
+
+        while (rs.next()) {
+            Estudiante estudiante = new Estudiante();
+            estudiante.setIdUsuario(rs.getInt("idUsuario"));
+            estudiante.setNombre(rs.getString("nombre"));
+            estudiante.setApePaterno(rs.getString("apePaterno"));
+            estudiante.setApeMaterno(rs.getString("apeMaterno"));
+            estudiante.setCorreo(rs.getString("correo"));
+            estudiante.setTelefono(rs.getString("telefono"));
+            estudiante.setIdentificador(rs.getString("identificador"));
+            estudiantes.add(estudiante);
+        }
+
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+
+    return estudiantes;
+}
 
 }

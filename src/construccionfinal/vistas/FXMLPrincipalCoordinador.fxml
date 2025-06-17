@@ -30,6 +30,7 @@
                 <Button fx:id="btnRegistrarOrganizacion" onAction="#btnRegistrarOrganizacion" style="-fx-background-color: #3498db; -fx-text-fill: white; -fx-background-radius: 8; -fx-font-weight: bold; -fx-font-size: 14px; -fx-padding: 8 16;" text="Registrar Organización Vinculada" />
                 <Button fx:id="btnRegistrarResponsable" onAction="#btnRegistrarResponsable" style="-fx-background-color: #3498db; -fx-text-fill: white; -fx-background-radius: 8; -fx-font-weight: bold; -fx-font-size: 14px; -fx-padding: 8 16;" text="Registrar Responsable Organización" />
             <Button fx:id="btnRegistrarProyecto" layoutX="35.0" layoutY="163.0" onAction="#clicRegistrarProyecto" style="-fx-background-color: #3498db; -fx-text-fill: white; -fx-background-radius: 8; -fx-font-weight: bold; -fx-font-size: 14px; -fx-padding: 8 16;" text="Registrar Proyecto" />
+            <Button fx:id="btnAsignar" layoutX="35.0" layoutY="214.0" onAction="#clicAsignar" style="-fx-background-color: #3498db; -fx-text-fill: white; -fx-background-radius: 8; -fx-font-weight: bold; -fx-font-size: 14px; -fx-padding: 8 16;" text="Asignar" />
             </children>
         </VBox>
     </left>
