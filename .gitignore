@@ -37,3 +37,5 @@
 /build/
 /.idea/
 /out/
+nbproject/project.properties
+*.properties
