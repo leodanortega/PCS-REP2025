@@ -29,14 +29,13 @@ public List<Proyecto> listar() {
             p.setDepartamento(rs.getString("departamento"));
             p.setIdResponsable(rs.getInt("idResponsable"));
             p.setIdOrganizacion(rs.getInt("idOrganizacion"));
-            p.setIdEstudiante(rs.getInt("idEstudiante")); // Si usas esto
 
-            // 🔹 Cargar objeto ResponsableProyecto
+            // Cargar objeto ResponsableProyecto
             ResponsableProyecto responsable;
             responsable = ResponsableProyectoDAO.buscarPorId(p.getIdResponsable());
             p.setResponsableProyecto(responsable);
 
-            // 🔹 Cargar objeto OrganizacionVinculada
+            // Cargar objeto OrganizacionVinculada
             OrganizacionVinculada organizacion;
             organizacion = OrganizacionVinculadaDAO.buscarPorId(p.getIdOrganizacion());
             p.setOrganizacionVinculada(organizacion);

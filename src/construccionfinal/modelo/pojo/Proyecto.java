@@ -116,15 +116,15 @@ public class Proyecto {
     public void setEspacios(String espacios) {
         this.espacios = espacios;
     }
-    
+
     public int getIdEstudiante() {
-    return idEstudiante;
-}
+        return idEstudiante;
+    }
 
-public void setIdEstudiante(int idEstudiante) {
-    this.idEstudiante = idEstudiante;
-}
-
+    public void setIdEstudiante(int idEstudiante) {
+        this.idEstudiante = idEstudiante;
+    }
+    
     @Override
     public String toString() {
         return nombre;
