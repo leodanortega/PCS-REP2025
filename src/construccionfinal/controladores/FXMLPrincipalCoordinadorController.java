@@ -8,6 +8,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
@@ -16,6 +17,12 @@ public class FXMLPrincipalCoordinadorController {
     @FXML
     private Label lblNombreUsuario;
     private Usuario usuario;
+    @FXML
+    private Button btnRegistrarOrganizacion;
+    @FXML
+    private Button btnRegistrarResponsable;
+    @FXML
+    private Button btnRegistrarProyecto;
 
     void setUsuario(Usuario usuarioSesion) {
         this.usuario=usuario;
@@ -63,7 +70,13 @@ public class FXMLPrincipalCoordinadorController {
         }
     }
 
+    @FXML
     public void btnRegistrarResponsable(ActionEvent actionEvent) {
         abrirNuevaVentana("/construccionfinal/vistas/RegistrarResponsable/FXMLRegistrarResponsable.fxml", "Registrar Responsable de proyecto");
+    }
+
+    @FXML
+    private void clicRegistrarProyecto(ActionEvent actionEvent) {
+        abrirNuevaVentana("/construccionfinal/vistas/RegistrarProyecto/FXMLFormularioProyecto.fxml", "Registrar Proyecto");
     }
 }
