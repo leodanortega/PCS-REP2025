@@ -185,7 +185,7 @@ public class ResponsableProyectoDAO {
         }
     }
 
-    public ResponsableProyecto buscarPorId(int id) {
+    public static ResponsableProyecto buscarPorId(int id) {
         ResponsableProyecto responsable = null;
         String sql = "SELECT idResponsable, nombre, apePaterno, apeMaterno, correo, telefono, puesto, idOrganizacion FROM responsable_proyecto WHERE idResponsable = ?";
 

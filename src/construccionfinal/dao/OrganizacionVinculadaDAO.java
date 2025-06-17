@@ -149,7 +149,7 @@ public class OrganizacionVinculadaDAO {
         }
     }
 
-    public OrganizacionVinculada buscarPorId(int id) {
+    public static OrganizacionVinculada buscarPorId(int id) {
         OrganizacionVinculada org = null;
         String sql = "SELECT * FROM organizacion_vinculada WHERE idOrganizacion = ?";
 

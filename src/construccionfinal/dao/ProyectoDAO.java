@@ -11,34 +11,46 @@ import java.util.List;
 
 public class ProyectoDAO {
 
-    public List<Proyecto> listar() {
-        List<Proyecto> lista = new ArrayList<>();
-        String sql = "SELECT * FROM proyecto";
+public List<Proyecto> listar() {
+    List<Proyecto> lista = new ArrayList<>();
+    String sql = "SELECT * FROM proyecto";
 
-        try (Connection con = ConexionBD.abrirConexion();
-             PreparedStatement ps = con.prepareStatement(sql);
-             ResultSet rs = ps.executeQuery()) {
+    try (Connection con = ConexionBD.abrirConexion();
+         PreparedStatement ps = con.prepareStatement(sql);
+         ResultSet rs = ps.executeQuery()) {
 
-            while (rs.next()) {
-                Proyecto p = new Proyecto();
-                p.setIdProyecto(rs.getInt("idProyecto"));
-                p.setNombre(rs.getString("nombre"));
-                p.setDescripcion(rs.getString("descripcion"));
-                p.setMetodologia(rs.getString("metodologia"));
-                p.setEspacios(rs.getString("espacios"));
-                p.setDepartamento(rs.getString("departamento"));
-                p.setIdResponsable(rs.getInt("idResponsable"));
-                p.setIdOrganizacion(rs.getInt("idOrganizacion"));
-                p.setIdEstudiante(rs.getInt("idEstudiante"));
-                lista.add(p);
-            }
+        while (rs.next()) {
+            Proyecto p = new Proyecto();
+            p.setIdProyecto(rs.getInt("idProyecto"));
+            p.setNombre(rs.getString("nombre"));
+            p.setDescripcion(rs.getString("descripcion"));
+            p.setMetodologia(rs.getString("metodologia"));
+            p.setEspacios(rs.getString("espacios"));
+            p.setDepartamento(rs.getString("departamento"));
+            p.setIdResponsable(rs.getInt("idResponsable"));
+            p.setIdOrganizacion(rs.getInt("idOrganizacion"));
+            p.setIdEstudiante(rs.getInt("idEstudiante")); // Si usas esto
 
-        } catch (SQLException e) {
-            e.printStackTrace();
+            // 🔹 Cargar objeto ResponsableProyecto
+            ResponsableProyecto responsable;
+            responsable = ResponsableProyectoDAO.buscarPorId(p.getIdResponsable());
+            p.setResponsableProyecto(responsable);
+
+            // 🔹 Cargar objeto OrganizacionVinculada
+            OrganizacionVinculada organizacion;
+            organizacion = OrganizacionVinculadaDAO.buscarPorId(p.getIdOrganizacion());
+            p.setOrganizacionVinculada(organizacion);
+
+            lista.add(p);
         }
 
-        return lista;
+    } catch (SQLException e) {
+        e.printStackTrace();
     }
+
+    return lista;
+}
+
 
     public boolean agregar(Proyecto p) {
         String sql = "INSERT INTO proyecto(nombre, descripcion, metodologia, espacios, departamento, idResponsable, idOrganizacion) " +

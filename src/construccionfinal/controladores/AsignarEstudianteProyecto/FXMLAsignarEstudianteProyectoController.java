@@ -61,7 +61,8 @@ public class FXMLAsignarEstudianteProyectoController implements Initializable {
     }
 
     private void cargarProyectos() {
-        ObservableList<Proyecto> listaProyectos = FXCollections.observableArrayList(ProyectoDAO.obtenerTodos());
+        ProyectoDAO dao = new ProyectoDAO();
+        ObservableList<Proyecto> listaProyectos = FXCollections.observableArrayList(dao.listar());
 
         tcProyecto.setCellValueFactory(new PropertyValueFactory<>("nombre"));
 
