@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="construccionfinal.controladores.ExpedienteEstudiante.FXMLListaEstudiantesController">
+   <top>
+      <Pane prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label layoutX="50.0" layoutY="40.0" text="Estudiantes" />
+         </children>
+      </Pane>
+   </top>
+   <left>
+      <Pane prefHeight="200.0" prefWidth="50.0" BorderPane.alignment="CENTER" />
+   </left>
+   <right>
+      <Pane prefHeight="200.0" prefWidth="50.0" BorderPane.alignment="CENTER" />
+   </right>
+   <bottom>
+      <Pane prefHeight="50.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+   </bottom>
+   <center>
+      <ScrollPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <content>
+            <TableView fx:id="tvEstudiantes" prefHeight="570.0" prefWidth="1180.0">
+              <columns>
+                <TableColumn fx:id="tcMatricula" prefWidth="140.0" text="Matricula" />
+                <TableColumn fx:id="tcNombre" prefWidth="285.0" text="Nombre" />
+                  <TableColumn fx:id="tcCarrera" prefWidth="229.0" text="Carrera" />
+                  <TableColumn fx:id="tcCreditos" minWidth="0.0" prefWidth="66.0" text="Creditos" />
+                  <TableColumn fx:id="tcSemestre" prefWidth="191.0" text="Semestre" />
+                  <TableColumn fx:id="tcEstado" prefWidth="146.0" text="Estado" />
+                  <TableColumn fx:id="tcCalificacion" prefWidth="122.0" text="Calificacion" />
+              </columns>
+            </TableView>
+         </content>
+      </ScrollPane>
+   </center>
+</BorderPane>

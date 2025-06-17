@@ -15,6 +15,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
@@ -24,6 +25,10 @@ public class FXMLPrincipalProfesorController implements Initializable {
     private Label lblNombreUsuario;
 
     private Usuario usuario;
+    @FXML
+    private Button btnEvaluarEstudiante;
+    @FXML
+    private Button btnEstudiantes;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -35,6 +40,7 @@ public class FXMLPrincipalProfesorController implements Initializable {
         lblNombreUsuario.setText(usuario.getNombre()); // Mostrar nombre del estudiante
     }
 
+    @FXML
     public void btnEvaluarEstudiante(ActionEvent actionEvent) {
         abrirNuevaVentana("/construccionfinal/vistas/EvaluarEstudiante/FXMLEstudiantesPorEvaluar.fxml", "Estudiantes por evaluar");
     }
@@ -69,5 +75,10 @@ public class FXMLPrincipalProfesorController implements Initializable {
             e.printStackTrace();
             System.err.println("No se pudo abrir la ventana: " + rutaFXML);
         }
+    }
+
+    @FXML
+    private void clicEstudiantes(ActionEvent event) {
+        abrirNuevaVentana("/construccionfinal/vistas/ExpedienteEstudiante/FXMLListaEstudiantes.fxml", "Estudiantes");
     }
 }

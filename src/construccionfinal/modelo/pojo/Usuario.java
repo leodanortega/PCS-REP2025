@@ -1,6 +1,5 @@
 package construccionfinal.modelo.pojo;
 
-
 public class Usuario {
     private int idUsuario;
     private String nombre;
@@ -99,6 +98,10 @@ public class Usuario {
 
     public void setContrasenia(String contrasenia) {
         this.contrasenia = contrasenia;
+    }
+    
+    public String getNombreCompleto() {
+        return String.format("%s %s %s", getNombre(), getApePaterno(), getApeMaterno()).trim();
     }
     
     @Override

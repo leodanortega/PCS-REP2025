@@ -74,9 +74,44 @@ public class EstudianteDAO {
     return estudiantes;
 }
 
-    /**
-     * Obtiene todos los estudiantes de la base de datos.
-     */
+    public static ObservableList<Estudiante> listarDatosAcademicos() {
+    ObservableList<Estudiante> lista = FXCollections.observableArrayList();
+
+    String sql = "SELECT u.idUsuario, u.nombre, u.apePaterno, u.apeMaterno, u.identificador, " +
+            "e.carrera, e.creditos, e.semestre, e.estado, e.calificacion " +
+            "FROM usuario u " +
+            "INNER JOIN estudiante e ON u.idUsuario = e.idUsuario " +
+            "WHERE u.rol = 'estudiante'";
+
+    try (Connection con = ConexionBD.abrirConexion();
+         PreparedStatement ps = con.prepareStatement(sql);
+         ResultSet rs = ps.executeQuery()) {
+
+        while (rs.next()) {
+            Estudiante estudiante = new Estudiante();
+            estudiante.setIdUsuario(rs.getInt("idUsuario"));
+            estudiante.setNombre(rs.getString("nombre"));
+            estudiante.setApePaterno(rs.getString("apePaterno"));
+            estudiante.setApeMaterno(rs.getString("apeMaterno"));
+            estudiante.setIdentificador(rs.getString("identificador"));
+
+            estudiante.setCarrera(rs.getString("carrera"));
+            estudiante.setCreditos(rs.getInt("creditos"));
+            estudiante.setSemestre(rs.getInt("semestre"));
+            estudiante.setEstado(rs.getString("estado"));
+            estudiante.setCalificacion(rs.getBigDecimal("calificacion"));
+
+            lista.add(estudiante);
+        }
+
+    } catch (SQLException e) {
+        System.err.println("Error al listar datos académicos de estudiantes: " + e.getMessage());
+    }
+
+    return lista;
+}
+
+    
     public static ObservableList<Estudiante> listar() {
         ObservableList<Estudiante> lista = FXCollections.observableArrayList();
         String sql = "SELECT idUsuario, nombre, apePaterno, apeMaterno, identificador, correo, telefono " +

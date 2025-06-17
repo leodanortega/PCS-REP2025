@@ -31,13 +31,13 @@
             <Label text="Descripcion" GridPane.rowIndex="4" />
             <Label text="Metodologia" GridPane.columnIndex="1" GridPane.rowIndex="4" />
             <Label text="Espacios" GridPane.halignment="RIGHT" GridPane.rowIndex="6" GridPane.valignment="CENTER" />
-            <Label fx:id="lbNombre" GridPane.rowIndex="3" />
-            <Label fx:id="lbDepartamento" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-            <Label fx:id="lbDescripcion" GridPane.rowIndex="5" />
-            <Label fx:id="lbMetodologia" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-            <Label fx:id="lbEspacios" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-            <Label fx:id="lbOrganizacionVinculada" GridPane.rowIndex="1" />
-            <Label fx:id="lbResponsableProyecto" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <Label fx:id="lbNombre" alignment="TOP_CENTER" contentDisplay="CENTER" prefHeight="21.0" prefWidth="246.0" GridPane.rowIndex="3" GridPane.valignment="TOP" />
+            <Label fx:id="lbDepartamento" prefHeight="21.0" prefWidth="252.0" GridPane.columnIndex="1" GridPane.rowIndex="3" GridPane.valignment="TOP" />
+            <Label fx:id="lbDescripcion" prefHeight="21.0" prefWidth="250.0" GridPane.rowIndex="5" />
+            <Label fx:id="lbMetodologia" prefHeight="21.0" prefWidth="248.0" GridPane.columnIndex="1" GridPane.rowIndex="5" GridPane.valignment="TOP" />
+            <Label fx:id="lbEspacios" prefHeight="21.0" prefWidth="50.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+            <Label fx:id="lbOrganizacionVinculada" prefHeight="21.0" prefWidth="246.0" GridPane.rowIndex="1" />
+            <Label fx:id="lbResponsableProyecto" prefHeight="21.0" prefWidth="248.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
          </children>
          <BorderPane.margin>
             <Insets />

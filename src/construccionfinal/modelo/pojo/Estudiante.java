@@ -8,6 +8,7 @@ public class Estudiante extends Usuario {
     private int creditos;
     private String estado;
     private int semestre;
+    private String carrera;
 
     public Estudiante() {
         super();
@@ -15,12 +16,13 @@ public class Estudiante extends Usuario {
 
     public Estudiante(int idUsuario, String nombre, String apePaterno, String apeMaterno, String correo,
                       String telefono, String rol, String identificador, String contrasenia,
-                      BigDecimal calificacion, int creditos, String estado, int semestre) {
+                      BigDecimal calificacion, int creditos, String estado, int semestre, String carrera) {
         super(idUsuario, nombre, apePaterno, apeMaterno, correo, telefono, rol, identificador, contrasenia);
         this.calificacion = calificacion;
         this.creditos = creditos;
         this.estado = estado;
         this.semestre = semestre;
+        this.carrera = carrera;
     }
 
     public BigDecimal getCalificacion() {
@@ -55,6 +57,14 @@ public class Estudiante extends Usuario {
         this.semestre = semestre;
     }
 
+    public String getCarrera() {
+        return carrera;
+    }
+
+    public void setCarrera(String carrera) {
+        this.carrera = carrera;
+    }
+    
     @Override
     public String toString() {
         return super.toString() + " - Semestre: " + semestre;

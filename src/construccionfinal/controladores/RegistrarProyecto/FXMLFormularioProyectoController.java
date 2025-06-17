@@ -7,22 +7,20 @@ import construccionfinal.modelo.pojo.OrganizacionVinculada;
 import construccionfinal.modelo.pojo.Proyecto;
 import construccionfinal.modelo.pojo.ResponsableProyecto;
 import construccionfinal.utilidades.Utilidad;
-import java.io.IOException;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
+
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
-import javafx.collections.FXCollections;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
+import javafx.scene.control.*;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -69,20 +67,20 @@ public class FXMLFormularioProyectoController implements Initializable {
     }
 
     @FXML
-private void clicGuardar(ActionEvent event) {
-    if (tfNombre.getText().isEmpty() || taDescripcion.getText().isEmpty() ||
-        tfMetodologia.getText().isEmpty() || tfEspacios.getText().isEmpty() ||
-        tfDepartamento.getText().isEmpty() || cbOrganizaciones.getValue() == null ||
-        cbResponsables.getValue() == null) {
+    private void clicGuardar(ActionEvent event) {
+        if (tfNombre.getText().isEmpty() || taDescripcion.getText().isEmpty() ||
+            tfMetodologia.getText().isEmpty() || tfEspacios.getText().isEmpty() ||
+            tfDepartamento.getText().isEmpty() || cbOrganizaciones.getValue() == null ||
+            cbResponsables.getValue() == null) {
 
-        mostrarAlerta(Alert.AlertType.WARNING, "Campos vacíos", "Por favor completa todos los campos requeridos.");
-        return;
-    }
+            mostrarAlerta(Alert.AlertType.WARNING, "Campos vacíos", "Por favor completa todos los campos requeridos.");
+            return;
+        }
 
-    if (!ProyectoDAO.hayConexion()) {
-        mostrarAlerta(Alert.AlertType.ERROR, "Sin conexión", "No hay conexión con la base de datos.");
-        return;
-    }
+        if (!ProyectoDAO.hayConexion()) {
+            mostrarAlerta(Alert.AlertType.ERROR, "Sin conexión", "No hay conexión con la base de datos.");
+            return;
+        }
 
         // Crear el objeto proyecto con los datos del formulario
         Proyecto proyecto = new Proyecto();
@@ -97,40 +95,43 @@ private void clicGuardar(ActionEvent event) {
 
         proyecto.setIdOrganizacion(ov.getIdOrganizacion());
         proyecto.setIdResponsable(responsable.getIdResponsable());
-        
-        try{
-        // Cargar ventana de confirmación
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/construccionfinal/vistas/RegistrarProyecto/FXMLConfirmarDatosProyecto.fxml"));
-        Parent root = loader.load();
 
-        FXMLConfirmarDatosProyectoController controller = loader.getController();
-        controller.setProyecto(proyecto);
+        // ✅ Corrección clave: establecer objetos completos para visualización
+        proyecto.setOrganizacionVinculada(ov);
+        proyecto.setResponsableProyecto(responsable);
 
-        Stage stage = new Stage();
-        stage.setTitle("Confirmar Proyecto");
-        stage.setScene(new Scene(root));
-        stage.initModality(Modality.APPLICATION_MODAL);
-        stage.showAndWait();
+        try {
+            // Cargar ventana de confirmación
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/construccionfinal/vistas/RegistrarProyecto/FXMLConfirmarDatosProyecto.fxml"));
+            Parent root = loader.load();
 
-        if (controller.isConfirmado()) {
-            ProyectoDAO dao = new ProyectoDAO();
-            boolean exito = dao.agregar(proyecto);
+            FXMLConfirmarDatosProyectoController controller = loader.getController();
+            controller.setProyecto(proyecto);
 
-            if (exito) {
-                mostrarAlerta(Alert.AlertType.INFORMATION, "Registro exitoso", "El proyecto fue registrado exitosamente.");
-                limpiarCampos();
-            } else {
-                mostrarAlerta(Alert.AlertType.ERROR, "Error", "No se pudo registrar el proyecto.");
+            Stage stage = new Stage();
+            stage.setTitle("Confirmar Proyecto");
+            stage.setScene(new Scene(root));
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.showAndWait();
+
+            if (controller.isConfirmado()) {
+                ProyectoDAO dao = new ProyectoDAO();
+                boolean exito = dao.agregar(proyecto);
+
+                if (exito) {
+                    mostrarAlerta(Alert.AlertType.INFORMATION, "Registro exitoso", "El proyecto fue registrado exitosamente.");
+                    limpiarCampos();
+                } else {
+                    mostrarAlerta(Alert.AlertType.ERROR, "Error", "No se pudo registrar el proyecto.");
+                }
             }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            mostrarAlerta(Alert.AlertType.ERROR, "Error de carga", "No se pudo cargar la ventana de confirmación.");
         }
-
-    } catch (IOException e) {
-        e.printStackTrace();
-        mostrarAlerta(Alert.AlertType.ERROR, "Error de carga", "No se pudo cargar la ventana de confirmación.");
     }
-}
 
-    
     private void mostrarAlerta(Alert.AlertType tipo, String titulo, String contenido) {
         Alert alerta = new Alert(tipo);
         alerta.setTitle(titulo);
@@ -138,7 +139,7 @@ private void clicGuardar(ActionEvent event) {
         alerta.setContentText(contenido);
         alerta.showAndWait();
     }
-    
+
     private void limpiarCampos() {
         tfNombre.clear();
         taDescripcion.clear();
