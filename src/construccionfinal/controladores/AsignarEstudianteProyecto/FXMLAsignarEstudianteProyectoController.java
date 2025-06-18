@@ -140,7 +140,6 @@ public class FXMLAsignarEstudianteProyectoController implements Initializable {
     private int crearExpediente(Estudiante estudiante) {
         ExpedienteDAO daoExpediente = new ExpedienteDAO();
 
-        // Datos fijos según la tabla proporcionada
         int idGrupoEE = 12345;
         int idPeriodo = 1;
         String calificaciones = "1";
