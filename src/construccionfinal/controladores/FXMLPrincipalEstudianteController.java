@@ -147,7 +147,7 @@ public class FXMLPrincipalEstudianteController implements Initializable {
     }
 }
     
-    @FXML
+    /*@FXML
     private void clicExpediente(ActionEvent event) {
         EstudianteDAO estudianteDAO = new EstudianteDAO();
         Estudiante estudiante = estudianteDAO.buscarPorId(usuario.getIdUsuario());
@@ -156,7 +156,7 @@ public class FXMLPrincipalEstudianteController implements Initializable {
         abrirNuevaVentanaConEstudiante(estudiante);
         } else {
             Utilidad.mostrarAlertaSimple(Alert.AlertType.ERROR, "Error", "No se encontro al estudiante");
-        }
+        }*/
 
     @FXML
     private void clicExpediente(ActionEvent event) {
