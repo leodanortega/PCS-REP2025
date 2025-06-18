@@ -10,7 +10,7 @@ import java.util.List;
 public class DocumentoInicialDAO {
 
     public boolean agregar(DocumentoInicial doc) {
-        String sql = "INSERT INTO documentoinicial (nombre, estado, tipoDocumento, fecha, archivo) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO documento_inicial (nombre, estado, tipoDocumento, fecha, archivo) VALUES (?, ?, ?, ?, ?)";
 
         try (Connection con = ConexionBD.abrirConexion();
              PreparedStatement ps = con.prepareStatement(sql)) {
@@ -30,7 +30,7 @@ public class DocumentoInicialDAO {
     }
 
     public boolean modificar(DocumentoInicial doc) {
-        String sql = "UPDATE documentoinicial SET nombre = ?, estado = ?, tipoDocumento = ?, fecha = ?, archivo = ? WHERE idDocumentoInicial = ?";
+        String sql = "UPDATE documento_inicial SET nombre = ?, estado = ?, tipoDocumento = ?, fecha = ?, archivo = ? WHERE idDocumentoInicial = ?";
 
         try (Connection con = ConexionBD.abrirConexion();
              PreparedStatement ps = con.prepareStatement(sql)) {
@@ -51,7 +51,7 @@ public class DocumentoInicialDAO {
     }
 
     public boolean eliminar(int id) {
-        String sql = "DELETE FROM documentoinicial WHERE idDocumentoInicial = ?";
+        String sql = "DELETE FROM documento_inicial WHERE idDocumentoInicial = ?";
 
         try (Connection con = ConexionBD.abrirConexion();
              PreparedStatement ps = con.prepareStatement(sql)) {
@@ -66,7 +66,7 @@ public class DocumentoInicialDAO {
     }
 
     public DocumentoInicial buscarPorId(int id) {
-        String sql = "SELECT * FROM documentoinicial WHERE idDocumentoInicial = ?";
+        String sql = "SELECT * FROM documento_inicial WHERE idDocumentoInicial = ?";
         DocumentoInicial doc = null;
 
         try (Connection con = ConexionBD.abrirConexion();
@@ -95,7 +95,7 @@ public class DocumentoInicialDAO {
 
     public List<DocumentoInicial> listarTodos() {
         List<DocumentoInicial> lista = new ArrayList<>();
-        String sql = "SELECT * FROM documentoinicial";
+        String sql = "SELECT * FROM documento_inicial";
 
         try (Connection con = ConexionBD.abrirConexion();
              PreparedStatement ps = con.prepareStatement(sql);
