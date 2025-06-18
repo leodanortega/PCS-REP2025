@@ -134,7 +134,6 @@ public class FXMLPrincipalEstudianteController implements Initializable {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/construccionfinal/vistas/Expediente/FXMLExpedienteEstudiante.fxml"));
         Parent root = loader.load();
 
-        // Aquí se pasa el estudiante al nuevo controlador
         FXMLExpedienteEstudianteController controller = loader.getController();
         controller.inicializarDatos(estudiante);
 
@@ -146,29 +145,29 @@ public class FXMLPrincipalEstudianteController implements Initializable {
         e.printStackTrace();
     }
 }
-    
-    /*@FXML
-    private void clicExpediente(ActionEvent event) {
-        EstudianteDAO estudianteDAO = new EstudianteDAO();
-        Estudiante estudiante = estudianteDAO.buscarPorId(usuario.getIdUsuario());
 
-        if (estudiante != null) {
-        abrirNuevaVentanaConEstudiante(estudiante);
-        } else {
-            Utilidad.mostrarAlertaSimple(Alert.AlertType.ERROR, "Error", "No se encontro al estudiante");
-        }*/
+
 
     @FXML
     private void clicExpediente(ActionEvent event) {
-        ExpedienteDAO expedienteDAO= new ExpedienteDAO();
         EstudianteDAO estudianteDAO = new EstudianteDAO();
+        ExpedienteDAO expedienteDAO = new ExpedienteDAO();
+
         Estudiante estudiante = estudianteDAO.buscarPorId(usuario.getIdUsuario());
+
+        if (estudiante == null) {
+            Utilidad.mostrarAlertaSimple(Alert.AlertType.ERROR, "Error", "No se encontró al estudiante");
+            return;
+        }
+
         Expediente expediente = expedienteDAO.obtenerExpedientePorEstudiante(estudiante.getIdUsuario());
 
         if (expediente == null) {
             Utilidad.mostrarAlertaSimple(Alert.AlertType.WARNING, "Aún no puedes realizar esta operación", "Aún no puedes realizar esta operación");
             return;
         }
-        abrirNuevaVentana("/construccionfinal/vistas/Expediente/FXMLExpedienteEstudiante.fxml", "Expendiente");
+
+        abrirNuevaVentanaConEstudiante(estudiante);
     }
+
 }
