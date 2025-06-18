@@ -11,6 +11,7 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import construccionfinal.utilidades.Utilidad;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -51,10 +52,26 @@ public class FXMLPrincipalEstudianteController implements Initializable {
             FXMLEvaluarOVController controller = loader.getController();
 
             EstudianteDAO estudianteDAO = new EstudianteDAO();
+
             Estudiante estudiante = estudianteDAO.buscarPorId(usuario.getIdUsuario());
 
             if (estudiante == null) {
                 System.err.println("No se encontró estudiante para el usuario.");
+                return;
+            }
+
+            ExpedienteDAO expedienteDAO= new ExpedienteDAO();
+            Expediente expediente = expedienteDAO.obtenerExpedientePorEstudiante(estudiante.getIdUsuario());
+
+            if (expediente == null) {
+                Utilidad.mostrarAlertaSimple(Alert.AlertType.WARNING, "Aún no puedes realizar esta operación", "Aún no puedes realizar esta operación");
+                return;
+            }
+
+            int idExpediente = expediente.getIdExpediente();
+
+            if (EvaluacionOVDAO.tieneEvaluacionOrganizacion(idExpediente)) {
+                Utilidad.mostrarAlertaSimple(Alert.AlertType.WARNING, "Evaluación ya realizada", "Ya realizaste la evaluación");
                 return;
             }
 
@@ -140,5 +157,18 @@ public class FXMLPrincipalEstudianteController implements Initializable {
         } else {
             Utilidad.mostrarAlertaSimple(Alert.AlertType.ERROR, "Error", "No se encontro al estudiante");
         }
+
+    @FXML
+    private void clicExpediente(ActionEvent event) {
+        ExpedienteDAO expedienteDAO= new ExpedienteDAO();
+        EstudianteDAO estudianteDAO = new EstudianteDAO();
+        Estudiante estudiante = estudianteDAO.buscarPorId(usuario.getIdUsuario());
+        Expediente expediente = expedienteDAO.obtenerExpedientePorEstudiante(estudiante.getIdUsuario());
+
+        if (expediente == null) {
+            Utilidad.mostrarAlertaSimple(Alert.AlertType.WARNING, "Aún no puedes realizar esta operación", "Aún no puedes realizar esta operación");
+            return;
+        }
+        abrirNuevaVentana("/construccionfinal/vistas/Expediente/FXMLExpedienteEstudiante.fxml", "Expendiente");
     }
 }

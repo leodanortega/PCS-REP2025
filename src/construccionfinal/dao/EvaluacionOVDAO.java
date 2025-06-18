@@ -11,14 +11,27 @@ import java.util.Map;
 
 public class EvaluacionOVDAO {
 
-    /**
-     * Guarda la evaluación de organización vinculada y devuelve el ID generado.
-     *
-     * @param respuestas     Mapa de criterios con su puntaje.
-     * @param comentarios    Comentarios generales de la evaluación.
-     * @param idExpediente   ID del expediente relacionado.
-     * @return ID generado de la evaluación o -1 si falló.
-     */
+    public static boolean tieneEvaluacionOrganizacion(int idExpediente) {
+        boolean existeEvaluacion = false;
+        String sql = "SELECT idEvaluacionOV FROM evaluacion_organizacion_vinculada WHERE idExpediente = ? LIMIT 1";
+
+        try (Connection conn = ConexionBD.abrirConexion();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, idExpediente);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    existeEvaluacion = true;
+                }
+            }
+
+        } catch (SQLException e) {
+            System.err.println("Error al verificar evaluación de la organización vinculada " + e.getMessage());
+        }
+
+        return existeEvaluacion;
+    }
+
     public static int guardarEvaluacion(Map<CriterioEvaluacion, Integer> respuestas, String comentarios, int idExpediente) {
         double puntajeTotal = calcularPuntajeTotal(respuestas);
         int idGenerado = -1;
@@ -48,9 +61,6 @@ public class EvaluacionOVDAO {
         return idGenerado;
     }
 
-    /**
-     * Calcula el puntaje total a partir de los puntajes individuales.
-     */
     private static double calcularPuntajeTotal(Map<CriterioEvaluacion, Integer> respuestas) {
         int sumaTotal = respuestas.values().stream().mapToInt(Integer::intValue).sum();
         return sumaTotal / 10.0;
