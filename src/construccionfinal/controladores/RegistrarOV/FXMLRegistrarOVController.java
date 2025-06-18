@@ -37,6 +37,10 @@ public class FXMLRegistrarOVController {
             mostrarAlerta(Alert.AlertType.WARNING, "Campos vacíos", "Existen campos inválidos, por favor corregir");
             return;
         }
+        if (!tfTelefono.getText().matches("\\d{10}")) {
+            mostrarAlerta(Alert.AlertType.WARNING, "Teléfono inválido", "El número de teléfono debe contener exactamente 10 dígitos numéricos.");
+            return;
+        }
 
         if (!OrganizacionVinculadaDAO.hayConexion()) {
             mostrarAlerta(Alert.AlertType.ERROR, "Sin conexión", "Error: No hay conexión con la base de datos");

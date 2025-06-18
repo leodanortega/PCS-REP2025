@@ -61,9 +61,15 @@ public class FXMLFormularioProyectoController implements Initializable {
 
     @FXML
     private void clicCancelar(ActionEvent event) {
-        Stage stage = (Stage) tfNombre.getScene().getWindow();
-        Utilidad.mostrarAlertaConfirmacion("Cancelar", "¿Seguro que quieres cancelar?");
-        stage.close();
+        Alert alerta = new Alert(Alert.AlertType.CONFIRMATION);
+        alerta.setTitle("Confirmación");
+        alerta.setHeaderText(null);
+        alerta.setContentText("¿Seguro que quieres cancelar?");
+
+        if (alerta.showAndWait().orElse(ButtonType.CANCEL) == ButtonType.OK) {
+            Stage stage = (Stage) tfNombre.getScene().getWindow();
+            stage.close();
+        }
     }
 
     @FXML
@@ -76,13 +82,23 @@ public class FXMLFormularioProyectoController implements Initializable {
             mostrarAlerta(Alert.AlertType.WARNING, "Campos vacíos", "Por favor completa todos los campos requeridos.");
             return;
         }
+        try {
+            int valor = Integer.parseInt(tfEspacios.getText());
+            if (valor < 1 || valor > 100) {
+                mostrarAlerta(Alert.AlertType.WARNING, "Valor fuera de rango", "El número debe estar entre 1 y 100.");
+                return;
+            }
+        } catch (NumberFormatException e) {
+            mostrarAlerta(Alert.AlertType.WARNING, "Entrada inválida", "Debes ingresar un número válido entre 1 y 100.");
+            return;
+        }
+
 
         if (!ProyectoDAO.hayConexion()) {
             mostrarAlerta(Alert.AlertType.ERROR, "Sin conexión", "No hay conexión con la base de datos.");
             return;
         }
 
-        // Crear el objeto proyecto con los datos del formulario
         Proyecto proyecto = new Proyecto();
         proyecto.setNombre(tfNombre.getText());
         proyecto.setDescripcion(taDescripcion.getText());
@@ -100,7 +116,6 @@ public class FXMLFormularioProyectoController implements Initializable {
         proyecto.setResponsableProyecto(responsable);
 
         try {
-            // Cargar ventana de confirmación
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/construccionfinal/vistas/RegistrarProyecto/FXMLConfirmarDatosProyecto.fxml"));
             Parent root = loader.load();
 
