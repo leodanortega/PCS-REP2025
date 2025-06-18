@@ -3,6 +3,7 @@ package construccionfinal.controladores.AsignarEstudianteProyecto;
 import construccionfinal.dao.EstudianteDAO;
 import construccionfinal.dao.ExpedienteDAO;
 import construccionfinal.dao.ProyectoDAO;
+import construccionfinal.modelo.pojo.DocumentoInicial;
 import construccionfinal.modelo.pojo.Estudiante;
 import construccionfinal.modelo.pojo.Proyecto;
 import construccionfinal.utilidades.Utilidad;
@@ -139,14 +140,15 @@ public class FXMLAsignarEstudianteProyectoController implements Initializable {
 
     private int crearExpediente(Estudiante estudiante) {
         ExpedienteDAO daoExpediente = new ExpedienteDAO();
-
+        
         int idGrupoEE = 12345;
         int idPeriodo = 1;
         String calificaciones = "1";
         String horas = "90";
         String informe = "asd";
+        int idDocumentoInicial = 1;
 
-        return daoExpediente.crearExpediente(estudiante.getIdUsuario(), idGrupoEE, idPeriodo, calificaciones, horas, informe);
+        return daoExpediente.crearExpediente(estudiante.getIdUsuario(), idGrupoEE, idPeriodo, calificaciones, horas, informe, idDocumentoInicial);
     }
 
     private void mostrarAlerta(String mensaje) {

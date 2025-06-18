@@ -8,10 +8,11 @@ public class Expediente {
     private String calificaciones;
     private String horas;
     private String informe;
+    private int idDocumentoInicial;
 
     public Expediente() {}
 
-    public Expediente(int idExpediente, int idEstudiante, int idGrupoEE, int idPeriodo, String calificaciones, String horas, String informe) {
+    public Expediente(int idExpediente, int idEstudiante, int idGrupoEE, int idPeriodo, String calificaciones, String horas, String informe, int idDocumentoInicial) {
         this.idExpediente = idExpediente;
         this.idEstudiante = idEstudiante;
         this.idGrupoEE = idGrupoEE;
@@ -19,6 +20,7 @@ public class Expediente {
         this.calificaciones = calificaciones;
         this.horas = horas;
         this.informe = informe;
+        this.idDocumentoInicial = idDocumentoInicial;
     }
 
     public int getIdExpediente() { return idExpediente; }
@@ -41,4 +43,12 @@ public class Expediente {
 
     public String getInforme() { return informe; }
     public void setInforme(String informe) { this.informe = informe; }
+
+    public int getIdDocumentoInicial() {
+        return idDocumentoInicial;
+    }
+
+    public void setIdDocumentoInicial(int idDocumentoInicial) {
+        this.idDocumentoInicial = idDocumentoInicial;
+    }
 }

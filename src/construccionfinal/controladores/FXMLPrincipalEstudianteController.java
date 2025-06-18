@@ -1,8 +1,10 @@
 package construccionfinal.controladores;
 
 import construccionfinal.controladores.EvaluarOV.FXMLEvaluarOVController;
+import construccionfinal.controladores.Expediente.FXMLExpedienteEstudianteController;
 import construccionfinal.dao.*;
 import construccionfinal.modelo.pojo.*;
+import construccionfinal.utilidades.Utilidad;
 
 import java.io.IOException;
 import java.net.URL;
@@ -15,6 +17,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
@@ -109,8 +112,33 @@ public class FXMLPrincipalEstudianteController implements Initializable {
         }
     }
 
+    private void abrirNuevaVentanaConEstudiante(Estudiante estudiante) {
+    try {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/construccionfinal/vistas/Expediente/FXMLExpedienteEstudiante.fxml"));
+        Parent root = loader.load();
+
+        // Aquí se pasa el estudiante al nuevo controlador
+        FXMLExpedienteEstudianteController controller = loader.getController();
+        controller.inicializarDatos(estudiante);
+
+        Stage stage = new Stage();
+        stage.setTitle("Expediente del Estudiante");
+        stage.setScene(new Scene(root));
+        stage.show();
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+}
+    
     @FXML
     private void clicExpediente(ActionEvent event) {
-        abrirNuevaVentana("/construccionfinal/vistas/Expediente/FXMLExpedienteEstudiante.fxml", "Expendiente");
+        EstudianteDAO estudianteDAO = new EstudianteDAO();
+        Estudiante estudiante = estudianteDAO.buscarPorId(usuario.getIdUsuario());
+
+        if (estudiante != null) {
+        abrirNuevaVentanaConEstudiante(estudiante);
+        } else {
+            Utilidad.mostrarAlertaSimple(Alert.AlertType.ERROR, "Error", "No se encontro al estudiante");
+        }
     }
 }

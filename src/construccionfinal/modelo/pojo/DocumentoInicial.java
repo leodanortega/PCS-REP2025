@@ -1,27 +1,28 @@
-
 package construccionfinal.modelo.pojo;
 
 import java.sql.Date;
 
 public class DocumentoInicial {
-    
+
     private int idDocumentoInicial;
     private String nombre;
     private String estado;
     private String tipoDocumento;
     private Date fecha;
     private byte[] archivo;
+    private int idExpediente;
 
     public DocumentoInicial() {
     }
 
-    public DocumentoInicial(int idDocumentoInicial, String nombre, String estado, String tipoDocumento, Date fecha, byte[] archivo) {
+    public DocumentoInicial(int idDocumentoInicial, String nombre, String estado, String tipoDocumento, Date fecha, byte[] archivo, int idExpediente) {
         this.idDocumentoInicial = idDocumentoInicial;
         this.nombre = nombre;
         this.estado = estado;
         this.tipoDocumento = tipoDocumento;
         this.fecha = fecha;
         this.archivo = archivo;
+        this.idExpediente = idExpediente;
     }
 
     public int getIdDocumentoInicial() {
@@ -70,5 +71,13 @@ public class DocumentoInicial {
 
     public void setArchivo(byte[] archivo) {
         this.archivo = archivo;
+    }
+
+    public int getIdExpediente() {
+        return idExpediente;
+    }
+
+    public void setIdExpediente(int idExpediente) {
+        this.idExpediente = idExpediente;
     }
 }

@@ -26,9 +26,10 @@ public class ExpedienteDAO {
                     expediente.setIdEstudiante(rs.getInt("idEstudiante"));
                     expediente.setIdGrupoEE(rs.getInt("idGrupoEE"));
                     expediente.setIdPeriodo(rs.getInt("idPeriodo"));
-                    expediente.setCalificaciones(rs.getString("califaciones"));
+                    expediente.setCalificaciones(rs.getString("calificaciones")); // corregido: era "califaciones"
                     expediente.setHoras(rs.getString("horas"));
                     expediente.setInforme(rs.getString("informe"));
+                    expediente.setIdDocumentoInicial(rs.getInt("idDocumentoInicial"));
                 }
             }
         } catch (SQLException e) {
@@ -38,9 +39,11 @@ public class ExpedienteDAO {
         return expediente;
     }
 
-    public static int crearExpediente(int idEstudiante, int idGrupoEE, int idPeriodo, String calificaciones, String horas, String informe) {
+    public static int crearExpediente(int idEstudiante, int idGrupoEE, int idPeriodo,
+                                      String calificaciones, String horas, String informe, int idDocumentoInicial) {
         int idExpediente = -1;
-        String sql = "INSERT INTO expediente (idEstudiante, idGrupoEE, idPeriodo, califaciones, horas, informe) VALUES (?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO expediente (idEstudiante, idGrupoEE, idPeriodo, calificaciones, horas, informe, idDocumentoInicial) " +
+                     "VALUES (?, ?, ?, ?, ?, ?, ?)";
 
         try (Connection con = ConexionBD.abrirConexion();
              PreparedStatement ps = con.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
@@ -51,6 +54,7 @@ public class ExpedienteDAO {
             ps.setString(4, calificaciones);
             ps.setString(5, horas);
             ps.setString(6, informe);
+            ps.setInt(7, idDocumentoInicial);
             ps.executeUpdate();
 
             try (ResultSet generatedKeys = ps.getGeneratedKeys()) {

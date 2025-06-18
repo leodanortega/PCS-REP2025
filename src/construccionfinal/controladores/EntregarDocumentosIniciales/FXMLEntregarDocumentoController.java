@@ -24,26 +24,24 @@ import javafx.stage.Stage;
 
 public class FXMLEntregarDocumentoController implements Initializable {
 
-    @FXML
-    private Label lbDoc1;
-    @FXML
-    private Label lbDoc2;
-    @FXML
-    private Label lbDoc3;
-    @FXML
-    private Label lbDoc4;
-    @FXML
-    private Label lbDoc5;
+    @FXML private Label lbDoc1;
+    @FXML private Label lbDoc2;
+    @FXML private Label lbDoc3;
+    @FXML private Label lbDoc4;
+    @FXML private Label lbDoc5;
+    @FXML private Button btnCancelar;
 
     private File archivo1, archivo2, archivo3, archivo4, archivo5;
-    @FXML
-    private Button btnCancelar;
-
+    private int idExpediente; 
     private static final String ESTADO_PENDIENTE = "Pendiente";
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        
+    }
+
+    public void setIdExpediente(int idExpediente) {
+        this.idExpediente = idExpediente;
     }
 
     @FXML
@@ -52,7 +50,6 @@ public class FXMLEntregarDocumentoController implements Initializable {
         alerta.setTitle("Confirmación");
         alerta.setHeaderText(null);
         alerta.setContentText("¿Seguro que quieres cancelar?");
-
         if (alerta.showAndWait().orElse(ButtonType.CANCEL) == ButtonType.OK) {
             Stage stage = (Stage) btnCancelar.getScene().getWindow();
             stage.close();
@@ -84,7 +81,6 @@ public class FXMLEntregarDocumentoController implements Initializable {
         } else {
             Utilidad.mostrarAlertaSimple(Alert.AlertType.ERROR, "Error", "No se pudo guardar ningún documento");
         }
-        
     }
 
     @FXML
@@ -116,10 +112,9 @@ public class FXMLEntregarDocumentoController implements Initializable {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Seleccionar Documento");
         fileChooser.getExtensionFilters().addAll(
-                new FileChooser.ExtensionFilter("Archivos PDF", "*.pdf"),
-                new FileChooser.ExtensionFilter("Todos los archivos", "*.*")
+            new FileChooser.ExtensionFilter("Archivos PDF", "*.pdf"),
+            new FileChooser.ExtensionFilter("Todos los archivos", "*.*")
         );
-
         File file = fileChooser.showOpenDialog(label.getScene().getWindow());
         if (file != null) {
             label.setText(file.getName());
@@ -138,13 +133,15 @@ public class FXMLEntregarDocumentoController implements Initializable {
         try {
             byte[] bytesArchivo = Files.readAllBytes(archivo.toPath());
             DocumentoInicial doc = new DocumentoInicial(
-                    0,
-                    archivo.getName(),
-                    ESTADO_PENDIENTE,
-                    tipoDocumento,
-                    Date.valueOf(LocalDate.now()),
-                    bytesArchivo
+                0,
+                archivo.getName(),
+                ESTADO_PENDIENTE,
+                tipoDocumento,
+                Date.valueOf(LocalDate.now()),
+                bytesArchivo,
+                idExpediente
             );
+            doc.setIdExpediente(idExpediente);
             return dao.agregar(doc);
         } catch (IOException e) {
             e.printStackTrace();
@@ -153,3 +150,5 @@ public class FXMLEntregarDocumentoController implements Initializable {
         }
     }
 }
+
+
