@@ -69,12 +69,13 @@ public class FXMLRegistrarResponsableController {
             stage.setScene(new Scene(root));
             stage.showAndWait();
 
-
-            OrganizacionVinculada org = responsableProyecto.getOrganizacionVinculada();
-            if (org != null) {
-                System.out.println("Organización seleccionada: " + org.getNombre());
-            } else {
-                mostrarAlerta(Alert.AlertType.WARNING,"Seleccionar Organización Vinculada", "Debe seleccionar una organización vinculada");
+            if (!controller.isFueCancelado()) {
+                OrganizacionVinculada org = responsableProyecto.getOrganizacionVinculada();
+                if (org != null) {
+                    System.out.println("Organización seleccionada: " + org.getNombre());
+                } else {
+                    mostrarAlerta(Alert.AlertType.WARNING,"Seleccionar Organización Vinculada", "Debe seleccionar una organización vinculada");
+                }
             }
 
         } catch (IOException e) {

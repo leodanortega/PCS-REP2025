@@ -31,7 +31,6 @@
             <children>
                 <Label text="Opciones del sistema" style="-fx-font-size: 20px; -fx-text-fill: #34495e; -fx-font-weight: bold;" />
                 <Label fx:id="lblNombreUsuario" text="Usuario: " style="-fx-font-size: 16px; -fx-text-fill: #555555;" />
-                <Button fx:id="btnEvaluarEstudiante" onAction="#btnEvaluarEstudiante" style="-fx-background-color: #3498db; -fx-text-fill: white; -fx-background-radius: 8; -fx-font-weight: bold; -fx-font-size: 14px; -fx-padding: 8 16;" text="Evaluar estudiante" />
             <Button fx:id="btnEstudiantes" layoutX="35.0" layoutY="112.0" onAction="#clicEstudiantes" style="-fx-background-color: #3498db; -fx-text-fill: white; -fx-background-radius: 8; -fx-font-weight: bold; -fx-font-size: 14px; -fx-padding: 8 16;" text="Estudiantes" />
             </children>
         </VBox>

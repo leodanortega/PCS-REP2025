@@ -54,7 +54,7 @@
                    <children>
                        <Button onAction="#clicRegistrar" style="-fx-background-color: #3498db; -fx-text-fill: white; -fx-background-radius: 8; -fx-font-weight: bold; -fx-font-size: 14px; -fx-padding: 8 16;" text="Registrar" />
    
-                       <Button onAction="#clicSalir" style="-fx-background-color: #E74C3C; -fx-text-fill: white; -fx-background-radius: 8; -fx-font-weight: bold; -fx-font-size: 14px; -fx-padding: 8 16;" text="Salir" />
+                       <Button onAction="#clicSalir" style="-fx-background-color: #E74C3C; -fx-text-fill: white; -fx-background-radius: 8; -fx-font-weight: bold; -fx-font-size: 14px; -fx-padding: 8 16;" text="Cancelar" />
                    </children>
                </HBox>
            </children>

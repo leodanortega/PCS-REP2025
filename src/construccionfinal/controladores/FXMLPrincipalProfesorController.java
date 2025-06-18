@@ -26,23 +26,16 @@ public class FXMLPrincipalProfesorController implements Initializable {
 
     private Usuario usuario;
     @FXML
-    private Button btnEvaluarEstudiante;
-    @FXML
     private Button btnEstudiantes;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // Aquí podrías inicializar algo si es necesario
+
     }
 
     public void setUsuario(Usuario usuarioSesion) {
         this.usuario = usuarioSesion;
         lblNombreUsuario.setText(usuario.getNombre()); // Mostrar nombre del estudiante
-    }
-
-    @FXML
-    public void btnEvaluarEstudiante(ActionEvent actionEvent) {
-        abrirNuevaVentana("/construccionfinal/vistas/EvaluarEstudiante/FXMLEstudiantesPorEvaluar.fxml", "Estudiantes por evaluar");
     }
 
     @FXML

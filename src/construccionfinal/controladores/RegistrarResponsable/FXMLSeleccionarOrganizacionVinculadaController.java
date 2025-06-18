@@ -31,12 +31,15 @@ public class FXMLSeleccionarOrganizacionVinculadaController {
     private TableColumn<OrganizacionVinculada, String> colTelefono;
     @FXML
     private TableColumn<OrganizacionVinculada, String> colTipo;
-
+    private boolean fueCancelado = false;
     private OrganizacionVinculadaDAO organizacionDAO = new OrganizacionVinculadaDAO();
     private ResponsableProyecto responsableProyecto;
 
     public void inicializarDatos(ResponsableProyecto responsableProyecto) {
         this.responsableProyecto = responsableProyecto;
+    }
+    public boolean isFueCancelado() {
+        return fueCancelado;
     }
 
     @FXML
@@ -82,7 +85,16 @@ public class FXMLSeleccionarOrganizacionVinculadaController {
 
     @FXML
     private void clicCancelar() {
-        cerrarVentana();
+        Alert alerta = new Alert(Alert.AlertType.CONFIRMATION);
+        alerta.setTitle("Confirmación");
+        alerta.setHeaderText(null);
+        alerta.setContentText("¿Seguro que quieres cancelar la operación?");
+
+        if (alerta.showAndWait().orElse(ButtonType.CANCEL) == ButtonType.OK) {
+            fueCancelado = true;
+            Stage stage = (Stage) txtBuscar.getScene().getWindow();
+            stage.close();
+        }
     }
 
     private void cerrarVentana() {
