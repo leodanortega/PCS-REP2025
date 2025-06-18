@@ -15,6 +15,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
@@ -24,6 +25,10 @@ public class FXMLPrincipalEstudianteController implements Initializable {
     private Label lblNombreUsuario;
 
     private Usuario usuario;
+    @FXML
+    private Button btnEvaluarOV;
+    @FXML
+    private Button btnExpediente;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -34,6 +39,7 @@ public class FXMLPrincipalEstudianteController implements Initializable {
         lblNombreUsuario.setText(usuario.getNombre());
     }
 
+    @FXML
     public void btnEvaluarOV(ActionEvent actionEvent) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/construccionfinal/vistas/EvaluarOV/FXMLEvaluarOV.fxml"));
@@ -87,5 +93,24 @@ public class FXMLPrincipalEstudianteController implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+    
+    private void abrirNuevaVentana(String rutaFXML, String titulo) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(rutaFXML));
+            Parent root = loader.load();
+            Stage stage = new Stage();
+            stage.setTitle(titulo);
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.err.println("No se pudo abrir la ventana: " + rutaFXML);
+        }
+    }
+
+    @FXML
+    private void clicExpediente(ActionEvent event) {
+        abrirNuevaVentana("/construccionfinal/vistas/Expediente/FXMLExpedienteEstudiante.fxml", "Expendiente");
     }
 }
