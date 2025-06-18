@@ -141,11 +141,14 @@ public class EstudianteDAO {
 
     public static ObservableList<Estudiante> buscarPorNombre(String filtro) {
         ObservableList<Estudiante> lista = FXCollections.observableArrayList();
-        String sql = "SELECT idUsuario, nombre, apePaterno, apeMaterno, identificador, correo, telefono " +
-                "FROM usuario " +
-                "WHERE rol = 'estudiante' " +
-                "AND idUsuario NOT IN (SELECT idEstudiante FROM proyecto WHERE idEstudiante IS NOT NULL) " +
-                "AND (nombre LIKE ? OR apePaterno LIKE ? OR apeMaterno LIKE ? OR identificador LIKE ?)";
+        String sql = "SELECT u.idUsuario, u.nombre, u.apePaterno, u.apeMaterno, u.identificador, u.correo, u.telefono " +
+                "FROM usuario u " +
+                "JOIN proyecto p ON u.idUsuario = p.idEstudiante " +
+                "JOIN expediente e ON p.idProyecto = e.idProyecto " +
+                "LEFT JOIN evaluacion ev ON e.idExpediente = ev.idExpediente " +
+                "WHERE u.rol = 'estudiante' " +
+                "AND ev.idEvaluacion IS NULL " +
+                "AND (u.nombre LIKE ? OR u.apePaterno LIKE ? OR u.apeMaterno LIKE ? OR u.identificador LIKE ?)";
 
         try (Connection con = ConexionBD.abrirConexion();
              PreparedStatement ps = con.prepareStatement(sql)) {
@@ -166,13 +169,12 @@ public class EstudianteDAO {
                     estudiante.setIdentificador(rs.getString("identificador"));
                     estudiante.setCorreo(rs.getString("correo"));
                     estudiante.setTelefono(rs.getString("telefono"));
-
                     lista.add(estudiante);
                 }
             }
 
         } catch (SQLException e) {
-            System.err.println("Error al buscar estudiantes sin evaluación: " + e.getMessage());
+            System.err.println("Error al filtrar estudiantes sin evaluación: " + e.getMessage());
         }
 
         return lista;
