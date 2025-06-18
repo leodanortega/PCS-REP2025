@@ -129,7 +129,6 @@ public class FXMLEvaluarEstudianteController {
 
         System.out.println("ID Evaluación guardado: " + idEvaluacion);
 
-        // Generamos resultados con idEvaluacion
         List<CriterioEvaluacionResultado> resultados = respuestasEvaluacion.entrySet().stream()
                 .map(entry -> new CriterioEvaluacionResultado(
                         idEvaluacion,

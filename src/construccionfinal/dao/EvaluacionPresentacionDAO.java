@@ -43,6 +43,6 @@ public class EvaluacionPresentacionDAO {
         for (Integer puntaje : respuestas.values()) {
             suma += puntaje;
         }
-        return suma / 5.0; // Ajusta el divisor si tu escala cambia
+        return suma / 5.0;
     }
 }

@@ -26,7 +26,7 @@ public class ExpedienteDAO {
                     expediente.setIdEstudiante(rs.getInt("idEstudiante"));
                     expediente.setIdGrupoEE(rs.getInt("idGrupoEE"));
                     expediente.setIdPeriodo(rs.getInt("idPeriodo"));
-                    expediente.setCalificaciones(rs.getString("calificaciones")); // corregido: era "califaciones"
+                    expediente.setCalificaciones(rs.getString("califaciones"));
                     expediente.setHoras(rs.getString("horas"));
                     expediente.setInforme(rs.getString("informe"));
                     expediente.setIdDocumentoInicial(rs.getInt("idDocumentoInicial"));
@@ -42,7 +42,7 @@ public class ExpedienteDAO {
     public static int crearExpediente(int idEstudiante, int idGrupoEE, int idPeriodo,
                                       String calificaciones, String horas, String informe, int idDocumentoInicial) {
         int idExpediente = -1;
-        String sql = "INSERT INTO expediente (idEstudiante, idGrupoEE, idPeriodo, calificaciones, horas, informe, idDocumentoInicial) " +
+        String sql = "INSERT INTO expediente (idEstudiante, idGrupoEE, idPeriodo, califaciones, horas, informe, idDocumentoInicial) " +
                      "VALUES (?, ?, ?, ?, ?, ?, ?)";
 
         try (Connection con = ConexionBD.abrirConexion();
