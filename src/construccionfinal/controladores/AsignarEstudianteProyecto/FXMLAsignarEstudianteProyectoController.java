@@ -1,6 +1,7 @@
 package construccionfinal.controladores.AsignarEstudianteProyecto;
 
 import construccionfinal.dao.EstudianteDAO;
+import construccionfinal.dao.ExpedienteDAO;
 import construccionfinal.dao.ProyectoDAO;
 import construccionfinal.modelo.pojo.Estudiante;
 import construccionfinal.modelo.pojo.Proyecto;
@@ -50,7 +51,7 @@ public class FXMLAsignarEstudianteProyectoController implements Initializable {
     }
 
     private void cargarEstudiantes() {
-        ObservableList<Estudiante> listaEstudiantes = FXCollections.observableArrayList(EstudianteDAO.listarDatosAcademicos());
+        ObservableList<Estudiante> listaEstudiantes = FXCollections.observableArrayList(EstudianteDAO.listarEstudiantesNoAsignados());
 
         tcMatricula.setCellValueFactory(new PropertyValueFactory<>("identificador"));
 
@@ -98,46 +99,63 @@ public class FXMLAsignarEstudianteProyectoController implements Initializable {
         Utilidad.mostrarAlertaConfirmacion("Cancelar", "¿Seguro que quieres cancelar?");
         stage.close();
     }
-    
+
     @FXML
-private void clicAsignar(ActionEvent event) {
-    Estudiante estudianteSeleccionado = tvEstudiantes.getSelectionModel().getSelectedItem();
-    Proyecto proyectoSeleccionado = tvProyectos.getSelectionModel().getSelectedItem();
+    private void clicAsignar(ActionEvent event) {
+        Estudiante estudianteSeleccionado = tvEstudiantes.getSelectionModel().getSelectedItem();
+        Proyecto proyectoSeleccionado = tvProyectos.getSelectionModel().getSelectedItem();
 
-    if (estudianteSeleccionado == null || proyectoSeleccionado == null) {
-        mostrarAlerta("Debe seleccionar un estudiante y un proyecto.");
-        return;
+        // Validación: Se debe seleccionar un estudiante y un proyecto
+        if (estudianteSeleccionado == null || proyectoSeleccionado == null) {
+            mostrarAlerta("Debe seleccionar un estudiante y un proyecto.");
+            return;
+        }
+
+        // Validación: El proyecto no debe tener un estudiante asignado
+        if (proyectoSeleccionado.getIdEstudiante() > 0) {
+            mostrarAlerta("Este proyecto ya tiene un estudiante asignado.");
+            return;
+        }
+
+        ProyectoDAO dao = new ProyectoDAO();
+        boolean asignado = dao.asignarEstudianteAProyecto(proyectoSeleccionado.getIdProyecto(), estudianteSeleccionado.getIdUsuario());
+
+        if (asignado) {
+            mostrarAlerta("Estudiante asignado correctamente al proyecto.");
+            cargarProyectos();
+
+            // Llamar a la creación del expediente después de asignar el estudiante
+            int nuevoExpedienteId = crearExpediente(estudianteSeleccionado);
+
+            if (nuevoExpedienteId != -1) {
+                mostrarAlerta("Expediente creado correctamente para el estudiante.");
+            } else {
+                mostrarAlerta("No se pudo crear el expediente.");
+            }
+        } else {
+            mostrarAlerta("No se pudo asignar el estudiante al proyecto.");
+        }
     }
 
-    if (proyectoSeleccionado.getIdEstudiante() > 0) {
-        mostrarAlerta("Este proyecto ya tiene un estudiante asignado.");
-        return;
+    private int crearExpediente(Estudiante estudiante) {
+        ExpedienteDAO daoExpediente = new ExpedienteDAO();
+
+        // Datos fijos según la tabla proporcionada
+        int idGrupoEE = 12345;
+        int idPeriodo = 1;
+        String calificaciones = "1";
+        String horas = "90";
+        String informe = "asd";
+
+        return daoExpediente.crearExpediente(estudiante.getIdUsuario(), idGrupoEE, idPeriodo, calificaciones, horas, informe);
     }
 
-    ProyectoDAO dao = new ProyectoDAO();
-    boolean asignado = dao.asignarEstudianteAProyecto(proyectoSeleccionado.getIdProyecto(), estudianteSeleccionado.getIdUsuario());
-
-    if (asignado) {
-        mostrarAlerta("Estudiante asignado correctamente al proyecto.");
-        cargarProyectos();
-    } else {
-        mostrarAlerta("No se pudo asignar el estudiante al proyecto.");
-    }
-}
-
-private void mostrarAlerta(String mensaje) {
-    javafx.scene.control.Alert alerta = new javafx.scene.control.Alert(javafx.scene.control.Alert.AlertType.INFORMATION);
-    alerta.setContentText(mensaje);
-    alerta.showAndWait();
-}
-
-        private void mostrarAlerta(Alert.AlertType tipo, String titulo, String contenido) {
-        Alert alerta = new Alert(tipo);
-        alerta.setTitle(titulo);
+    private void mostrarAlerta(String mensaje) {
+        Alert alerta = new Alert(Alert.AlertType.INFORMATION);
+        alerta.setTitle("Aviso");
         alerta.setHeaderText(null);
-        alerta.setContentText(contenido);
+        alerta.setContentText(mensaje);
         alerta.showAndWait();
     }
-
 }
 
