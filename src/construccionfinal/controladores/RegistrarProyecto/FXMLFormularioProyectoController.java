@@ -6,7 +6,6 @@ import construccionfinal.dao.ResponsableProyectoDAO;
 import construccionfinal.modelo.pojo.OrganizacionVinculada;
 import construccionfinal.modelo.pojo.Proyecto;
 import construccionfinal.modelo.pojo.ResponsableProyecto;
-import construccionfinal.utilidades.Utilidad;
 
 import java.io.IOException;
 import java.net.URL;
@@ -26,20 +25,13 @@ import javafx.stage.Stage;
 
 public class FXMLFormularioProyectoController implements Initializable {
 
-    @FXML
-    private ComboBox<OrganizacionVinculada> cbOrganizaciones;
-    @FXML
-    private ComboBox<ResponsableProyecto> cbResponsables;
-    @FXML
-    private TextField tfNombre;
-    @FXML
-    private TextField tfDepartamento;
-    @FXML
-    private TextArea taDescripcion;
-    @FXML
-    private TextField tfMetodologia;
-    @FXML
-    private TextField tfEspacios;
+    @FXML private ComboBox<OrganizacionVinculada> cbOrganizaciones;
+    @FXML private ComboBox<ResponsableProyecto> cbResponsables;
+    @FXML private TextField tfNombre;
+    @FXML private TextField tfDepartamento;
+    @FXML private TextArea taDescripcion;
+    @FXML private TextField tfMetodologia;
+    @FXML private TextField tfEspacios;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -48,70 +40,38 @@ public class FXMLFormularioProyectoController implements Initializable {
     }
 
     private void cargarOrganizaciones() {
-        OrganizacionVinculadaDAO dao = new OrganizacionVinculadaDAO();
-        List<OrganizacionVinculada> lista = dao.listar();
+        List<OrganizacionVinculada> lista = new OrganizacionVinculadaDAO().listar();
         cbOrganizaciones.setItems(FXCollections.observableArrayList(lista));
     }
 
     private void cargarResponsables() {
-        ResponsableProyectoDAO dao = new ResponsableProyectoDAO();
-        List<ResponsableProyecto> lista = dao.listar();
+        List<ResponsableProyecto> lista = new ResponsableProyectoDAO().listar();
         cbResponsables.setItems(FXCollections.observableArrayList(lista));
     }
 
     @FXML
     private void clicCancelar(ActionEvent event) {
-        Alert alerta = new Alert(Alert.AlertType.CONFIRMATION);
-        alerta.setTitle("Confirmación");
-        alerta.setHeaderText(null);
-        alerta.setContentText("¿Seguro que quieres cancelar?");
-
-        if (alerta.showAndWait().orElse(ButtonType.CANCEL) == ButtonType.OK) {
-            Stage stage = (Stage) tfNombre.getScene().getWindow();
-            stage.close();
+        if (confirmarAccion("¿Seguro que quieres cancelar?")) {
+            ((Stage) tfNombre.getScene().getWindow()).close();
         }
     }
 
     @FXML
     private void clicGuardar(ActionEvent event) {
-        if (tfNombre.getText().isEmpty() || taDescripcion.getText().isEmpty() ||
-            tfMetodologia.getText().isEmpty() || tfEspacios.getText().isEmpty() ||
-            tfDepartamento.getText().isEmpty() || cbOrganizaciones.getValue() == null ||
-            cbResponsables.getValue() == null) {
-
-            mostrarAlerta(Alert.AlertType.WARNING, "Campos vacíos", "Por favor completa todos los campos requeridos.");
-            return;
-        }
-        try {
-            int valor = Integer.parseInt(tfEspacios.getText());
-            if (valor < 1 || valor > 100) {
-                mostrarAlerta(Alert.AlertType.WARNING, "Valor fuera de rango", "El número debe estar entre 1 y 100.");
-                return;
-            }
-        } catch (NumberFormatException e) {
-            mostrarAlerta(Alert.AlertType.WARNING, "Entrada inválida", "Debes ingresar un número válido entre 1 y 100.");
-            return;
-        }
-
-
-        if (!ProyectoDAO.hayConexion()) {
-            mostrarAlerta(Alert.AlertType.ERROR, "Sin conexión", "No hay conexión con la base de datos.");
-            return;
-        }
+        if (!validarCampos()) return;
 
         Proyecto proyecto = new Proyecto();
-        proyecto.setNombre(tfNombre.getText());
-        proyecto.setDescripcion(taDescripcion.getText());
-        proyecto.setMetodologia(tfMetodologia.getText());
-        proyecto.setEspacios(tfEspacios.getText());
-        proyecto.setDepartamento(tfDepartamento.getText());
+        proyecto.setNombre(tfNombre.getText().trim());
+        proyecto.setDescripcion(taDescripcion.getText().trim());
+        proyecto.setMetodologia(tfMetodologia.getText().trim());
+        proyecto.setEspacios(tfEspacios.getText().trim());
+        proyecto.setDepartamento(tfDepartamento.getText().trim());
 
         OrganizacionVinculada ov = cbOrganizaciones.getValue();
         ResponsableProyecto responsable = cbResponsables.getValue();
 
         proyecto.setIdOrganizacion(ov.getIdOrganizacion());
         proyecto.setIdResponsable(responsable.getIdResponsable());
-
         proyecto.setOrganizacionVinculada(ov);
         proyecto.setResponsableProyecto(responsable);
 
@@ -129,15 +89,11 @@ public class FXMLFormularioProyectoController implements Initializable {
             stage.showAndWait();
 
             if (controller.isConfirmado()) {
-                ProyectoDAO dao = new ProyectoDAO();
-                boolean exito = dao.agregar(proyecto);
-
-                if (exito) {
-                    mostrarAlerta(Alert.AlertType.INFORMATION, "Registro exitoso", "El proyecto fue registrado exitosamente.");
-                    limpiarCampos();
-                } else {
-                    mostrarAlerta(Alert.AlertType.ERROR, "Error", "No se pudo registrar el proyecto.");
-                }
+                boolean exito = new ProyectoDAO().agregar(proyecto);
+                mostrarAlerta(exito ? Alert.AlertType.INFORMATION : Alert.AlertType.ERROR,
+                    exito ? "Registro exitoso" : "Error",
+                    exito ? "El proyecto fue registrado exitosamente." : "No se pudo registrar el proyecto.");
+                if (exito) limpiarCampos();
             }
 
         } catch (IOException e) {
@@ -146,12 +102,100 @@ public class FXMLFormularioProyectoController implements Initializable {
         }
     }
 
+    private boolean validarCampos() {
+        String nombre = tfNombre.getText().trim();
+        String descripcion = taDescripcion.getText().trim();
+        String metodologia = tfMetodologia.getText().trim();
+        String espaciosStr = tfEspacios.getText().trim();
+        String departamento = tfDepartamento.getText().trim();
+        OrganizacionVinculada organizacion = cbOrganizaciones.getValue();
+        ResponsableProyecto responsable = cbResponsables.getValue();
+        
+        if (nombre.isEmpty() && descripcion.isEmpty() && metodologia.isEmpty() &&
+            espaciosStr.isEmpty() && departamento.isEmpty() &&
+            organizacion == null && responsable == null) {
+
+            mostrarAlerta(Alert.AlertType.WARNING, "Sin datos", "No has ingresado ningún dato requerido.");
+            return false;
+        }
+        
+        if (organizacion == null) {
+            mostrarAlerta(Alert.AlertType.WARNING, "Organización requerida", "Debes seleccionar una organización vinculada.");
+            return false;
+        }
+
+        if (responsable == null) {
+            mostrarAlerta(Alert.AlertType.WARNING, "Responsable requerido", "Debes seleccionar un responsable de proyecto.");
+            return false;
+        }
+
+        if (nombre.isEmpty() || nombre.length() < 3 || nombre.length() > 100) {
+            mostrarAlerta(Alert.AlertType.WARNING, "Nombre inválido", "El nombre debe tener entre 3 y 100 caracteres.");
+            return false;
+        }
+
+        if (!nombre.matches("[A-Za-zÁÉÍÓÚáéíóúñÑ0-9 .,\\-()]+")) {
+            mostrarAlerta(Alert.AlertType.WARNING, "Nombre inválido", "El nombre contiene caracteres no permitidos.");
+            return false;
+        }
+
+        if (ProyectoDAO.existeNombreProyecto(nombre)) {
+            mostrarAlerta(Alert.AlertType.WARNING, "Nombre duplicado", "Ya existe un proyecto con ese nombre.");
+            return false;
+        }
+
+        if (departamento.isEmpty() || departamento.length() > 100) {
+            mostrarAlerta(Alert.AlertType.WARNING, "Departamento inválido", "Debe tener entre 1 y 100 caracteres.");
+            return false;
+        }
+        
+        if (descripcion.isEmpty() || descripcion.length() < 10 || descripcion.length() > 500) {
+            mostrarAlerta(Alert.AlertType.WARNING, "Descripción inválida", "Debe tener entre 10 y 1000 caracteres.");
+            return false;
+        }
+
+        if (metodologia.isEmpty() || metodologia.length() > 100) {
+            mostrarAlerta(Alert.AlertType.WARNING, "Metodología inválida", "Debe estar entre 1 y 100 caracteres.");
+            return false;
+        }
+
+        if(espaciosStr.isEmpty()){
+            mostrarAlerta(Alert.AlertType.WARNING, "Espacio vacio", "Debe ingresar un dígito");
+            return false;
+        }
+    
+        if (!espaciosStr.matches("\\d+")) {
+            mostrarAlerta(Alert.AlertType.WARNING, "Espacio inválido", "Debes ingresar solo números enteros.");
+            return false;
+        }
+
+        int espacios = Integer.parseInt(espaciosStr);
+        if (espacios < 1 || espacios > 100) {
+            mostrarAlerta(Alert.AlertType.WARNING, "Espacio fuera de rango", "Debe estar entre 1 y 100.");
+            return false;
+        }
+
+        if (!departamento.matches("[A-Za-zÁÉÍÓÚáéíóúñÑ0-9 .,\\-()]+")) {
+            mostrarAlerta(Alert.AlertType.WARNING, "Departamento inválido", "El nombre del departamento contiene caracteres no permitidos.");
+            return false;
+        }
+        return true;
+    }
+
     private void mostrarAlerta(Alert.AlertType tipo, String titulo, String contenido) {
         Alert alerta = new Alert(tipo);
         alerta.setTitle(titulo);
         alerta.setHeaderText(null);
         alerta.setContentText(contenido);
         alerta.showAndWait();
+    }
+
+    private boolean confirmarAccion(String mensaje) {
+        Alert alerta = new Alert(Alert.AlertType.CONFIRMATION);
+        alerta.setTitle("Confirmación");
+        alerta.setHeaderText(null);
+        alerta.setContentText(mensaje);
+        return alerta.showAndWait().orElse(ButtonType.CANCEL) == ButtonType.OK;
     }
 
     private void limpiarCampos() {

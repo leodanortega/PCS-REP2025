@@ -155,7 +155,7 @@ public List<Proyecto> listar() {
 
     public Proyecto buscarPorEstudiante(int idUsuario) {
         Proyecto proyecto = null;
-        String sql = "SELECT * FROM proyecto WHERE idEstudiante = ? LIMIT 1"; // 🔹 Solo devuelve un proyecto
+        String sql = "SELECT * FROM proyecto WHERE idEstudiante = ? LIMIT 1";
 
         try (Connection con = ConexionBD.abrirConexion();
              PreparedStatement ps = con.prepareStatement(sql)) {
@@ -163,7 +163,7 @@ public List<Proyecto> listar() {
             ps.setInt(1, idUsuario);
 
             try (ResultSet rs = ps.executeQuery()) {
-                if (rs.next()) { // 🔹 Solo un resultado
+                if (rs.next()) {
                     proyecto = new Proyecto();
                     proyecto.setIdProyecto(rs.getInt("idProyecto"));
                     proyecto.setNombre(rs.getString("nombre"));
@@ -207,7 +207,6 @@ public List<Proyecto> listar() {
             p.setIdResponsable(rs.getInt("idResponsable"));
             p.setIdOrganizacion(rs.getInt("idOrganizacion"));
 
-            // Construir objeto ResponsableProyecto
             ResponsableProyecto responsable = new ResponsableProyecto();
             responsable.setIdResponsable(rs.getInt("idResponsable"));
             responsable.setNombre(rs.getString("nombreResponsable"));
@@ -215,7 +214,6 @@ public List<Proyecto> listar() {
             responsable.setApeMaterno(rs.getString("apeMaternoResponsable"));
             p.setResponsableProyecto(responsable);
 
-            // Construir objeto Organizacion
             OrganizacionVinculada organizacion = new OrganizacionVinculada();
             organizacion.setIdOrganizacion(rs.getInt("idOrganizacion"));
             organizacion.setNombre(rs.getString("nombreOrganizacion"));
@@ -312,5 +310,24 @@ public List<Proyecto> listar() {
 
     return lista;
 }
+    
+    public static boolean existeNombreProyecto(String nombre) {
+        Connection conexion = ConexionBD.abrirConexion();
+        if (conexion == null) return false;
+
+        String query = "SELECT COUNT(*) FROM proyecto WHERE nombre = ?";
+
+        try {
+            PreparedStatement pstmt = conexion.prepareStatement(query);
+            pstmt.setString(1, nombre);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1) > 0;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 
 }
