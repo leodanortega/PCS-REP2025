@@ -35,7 +35,7 @@ public class FXMLPrincipalProfesorController implements Initializable {
 
     public void setUsuario(Usuario usuarioSesion) {
         this.usuario = usuarioSesion;
-        lblNombreUsuario.setText(usuario.getNombre()); // Mostrar nombre del estudiante
+        lblNombreUsuario.setText(usuario.getNombre());
     }
 
     @FXML

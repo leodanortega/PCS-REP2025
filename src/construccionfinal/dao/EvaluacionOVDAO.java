@@ -32,17 +32,16 @@ public class EvaluacionOVDAO {
         return existeEvaluacion;
     }
 
-    public static int guardarEvaluacion(Map<CriterioEvaluacion, Integer> respuestas, String comentarios, int idExpediente) {
+    public static int guardarEvaluacion(Map<CriterioEvaluacion, Integer> respuestas,  int idExpediente) {
         double puntajeTotal = calcularPuntajeTotal(respuestas);
         int idGenerado = -1;
 
-        String query = "INSERT INTO evaluacion_organizacion_vinculada (puntajeTotalObtenido, comentarios, idExpediente) VALUES (?, ?, ?)";
+        String query = "INSERT INTO evaluacion_organizacion_vinculada (puntajeTotalObtenido, idExpediente) VALUES (?, ?, ?)";
 
         try (Connection conn = ConexionBD.abrirConexion();
              PreparedStatement stmt = conn.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS)) {
 
             stmt.setDouble(1, puntajeTotal);
-            stmt.setString(2, comentarios);
             stmt.setInt(3, idExpediente);
 
             int rowsAffected = stmt.executeUpdate();

@@ -72,7 +72,6 @@ public class FXMLListaEstudiantesController implements Initializable {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/construccionfinal/vistas/Expediente/FXMLConsultarExpedienteEstudiante.fxml"));
             Parent root = loader.load();
 
-            // Obtener el controlador de la nueva ventana
             FXMLConsultarExpedienteEstudianteController controller = loader.getController();
             controller.inicializarDatos(estudiante);
 

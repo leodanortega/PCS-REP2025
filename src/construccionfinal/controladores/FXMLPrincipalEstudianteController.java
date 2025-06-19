@@ -155,11 +155,6 @@ public class FXMLPrincipalEstudianteController implements Initializable {
 
         Estudiante estudiante = estudianteDAO.buscarPorId(usuario.getIdUsuario());
 
-        if (estudiante == null) {
-            Utilidad.mostrarAlertaSimple(Alert.AlertType.ERROR, "Error", "No se encontró al estudiante");
-            return;
-        }
-
         Expediente expediente = expedienteDAO.obtenerExpedientePorEstudiante(estudiante.getIdUsuario());
 
         if (expediente == null) {

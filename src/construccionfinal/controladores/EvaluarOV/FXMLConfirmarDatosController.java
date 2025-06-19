@@ -88,7 +88,7 @@ public class FXMLConfirmarDatosController implements Initializable {
             return;
         }
 
-        int idEvaluacionOV = EvaluacionOVDAO.guardarEvaluacion(respuestas, "", idExpediente);
+        int idEvaluacionOV = EvaluacionOVDAO.guardarEvaluacion(respuestas, idExpediente);
         if (idEvaluacionOV == -1) {
             mostrarAlerta("Error al guardar la evaluación.");
             return;

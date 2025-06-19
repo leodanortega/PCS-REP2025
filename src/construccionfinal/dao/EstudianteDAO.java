@@ -73,13 +73,13 @@ public class EstudianteDAO {
 
     public static ObservableList<Estudiante> listarDatosAcademicos() {
     ObservableList<Estudiante> lista = FXCollections.observableArrayList();
-
-    String sql = "SELECT u.idUsuario, u.nombre, u.apePaterno, u.apeMaterno, u.identificador, " +
-            "e.carrera, e.creditos, e.semestre, e.estado, e.calificacion " +
-            "FROM usuario u " +
-            "INNER JOIN estudiante e ON u.idUsuario = e.idUsuario " +
-            "WHERE u.rol = 'estudiante'";
-
+        String sql = "SELECT u.idUsuario, u.nombre, u.apePaterno, u.apeMaterno, u.identificador, " +
+                "e.carrera, e.creditos, e.semestre, e.estado, e.calificacion " +
+                "FROM usuario u " +
+                "INNER JOIN estudiante e ON u.idUsuario = e.idUsuario " +
+                "INNER JOIN expediente ex ON e.idUsuario = ex.idEstudiante " +
+                "WHERE u.rol = 'estudiante' " +
+                "GROUP BY u.idUsuario";
     try (Connection con = ConexionBD.abrirConexion();
          PreparedStatement ps = con.prepareStatement(sql);
          ResultSet rs = ps.executeQuery()) {
@@ -107,37 +107,6 @@ public class EstudianteDAO {
 
     return lista;
 }
-
-    
-    public static ObservableList<Estudiante> listar() {
-        ObservableList<Estudiante> lista = FXCollections.observableArrayList();
-        String sql = "SELECT idUsuario, nombre, apePaterno, apeMaterno, identificador, correo, telefono " +
-                "FROM usuario WHERE rol = 'estudiante'";
-
-        try (Connection con = ConexionBD.abrirConexion();
-             PreparedStatement ps = con.prepareStatement(sql);
-             ResultSet rs = ps.executeQuery()) {
-
-            while (rs.next()) {
-                Estudiante estudiante = new Estudiante();
-                estudiante.setIdUsuario(rs.getInt("idUsuario"));
-                estudiante.setNombre(rs.getString("nombre"));
-                estudiante.setApePaterno(rs.getString("apePaterno"));
-                estudiante.setApeMaterno(rs.getString("apeMaterno"));
-                estudiante.setIdentificador(rs.getString("identificador"));
-                estudiante.setCorreo(rs.getString("correo"));
-                estudiante.setTelefono(rs.getString("telefono"));
-
-                lista.add(estudiante);
-            }
-
-        } catch (SQLException e) {
-            System.err.println("Error al listar estudiantes: " + e.getMessage());
-        }
-
-        return lista;
-    }
-
 
     public static ObservableList<Estudiante> buscarPorNombre(String filtro) {
         ObservableList<Estudiante> lista = FXCollections.observableArrayList();
