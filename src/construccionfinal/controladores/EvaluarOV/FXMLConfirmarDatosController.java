@@ -5,7 +5,7 @@ import construccionfinal.dao.EvaluacionOVDAO;
 import construccionfinal.dao.ExpedienteDAO;
 import construccionfinal.modelo.pojo.*;
 import construccionfinal.utilidades.Utilidad;
-import construccionfinal.utilidades.UtilidadImagen;
+import construccionfinal.utilidades.UtilidadPDF;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -103,7 +103,6 @@ public class FXMLConfirmarDatosController implements Initializable {
                 })
                 .collect(Collectors.toList());
 
-
         boolean guardadoResultados = CriterioEvaluacionResultadoDAO.guardarResultados(idEvaluacionOV, resultados);
         if (!guardadoResultados) {
             mostrarAlerta("La evaluación se guardó, pero hubo un error al registrar los resultados individuales.");
@@ -111,8 +110,8 @@ public class FXMLConfirmarDatosController implements Initializable {
         }
 
         FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Guardar Evaluación como Imagen");
-        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Archivos PNG", "*.png"));
+        fileChooser.setTitle("Guardar Evaluación como PDF");
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Archivos PDF", "*.pdf"));
         File archivoSeleccionado = fileChooser.showSaveDialog((Stage) vbCriteriosEvaluados.getScene().getWindow());
 
         if (archivoSeleccionado == null) {
@@ -120,9 +119,9 @@ public class FXMLConfirmarDatosController implements Initializable {
             return;
         }
 
-        UtilidadImagen.generarImagen(archivoSeleccionado.getAbsolutePath(), estudiante, proyecto, organizacion, responsable, respuestas);
+        UtilidadPDF.generarPDF(archivoSeleccionado.getAbsolutePath(), estudiante, proyecto, organizacion, responsable, respuestas);
 
-        mostrarAlerta("Evaluación guardada y resultados registrados correctamente.");
+        mostrarAlerta("Evaluación guardada en PDF y resultados registrados correctamente.");
         ((Stage) vbCriteriosEvaluados.getScene().getWindow()).close();
     }
 

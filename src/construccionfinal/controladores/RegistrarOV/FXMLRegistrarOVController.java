@@ -37,10 +37,20 @@ public class FXMLRegistrarOVController {
             mostrarAlerta(Alert.AlertType.WARNING, "Campos vacíos", "Existen campos inválidos, por favor corregir");
             return;
         }
+
+        if (!tfNombre.getText().matches("[A-Za-zÁÉÍÓÚáéíóúñÑ \\-()]+")) {
+            mostrarAlerta(Alert.AlertType.WARNING, "Nombre inválido", "El nombre contiene caracteres no permitidos.");
+            return;
+        }
         if (!tfTelefono.getText().matches("\\d{10}")) {
             mostrarAlerta(Alert.AlertType.WARNING, "Teléfono inválido", "El número de teléfono debe contener exactamente 10 dígitos numéricos.");
             return;
         }
+        if (!esEnteroPositivo(tfTelefono.getText())) {
+            mostrarAlerta(Alert.AlertType.WARNING, "Valor inválido", "El número de teléfono debe contener exactamente 10 dígitos numéricos.");
+            return;
+        }
+
 
         if (!OrganizacionVinculadaDAO.hayConexion()) {
             mostrarAlerta(Alert.AlertType.ERROR, "Sin conexión", "Error: No hay conexión con la base de datos");
@@ -90,6 +100,14 @@ public class FXMLRegistrarOVController {
         }
     }
 
+    private boolean esEnteroPositivo(String texto) {
+        try {
+            int valor = Integer.parseInt(texto);
+            return valor > 0;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
 
 
     @FXML

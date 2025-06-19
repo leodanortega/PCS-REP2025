@@ -36,13 +36,13 @@ public class EvaluacionOVDAO {
         double puntajeTotal = calcularPuntajeTotal(respuestas);
         int idGenerado = -1;
 
-        String query = "INSERT INTO evaluacion_organizacion_vinculada (puntajeTotalObtenido, idExpediente) VALUES (?, ?, ?)";
+        String query = "INSERT INTO evaluacion_organizacion_vinculada (puntajeTotalObtenido, idExpediente) VALUES (?,?)";
 
         try (Connection conn = ConexionBD.abrirConexion();
              PreparedStatement stmt = conn.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS)) {
 
             stmt.setDouble(1, puntajeTotal);
-            stmt.setInt(3, idExpediente);
+            stmt.setInt(2, idExpediente);
 
             int rowsAffected = stmt.executeUpdate();
             if (rowsAffected > 0) {

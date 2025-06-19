@@ -79,62 +79,25 @@ public class ResponsableProyectoDAO {
         }
     }
 
-    public boolean modificar(ResponsableProyecto rp) {
-        String sql = "UPDATE responsable_proyecto SET nombre = ?, apePaterno = ?, apeMaterno = ?, correo = ?, telefono = ?, puesto = ?, idOrganizacion = ? WHERE idResponsable = ?";
-        Connection con = null;
-        PreparedStatement ps = null;
+    public boolean existeResponsable(String nombre, String apePaterno, String apeMaterno) {
+        String sql = "SELECT COUNT(*) FROM responsable_proyecto WHERE nombre = ? AND apePaterno = ? AND apeMaterno = ?";
 
-        try {
-            con = ConexionBD.abrirConexion();
-            ps = con.prepareStatement(sql);
+        try (Connection con = ConexionBD.abrirConexion();
+             PreparedStatement ps = con.prepareStatement(sql)) {
 
-            ps.setString(1, rp.getNombre());
-            ps.setString(2, rp.getApePaterno());
-            ps.setString(3, rp.getApeMaterno());
-            ps.setString(4, rp.getCorreo());
-            ps.setString(5, rp.getTelefono());
-            ps.setString(6, rp.getPuesto());
-            ps.setInt(7, rp.getIdOrganizacion());
-            ps.setInt(8, rp.getIdResponsable());
+            ps.setString(1, nombre);
+            ps.setString(2, apePaterno);
+            ps.setString(3, apeMaterno);
 
-            int filas = ps.executeUpdate();
-            return filas > 0;
-
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt(1) > 0;
+                }
+            }
         } catch (SQLException e) {
             e.printStackTrace();
-            return false;
-        } finally {
-            try {
-                if (ps != null) ps.close();
-            } catch (SQLException ex) {
-                ex.printStackTrace();
-            }
         }
-    }
-
-    public boolean eliminar(int idResponsable) {
-        String sql = "DELETE FROM responsable_proyecto WHERE idResponsable = ?";
-        Connection con = null;
-        PreparedStatement ps = null;
-
-        try {
-            con = ConexionBD.abrirConexion();
-            ps = con.prepareStatement(sql);
-            ps.setInt(1, idResponsable);
-
-            int filas = ps.executeUpdate();
-            return filas > 0;
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
-        } finally {
-            try {
-                if (ps != null) ps.close();
-            } catch (SQLException ex) {
-                ex.printStackTrace();
-            }
-        }
+        return false;
     }
 
     public List<ResponsableProyecto> buscarPorNombre(String nombreBusqueda) {

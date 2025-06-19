@@ -134,7 +134,7 @@ public class FXMLFormularioProyectoController implements Initializable {
             return false;
         }
 
-        if (!nombre.matches("[A-Za-zÁÉÍÓÚáéíóúñÑ0-9 .,\\-()]+")) {
+        if (!nombre.matches("[A-Za-zÁÉÍÓÚáéíóúñÑ0-9 \\-()]+")) {
             mostrarAlerta(Alert.AlertType.WARNING, "Nombre inválido", "El nombre contiene caracteres no permitidos.");
             return false;
         }
@@ -150,7 +150,7 @@ public class FXMLFormularioProyectoController implements Initializable {
         }
         
         if (descripcion.isEmpty() || descripcion.length() < 10 || descripcion.length() > 500) {
-            mostrarAlerta(Alert.AlertType.WARNING, "Descripción inválida", "Debe tener entre 10 y 1000 caracteres.");
+            mostrarAlerta(Alert.AlertType.WARNING, "Descripción inválida", "Debe tener entre 10 y 500 caracteres.");
             return false;
         }
 
@@ -175,7 +175,7 @@ public class FXMLFormularioProyectoController implements Initializable {
             return false;
         }
 
-        if (!departamento.matches("[A-Za-zÁÉÍÓÚáéíóúñÑ0-9 .,\\-()]+")) {
+        if (!departamento.matches("[A-Za-zÁÉÍÓÚáéíóúñÑ0-9 \\-()]+")) {
             mostrarAlerta(Alert.AlertType.WARNING, "Departamento inválido", "El nombre del departamento contiene caracteres no permitidos.");
             return false;
         }

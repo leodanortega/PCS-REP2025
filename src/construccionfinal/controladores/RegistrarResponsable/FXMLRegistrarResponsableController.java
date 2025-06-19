@@ -40,6 +40,21 @@ public class FXMLRegistrarResponsableController {
             mostrarAlerta(Alert.AlertType.WARNING, "Campos vacíos", "Existen campos inválidos, por favor corregir");
             return;
         }
+        if (!tfNombre.getText().matches("[A-Za-zÁÉÍÓÚáéíóúñÑ \\-()]+")) {
+            mostrarAlerta(Alert.AlertType.WARNING, "Nombre inválido", "El nombre contiene caracteres no permitidos.");
+            return;
+        }
+
+        if (!tfApePaterno.getText().matches("[A-Za-zÁÉÍÓÚáéíóúñÑ \\-()]+")) {
+            mostrarAlerta(Alert.AlertType.WARNING, "Nombre inválido", "El nombre contiene caracteres no permitidos.");
+            return;
+        }
+
+        if (!tfApeMaterno.getText().matches("[A-Za-zÁÉÍÓÚáéíóúñÑ \\-()]+")) {
+            mostrarAlerta(Alert.AlertType.WARNING, "Nombre inválido", "El nombre contiene caracteres no permitidos.");
+            return;
+        }
+
         if (!tfTelefono.getText().matches("\\d{10}")) {
             mostrarAlerta(Alert.AlertType.WARNING, "Teléfono inválido", "El número de teléfono debe contener exactamente 10 dígitos numéricos.");
             return;
@@ -55,6 +70,12 @@ public class FXMLRegistrarResponsableController {
         responsableProyecto.setCorreo(tfCorreo.getText());
         responsableProyecto.setTelefono(tfTelefono.getText());
         responsableProyecto.setPuesto(tfPuesto.getText());
+
+        ResponsableProyectoDAO dao = new ResponsableProyectoDAO();
+        if (dao.existeResponsable(responsableProyecto.getNombre(), responsableProyecto.getApePaterno(), responsableProyecto.getApeMaterno())) {
+            mostrarAlerta(Alert.AlertType.WARNING, "Duplicado", "Ya existe un responsable con el mismo nombre y apellidos.");
+            return;
+        }
 
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/construccionfinal/vistas/RegistrarResponsable/FXMLSeleccionarOrganizacionVinculada.fxml"));
