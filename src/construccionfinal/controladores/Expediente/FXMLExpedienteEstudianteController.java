@@ -18,10 +18,15 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import javafx.event.ActionEvent;
 
+import java.awt.Desktop;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
 import java.util.ResourceBundle;
+import javafx.util.Callback;
+import javafx.event.EventHandler;
 
 public class FXMLExpedienteEstudianteController implements Initializable {
 
@@ -37,16 +42,7 @@ public class FXMLExpedienteEstudianteController implements Initializable {
     @FXML private TableColumn<DocumentoInicial, String> tcEstadoDI;
     @FXML private TableColumn<DocumentoInicial, String> tcTipoDI;
     @FXML private TableColumn<DocumentoInicial, Date> tcFechaDI;
-    @FXML private TableColumn<?, ?> tcArchivoDI;
-
-    @FXML private TableView<?> tvReportes;
-    @FXML private TableView<?> tvDocumentosFinales;
-    @FXML private TableColumn<?, ?> tcNombreR;
-    @FXML private TableColumn<?, ?> tcHorasR;
-    @FXML private TableColumn<?, ?> tcEstadoR;
-    @FXML private TableColumn<?, ?> tcCalificacionR;
-    @FXML private TableColumn<?, ?> tcFechaR;
-    @FXML private TableColumn<?, ?> tcArchivoR;
+    @FXML private TableColumn<DocumentoInicial, Void> tcArchivoDI;
 
     private Estudiante estudiante;
 
@@ -74,15 +70,63 @@ public class FXMLExpedienteEstudianteController implements Initializable {
     }
 
     private void configurarColumnasDocumentosIniciales() {
-        tcNombreDI.setCellValueFactory(new PropertyValueFactory<>("nombre"));
-        tcEstadoDI.setCellValueFactory(new PropertyValueFactory<>("estado"));
-        tcTipoDI.setCellValueFactory(new PropertyValueFactory<>("tipoDocumento"));
-        tcFechaDI.setCellValueFactory(new PropertyValueFactory<>("fecha"));
+        tcNombreDI.setCellValueFactory(new PropertyValueFactory<DocumentoInicial, String>("nombre"));
+        tcEstadoDI.setCellValueFactory(new PropertyValueFactory<DocumentoInicial, String>("estado"));
+        tcTipoDI.setCellValueFactory(new PropertyValueFactory<DocumentoInicial, String>("tipoDocumento"));
+        tcFechaDI.setCellValueFactory(new PropertyValueFactory<DocumentoInicial, Date>("fecha"));
+
+        // Configurar columna con botón para ver PDF (compatible con Java 8)
+        tcArchivoDI.setCellFactory(new Callback<TableColumn<DocumentoInicial, Void>, TableCell<DocumentoInicial, Void>>() {
+            @Override
+            public TableCell<DocumentoInicial, Void> call(final TableColumn<DocumentoInicial, Void> param) {
+                return new TableCell<DocumentoInicial, Void>() {
+                    private final Button btnVer = new Button("Ver");
+
+                    {
+                        btnVer.setOnAction(new EventHandler<ActionEvent>() {
+                            @Override
+                            public void handle(ActionEvent event) {
+                                DocumentoInicial doc = getTableView().getItems().get(getIndex());
+                                mostrarPDF(doc);
+                            }
+                        });
+                    }
+
+                    @Override
+                    protected void updateItem(Void item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (empty) {
+                            setGraphic(null);
+                        } else {
+                            setGraphic(btnVer);
+                        }
+                    }
+                };
+            }
+        });
     }
 
     private void cargarDocumentosIniciales(int idExpediente) {
         ObservableList<DocumentoInicial> documentos = DocumentoInicialDAO.obtenerDocumentosPorIdExpediente(idExpediente);
         tvDocumentosIniciales.setItems(documentos);
+    }
+
+    private void mostrarPDF(DocumentoInicial doc) {
+        try {
+            File temp = File.createTempFile("doc_" + doc.getIdDocumentoInicial(), ".pdf");
+            FileOutputStream fos = new FileOutputStream(temp);
+            fos.write(doc.getArchivo());
+            fos.close();
+
+            if (Desktop.isDesktopSupported()) {
+                Desktop.getDesktop().open(temp);
+            } else {
+                mostrarAlerta("No soportado", "Tu sistema no puede abrir archivos automáticamente.", Alert.AlertType.WARNING);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            mostrarAlerta("Error", "No se pudo abrir el archivo PDF.", Alert.AlertType.ERROR);
+        }
     }
 
     @FXML
@@ -91,7 +135,6 @@ public class FXMLExpedienteEstudianteController implements Initializable {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/construccionfinal/vistas/EntregarDocumentosIniciales/FXMLEntregarDocumento.fxml"));
             Parent root = loader.load();
 
-            // Obtener el controlador y pasar el id del expediente
             FXMLEntregarDocumentoController controller = loader.getController();
             Expediente expediente = ExpedienteDAO.obtenerExpedientePorEstudiante(estudiante.getIdUsuario());
 
