@@ -149,6 +149,7 @@ public class FXMLExpedienteEstudianteController implements Initializable {
             Stage stage = new Stage();
             stage.setTitle("Entregar Documentos Iniciales");
             stage.setScene(new Scene(root));
+            stage.setOnHiding(e -> cargarDocumentosIniciales(expediente.getIdExpediente()));
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
