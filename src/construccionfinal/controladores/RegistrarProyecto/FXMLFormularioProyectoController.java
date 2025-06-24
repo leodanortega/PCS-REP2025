@@ -42,8 +42,22 @@ public class FXMLFormularioProyectoController implements Initializable {
     private void cargarOrganizaciones() {
         List<OrganizacionVinculada> lista = new OrganizacionVinculadaDAO().listar();
         cbOrganizaciones.setItems(FXCollections.observableArrayList(lista));
+
+        cbOrganizaciones.setOnAction(event -> {
+            OrganizacionVinculada seleccionada = cbOrganizaciones.getValue();
+            if (seleccionada != null) {
+                cargarResponsablesPorOrganizacion(seleccionada.getIdOrganizacion());
+            } else {
+                cbResponsables.getItems().clear();
+            }
+        });
     }
 
+    private void cargarResponsablesPorOrganizacion(int idOrganizacion) {
+        List<ResponsableProyecto> lista = new ResponsableProyectoDAO().listarPorOrganizacion(idOrganizacion);
+        cbResponsables.setItems(FXCollections.observableArrayList(lista));
+    }
+    
     private void cargarResponsables() {
         List<ResponsableProyecto> lista = new ResponsableProyectoDAO().listar();
         cbResponsables.setItems(FXCollections.observableArrayList(lista));

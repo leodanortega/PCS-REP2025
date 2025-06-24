@@ -1,84 +1,81 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.geometry.Pos?>
 
-<BorderPane prefHeight="600.0" prefWidth="750.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="construccionfinal.controladores.RegistrarProyecto.FXMLConfirmarDatosProyectoController">
+<BorderPane prefHeight="600.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="construccionfinal.controladores.RegistrarProyecto.FXMLConfirmarDatosProyectoController">
 
     <!-- Barra superior con título centrado -->
     <top>
         <AnchorPane prefHeight="80.0" BorderPane.alignment="CENTER">
             <children>
-                <Label layoutX="250.0" layoutY="25.0"
-                       text="Confirmar Datos del Proyecto"
-                       style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #2C3E50;" />
+                <Label layoutX="250.0" layoutY="25.0" style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #2C3E50;" text="Confirmar Datos del Proyecto" />
             </children>
         </AnchorPane>
     </top>
 
     <!-- Contenido centrado -->
     <center>
-        <VBox spacing="20" alignment="CENTER">
+        <VBox alignment="TOP_CENTER" spacing="20.0" BorderPane.alignment="TOP_CENTER">
             <children>
 
                 <!-- Grid de datos centrado -->
-                <GridPane hgap="25" vgap="18" alignment="CENTER">
+                <GridPane alignment="TOP_CENTER" hgap="25" vgap="18">
                     <columnConstraints>
                         <ColumnConstraints halignment="CENTER" maxWidth="300.0" minWidth="200.0" prefWidth="250.0" />
                         <ColumnConstraints hgrow="ALWAYS" maxWidth="350.0" minWidth="200.0" prefWidth="300.0" />
                     </columnConstraints>
                     <children>
-                        <Label text="Organización Vinculada:" GridPane.columnIndex="0" GridPane.rowIndex="0"
-                               style="-fx-font-size: 18px; -fx-font-weight: bold;" />
-                        <Label fx:id="lbOrganizacionVinculada" GridPane.columnIndex="1" GridPane.rowIndex="0"
-                               style="-fx-font-size: 18px; -fx-font-style: italic;" />
+                        <Label style="-fx-font-size: 18px; -fx-font-weight: bold;" text="Organización Vinculada:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                        <Label fx:id="lbOrganizacionVinculada" style="-fx-font-size: 18px; -fx-font-style: italic;" GridPane.columnIndex="1" GridPane.rowIndex="0" />
 
-                        <Label text="Responsable de Proyecto:" GridPane.columnIndex="0" GridPane.rowIndex="1"
-                               style="-fx-font-size: 18px; -fx-font-weight: bold;" />
-                        <Label fx:id="lbResponsableProyecto" GridPane.columnIndex="1" GridPane.rowIndex="1"
-                               style="-fx-font-size: 18px; -fx-font-style: italic;" />
+                        <Label style="-fx-font-size: 18px; -fx-font-weight: bold;" text="Responsable de Proyecto:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                        <Label fx:id="lbResponsableProyecto" style="-fx-font-size: 18px; -fx-font-style: italic;" GridPane.columnIndex="1" GridPane.rowIndex="1" />
 
-                        <Label text="Nombre del Proyecto:" GridPane.columnIndex="0" GridPane.rowIndex="2"
-                               style="-fx-font-size: 18px; -fx-font-weight: bold;" />
-                        <Label fx:id="lbNombre" GridPane.columnIndex="1" GridPane.rowIndex="2"
-                               style="-fx-font-size: 18px; -fx-font-style: italic;" />
+                        <Label style="-fx-font-size: 18px; -fx-font-weight: bold;" text="Nombre del Proyecto:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+                        <Label fx:id="lbNombre" style="-fx-font-size: 18px; -fx-font-style: italic;" GridPane.columnIndex="1" GridPane.rowIndex="2" />
 
-                        <Label text="Departamento:" GridPane.columnIndex="0" GridPane.rowIndex="3"
-                               style="-fx-font-size: 18px; -fx-font-weight: bold;" />
-                        <Label fx:id="lbDepartamento" GridPane.columnIndex="1" GridPane.rowIndex="3"
-                               style="-fx-font-size: 18px; -fx-font-style: italic;" />
+                        <Label style="-fx-font-size: 18px; -fx-font-weight: bold;" text="Departamento:" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+                        <Label fx:id="lbDepartamento" style="-fx-font-size: 18px; -fx-font-style: italic;" GridPane.columnIndex="1" GridPane.rowIndex="3" />
 
-                        <Label text="Descripción:" GridPane.columnIndex="0" GridPane.rowIndex="4"
-                               style="-fx-font-size: 18px; -fx-font-weight: bold;" />
-                        <Label fx:id="lbDescripcion" GridPane.columnIndex="1" GridPane.rowIndex="4"
-                               style="-fx-font-size: 18px; -fx-font-style: italic;" />
+                        <Label style="-fx-font-size: 18px; -fx-font-weight: bold;" text="Descripción:" GridPane.columnIndex="0" GridPane.rowIndex="4" />
+                        <Label fx:id="lbDescripcion" style="-fx-font-size: 18px; -fx-font-style: italic;" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="4" />
 
-                        <Label text="Metodología:" GridPane.columnIndex="0" GridPane.rowIndex="5"
-                               style="-fx-font-size: 18px; -fx-font-weight: bold;" />
-                        <Label fx:id="lbMetodologia" GridPane.columnIndex="1" GridPane.rowIndex="5"
-                               style="-fx-font-size: 18px; -fx-font-style: italic;" />
+                        <Label style="-fx-font-size: 18px; -fx-font-weight: bold;" text="Metodología:" GridPane.columnIndex="0" GridPane.rowIndex="5" />
+                        <Label fx:id="lbMetodologia" style="-fx-font-size: 18px; -fx-font-style: italic;" GridPane.columnIndex="1" GridPane.rowIndex="5" />
 
-                        <Label text="Espacios Disponibles:" GridPane.columnIndex="0" GridPane.rowIndex="6"
-                               style="-fx-font-size: 18px; -fx-font-weight: bold;" />
-                        <Label fx:id="lbEspacios" GridPane.columnIndex="1" GridPane.rowIndex="6"
-                               style="-fx-font-size: 18px; -fx-font-style: italic;" />
+                        <Label style="-fx-font-size: 18px; -fx-font-weight: bold;" text="Espacios Disponibles:" GridPane.columnIndex="0" GridPane.rowIndex="6" />
+                        <Label fx:id="lbEspacios" style="-fx-font-size: 18px; -fx-font-style: italic;" GridPane.columnIndex="1" GridPane.rowIndex="6" />
                     </children>
+               <rowConstraints>
+                  <RowConstraints />
+                  <RowConstraints />
+                  <RowConstraints />
+                  <RowConstraints />
+                  <RowConstraints />
+                  <RowConstraints />
+                  <RowConstraints />
+               </rowConstraints>
                 </GridPane>
 
             </children>
+         <BorderPane.margin>
+            <Insets top="20.0" />
+         </BorderPane.margin>
         </VBox>
     </center>
 
     <!-- Botones más accesibles y centrados -->
     <bottom>
-        <HBox alignment="CENTER" spacing="50" BorderPane.alignment="CENTER">
+        <HBox alignment="CENTER" prefHeight="100.0" spacing="100.0" BorderPane.alignment="CENTER">
             <children>
                 <Button onAction="#clicAceptar" style="-fx-background-color: #28a745; -fx-text-fill: white; -fx-font-size: 18px; -fx-font-weight: bold; -fx-background-radius: 10; -fx-padding: 10 20;" text="✅ Aceptar" />
 
-                <Button onAction="#clicCancelar" style="-fx-background-color: #dc3545; -fx-text-fill: white; -fx-font-size: 18px; -fx-font-weight: bold; -fx-background-radius: 10; -fx-padding: 10 20;" text="❌ Cancelar" />
+                      <Button onAction="#clicCancelar" style="-fx-background-color: #dc3545; -fx-text-fill: white; -fx-font-size: 18px; -fx-font-weight: bold; -fx-background-radius: 10; -fx-padding: 10 20;" text="❌ Cancelar" />
             </children>
         </HBox>
     </bottom>

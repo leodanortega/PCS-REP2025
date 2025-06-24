@@ -177,4 +177,34 @@ public class ResponsableProyectoDAO {
 
         return responsable;
     }
+    
+    public List<ResponsableProyecto> listarPorOrganizacion(int idOrganizacion) {
+    List<ResponsableProyecto> responsables = new ArrayList<>();
+    String query = "SELECT * FROM responsable_proyecto WHERE idOrganizacion = ?";
+
+    try (Connection conn = ConexionBD.abrirConexion();
+         PreparedStatement stmt = conn.prepareStatement(query)) {
+        
+        stmt.setInt(1, idOrganizacion);
+        ResultSet rs = stmt.executeQuery();
+
+        while (rs.next()) {
+            ResponsableProyecto r = new ResponsableProyecto();
+            r.setIdResponsable(rs.getInt("idResponsable"));
+            r.setNombre(rs.getString("nombre"));
+            r.setApePaterno(rs.getString("apePaterno"));
+            r.setApeMaterno(rs.getString("apeMaterno"));
+            r.setCorreo(rs.getString("correo"));
+            r.setTelefono(rs.getString("telefono"));
+            r.setPuesto(rs.getString("puesto"));
+            r.setIdOrganizacion(rs.getInt("idOrganizacion"));
+            responsables.add(r);
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+
+    return responsables;
+}
+
 }
