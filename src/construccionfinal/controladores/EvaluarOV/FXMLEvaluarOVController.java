@@ -64,17 +64,25 @@ public class FXMLEvaluarOVController implements Initializable {
 
     private void cargarCriterios(List<CriterioEvaluacion> criterios) {
         vbCriterios.getChildren().clear();
+
         for (CriterioEvaluacion criterio : criterios) {
             Label lblCriterio = new Label(criterio.getDescripcion());
+            lblCriterio.setWrapText(true);
+
             ToggleGroup toggleGroup = new ToggleGroup();
-            HBox hboxOpciones = new HBox(10);
-            hboxOpciones.getChildren().add(lblCriterio);
+
+            HBox hboxOpciones = new HBox(15);
             for (int i = 1; i <= 5; i++) {
                 RadioButton rb = new RadioButton(String.valueOf(i));
                 rb.setToggleGroup(toggleGroup);
                 hboxOpciones.getChildren().add(rb);
             }
-            vbCriterios.getChildren().add(hboxOpciones);
+
+            VBox bloque = new VBox(5);
+            bloque.getChildren().addAll(lblCriterio, hboxOpciones);
+            bloque.setStyle("-fx-padding: 1;");
+
+            vbCriterios.getChildren().add(bloque);
             criteriosToggleGroups.put(criterio, toggleGroup);
         }
     }

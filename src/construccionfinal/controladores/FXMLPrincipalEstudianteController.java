@@ -64,11 +64,16 @@ public class FXMLPrincipalEstudianteController implements Initializable {
             Expediente expediente = expedienteDAO.obtenerExpedientePorEstudiante(estudiante.getIdUsuario());
 
             if (expediente == null) {
-                Utilidad.mostrarAlertaSimple(Alert.AlertType.WARNING, "Aún no puedes realizar esta operación", "Aún no puedes realizar esta operación");
+                Utilidad.mostrarAlertaSimple(Alert.AlertType.WARNING, "Aún no puedes realizar esta operación", "No tienes asignado un proyecto");
                 return;
             }
 
             int idExpediente = expediente.getIdExpediente();
+            int horas = ExpedienteDAO.obtenerHorasPorExpediente(idExpediente);
+            if (horas < 420) {
+                Utilidad.mostrarAlertaSimple(Alert.AlertType.WARNING, "Aún no puedes realizar esta operación", "No cumples 420 horas como mínimo para poder evaluar la organización .");
+                return;
+            }
 
             if (EvaluacionOVDAO.tieneEvaluacionOrganizacion(idExpediente)) {
                 Utilidad.mostrarAlertaSimple(Alert.AlertType.WARNING, "Evaluación ya realizada", "Ya realizaste la evaluación");

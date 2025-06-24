@@ -39,6 +39,30 @@ public class ExpedienteDAO {
         return expediente;
     }
 
+    public static int obtenerHorasPorExpediente(int idExpediente) {
+        int horas = 0;
+        String sql = "SELECT horas FROM expediente WHERE idExpediente = ?";
+
+        try (Connection con = ConexionBD.abrirConexion();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setInt(1, idExpediente);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    String horasStr = rs.getString("horas");
+                    if (horasStr != null && horasStr.matches("\\d+")) {
+                        horas = Integer.parseInt(horasStr);
+                    }
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return horas;
+    }
+
     public static int crearExpediente(int idEstudiante, int idGrupoEE, int idPeriodo,
                                       String calificaciones, String horas, String informe, int idDocumentoInicial) {
         int idExpediente = -1;

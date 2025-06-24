@@ -1,45 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets?>
 
-<AnchorPane prefHeight="600" prefWidth="800" style="-fx-background-color: #f4f4f4;"
-            xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="construccionfinal.controladores.RegistrarResponsable.FXMLSeleccionarOrganizacionVinculadaController">
-
-    <!-- Título -->
-    <Label layoutX="30" layoutY="20" style="-fx-font-size: 26px; -fx-font-weight: bold; -fx-text-fill: #2C3E50;"
-           text="Seleccionar Organización Vinculada" />
-
-    <!-- Campo de búsqueda -->
-    <TextField fx:id="txtBuscar" layoutX="30" layoutY="70" prefWidth="740"
-               promptText="🔍 Buscar organización por nombre"
-               style="-fx-font-size: 15px; -fx-background-color: #FFFFFF; -fx-background-radius: 8; -fx-border-color: #ccc; -fx-border-radius: 8;" />
-
-    <!-- Tabla de Organizaciones -->
-    <TableView fx:id="tablaOrganizaciones" layoutX="30" layoutY="120" prefHeight="350" prefWidth="740"
-               style="-fx-background-color: white; -fx-border-color: #ccc; -fx-border-radius: 8;">
-        <columns>
-            <TableColumn fx:id="colNombre" prefWidth="170" text="Nombre" />
-            <TableColumn fx:id="colCorreo" prefWidth="170" text="Correo" />
-            <TableColumn fx:id="colRFC" prefWidth="120" text="RFC" />
-            <TableColumn fx:id="colTelefono" prefWidth="130" text="Teléfono" />
-            <TableColumn fx:id="colTipo" prefWidth="150" text="Tipo" />
-        </columns>
-    </TableView>
-
-    <!-- Botones Aceptar y Cancelar -->
-    <HBox alignment="CENTER" layoutX="280.0" layoutY="500.0" prefHeight="50" spacing="40">
-        <children>
-            <Button fx:id="btnAceptar" onAction="#clicAceptar" prefHeight="40" prefWidth="140"
-                    style="-fx-background-color: #28a745; -fx-text-fill: white; -fx-font-size: 16px; -fx-font-weight: bold; -fx-background-radius: 10;"
-                    text="✅ Aceptar" />
-
-            <Button fx:id="btnCancelar" onAction="#clicCancelar" prefHeight="40" prefWidth="140"
-                    style="-fx-background-color: #dc3545; -fx-text-fill: white; -fx-font-size: 16px; -fx-font-weight: bold; -fx-background-radius: 10;"
-                    text="❌ Cancelar" />
-        </children>
-    </HBox>
+<AnchorPane prefHeight="600" prefWidth="800" style="-fx-background-color: #f4f4f4;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="construccionfinal.controladores.RegistrarResponsable.FXMLSeleccionarOrganizacionVinculadaController">
+   <children>
+   
+       <!-- Título -->
+       <Label layoutX="30" layoutY="20" style="-fx-font-size: 26px; -fx-font-weight: bold; -fx-text-fill: #2C3E50;" text="Seleccionar Organización Vinculada" />
+   
+       <!-- Campo de búsqueda -->
+       <TextField fx:id="txtBuscar" layoutX="30" layoutY="70" prefWidth="740" promptText="🔍 Buscar organización por nombre" style="-fx-font-size: 15px; -fx-background-color: #FFFFFF; -fx-background-radius: 8; -fx-border-color: #ccc; -fx-border-radius: 8;" />
+   
+       <!-- Tabla de Organizaciones -->
+       <TableView fx:id="tablaOrganizaciones" layoutX="30" layoutY="120" prefHeight="350" prefWidth="740" style="-fx-background-color: white; -fx-border-color: #ccc; -fx-border-radius: 8;">
+           <columns>
+               <TableColumn fx:id="colNombre" prefWidth="170" text="Nombre" />
+               <TableColumn fx:id="colCorreo" prefWidth="170" text="Correo" />
+               <TableColumn fx:id="colRFC" prefWidth="120" text="RFC" />
+               <TableColumn fx:id="colTelefono" prefWidth="130" text="Teléfono" />
+               <TableColumn fx:id="colTipo" prefWidth="150" text="Tipo" />
+           </columns>
+       </TableView>
+   
+       <!-- Botones Aceptar y Cancelar -->
+       <HBox alignment="CENTER" layoutX="280.0" layoutY="500.0" prefHeight="50" spacing="40">
+           <children>
+               <Button fx:id="btnAceptar" onAction="#clicAceptar" prefHeight="40" prefWidth="140" style="-fx-background-color: #28a745; -fx-text-fill: white; -fx-font-size: 16px; -fx-font-weight: bold; -fx-background-radius: 10;" text="✅ Aceptar" />
+   
+               <Button fx:id="btnCancelar" onAction="#clicCancelar" prefHeight="40" prefWidth="140" style="-fx-background-color: #007bff; -fx-text-fill: white; -fx-font-size: 16px; -fx-font-weight: bold; -fx-background-radius: 10;" text="✏️ Modificar" />
+           </children>
+       </HBox>
+   </children>
 
 </AnchorPane>

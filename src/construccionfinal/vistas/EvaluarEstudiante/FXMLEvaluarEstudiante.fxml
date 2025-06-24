@@ -6,7 +6,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.geometry.Pos?>
 
-<AnchorPane prefHeight="618.0" prefWidth="1201.0" style="-fx-background-color: #f4f4f4;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="construccionfinal.controladores.EvaluarEstudiante.FXMLEvaluarEstudianteController">
+<AnchorPane prefHeight="618.0" prefWidth="1301.0" style="-fx-background-color: #f4f4f4;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="construccionfinal.controladores.EvaluarEstudiante.FXMLEvaluarEstudianteController">
 
     <children>
 
@@ -14,14 +14,14 @@
         <Label layoutX="30" layoutY="20" style="-fx-font-size: 26px; -fx-font-weight: bold; -fx-text-fill: #333;" text="Evaluación de Estudiante" />
 
         <!-- Tabla de Evaluación -->
-        <TableView fx:id="tablaEvaluacion" layoutX="30.0" layoutY="70.0" prefHeight="470.0" prefWidth="1132.0" style="-fx-background-color: white; -fx-border-color: #ccc; -fx-border-radius: 8;">
+        <TableView fx:id="tablaEvaluacion" layoutX="30.0" layoutY="70.0" prefHeight="470.0" prefWidth="1235.0" style="-fx-background-color: white; -fx-border-color: #ccc; -fx-border-radius: 8;">
             <columns>
-                <TableColumn fx:id="colCriterio" prefWidth="299.0" text="Criterio / Puntaje" />
-                <TableColumn fx:id="colCompetente" prefWidth="161.0" text="Competente (9-10)" />
-                <TableColumn fx:id="colIndependiente" prefWidth="201.0" text="Independiente (8-9)" />
-                <TableColumn fx:id="colBasicoAvanzado" prefWidth="165.0" text="Básico Avanzado (7-8)" />
-                <TableColumn fx:id="colBasicoUmbral" prefWidth="159.0" text="Básico Umbral (6-7)" />
-                <TableColumn fx:id="colNoCompetente" prefWidth="145.0" text="No Competente (5)" />
+                <TableColumn fx:id="colCriterio" prefWidth="523.0" text="Criterio / Puntaje" />
+                <TableColumn fx:id="colCompetente" prefWidth="149.0" text="Competente (9-10)" />
+                <TableColumn fx:id="colIndependiente" prefWidth="167.0" text="Independiente (8-9)" />
+                <TableColumn fx:id="colBasicoAvanzado" prefWidth="139.0" text="Básico Avanzado (7-8)" />
+                <TableColumn fx:id="colBasicoUmbral" prefWidth="128.0" text="Básico (6-7)" />
+                <TableColumn fx:id="colNoCompetente" prefWidth="127.0" text="No Competente (5)" />
             </columns>
         </TableView>
 

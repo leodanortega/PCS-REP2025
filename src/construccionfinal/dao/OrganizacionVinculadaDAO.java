@@ -123,12 +123,12 @@ public class OrganizacionVinculadaDAO {
         return lista;
     }
 
-    public boolean existeNombre(String nombre) {
-        String sql = "SELECT COUNT(*) FROM organizacion_vinculada WHERE nombre = ?";
+    public boolean existeNombre(String RFC){
+        String sql = "SELECT COUNT(*) FROM organizacion_vinculada WHERE RFC = ?";
         try (Connection con = ConexionBD.abrirConexion();
              PreparedStatement ps = con.prepareStatement(sql)) {
 
-            ps.setString(1, nombre);
+            ps.setString(1, RFC);
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
                     int count = rs.getInt(1);

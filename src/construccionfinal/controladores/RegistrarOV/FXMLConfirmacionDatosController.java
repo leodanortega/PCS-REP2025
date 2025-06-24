@@ -23,6 +23,7 @@ public class FXMLConfirmacionDatosController {
         lblNombre.setText(org.getNombre());
         lblCorreo.setText(org.getCorreo());
         lblDescripcion.setText(org.getDescripcion());
+        lblDescripcion.setWrapText(true);
         lblRFC.setText(org.getRFC());
         lblTelefono.setText(org.getTelefono());
         lblTipo.setText(org.getTipo());

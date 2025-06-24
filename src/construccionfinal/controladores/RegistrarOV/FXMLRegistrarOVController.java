@@ -42,6 +42,27 @@ public class FXMLRegistrarOVController {
             mostrarAlerta(Alert.AlertType.WARNING, "Nombre inválido", "El nombre contiene caracteres no permitidos.");
             return;
         }
+
+        if (tfNombre.getText().trim().length() < 3){
+            mostrarAlerta(Alert.AlertType.WARNING, "Nombre inválido", "El nombre debe tener al menos 3 letras");
+            return;
+        }
+
+        if (!tfCorreo.getText().matches("^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$")) {
+            mostrarAlerta(Alert.AlertType.WARNING, "Correo inválido", "El correo electrónico no tiene un formato válido.");
+            return;
+        }
+
+        if (tfDescripcion.getText().trim().length() < 10 || tfDescripcion.getText().trim().length() > 30){
+            mostrarAlerta(Alert.AlertType.WARNING, "Descripción no válida", "La descripción debe tener de 10 a 30 caracteres");
+            return;
+        }
+
+
+        if (!tfRFC.getText().matches("^[A-ZÑ&]{3}[0-9]{6}[A-Z0-9]{3}$")) {
+            mostrarAlerta(Alert.AlertType.WARNING, "RFC inválido", "El RFC no tiene un formato válido.");
+            return;
+        }
         if (!tfTelefono.getText().matches("\\d{10}")) {
             mostrarAlerta(Alert.AlertType.WARNING, "Teléfono inválido", "El número de teléfono debe contener exactamente 10 dígitos numéricos.");
             return;
@@ -51,6 +72,10 @@ public class FXMLRegistrarOVController {
             return;
         }
 
+        if (!tfCorreo.getText().matches("[A-Za-zÁÉÍÓÚáéíóúñÑ0-9 .@\\-()]+")) {
+            mostrarAlerta(Alert.AlertType.WARNING, "Correo inválido", "El correo no tiene un formato válido.");
+            return;
+        }
 
         if (!OrganizacionVinculadaDAO.hayConexion()) {
             mostrarAlerta(Alert.AlertType.ERROR, "Sin conexión", "Error: No hay conexión con la base de datos");
@@ -58,8 +83,8 @@ public class FXMLRegistrarOVController {
         }
 
         OrganizacionVinculadaDAO dao = new OrganizacionVinculadaDAO();
-        if (dao.existeNombre(tfNombre.getText())) {
-            mostrarAlerta(Alert.AlertType.WARNING, "Nombre duplicado", "Ya existe una organización registrada con ese nombre.");
+        if (dao.existeNombre(tfRFC.getText())) {
+            mostrarAlerta(Alert.AlertType.WARNING, "Organización ya registrada", "Ya existe una organización vinculada con ese RFC.");
             return;
         }
 
@@ -88,7 +113,8 @@ public class FXMLRegistrarOVController {
                 boolean exito = dao.agregar(nueva);
                 if (exito) {
                     mostrarAlerta(Alert.AlertType.INFORMATION, "Registro exitoso", "La organización Vinculada se registró con éxito");
-                    limpiarCampos();
+                    Stage currentStage= (Stage) tfNombre.getScene().getWindow();
+                    currentStage.close();
                 } else {
                     mostrarAlerta(Alert.AlertType.ERROR, "Error", "No se pudo registrar la organización.");
                 }

@@ -35,7 +35,7 @@ public class FXMLConfirmarDatosController {
     private Label lblTipo;
 
     private ResponsableProyecto responsableProyecto;
-
+    private  Stage ventanaRegistrarResponsable;
     public void inicializarDatos(ResponsableProyecto responsableProyecto) {
         this.responsableProyecto = responsableProyecto;
 
@@ -69,6 +69,12 @@ public class FXMLConfirmarDatosController {
 
         if (exito) {
             mostrarAlerta(Alert.AlertType.INFORMATION, "Registro exitoso", "El responsable de proyecto se ha registrado con éxito");
+            cerrarVentana();
+
+            if (ventanaRegistrarResponsable != null) {
+                ventanaRegistrarResponsable.close();
+            }
+
         } else {
             mostrarAlerta(Alert.AlertType.ERROR, "No se pudo registrar el responsable", "Intenta nuevamente más tarde.");
         }
@@ -91,4 +97,9 @@ public class FXMLConfirmarDatosController {
         alerta.setContentText(contenido);
         alerta.showAndWait();
     }
+
+    public void setVentanaRegistrarResponsable(Stage ventanaRegistrarResponsable) {
+        this.ventanaRegistrarResponsable = ventanaRegistrarResponsable;
+    }
+
 }

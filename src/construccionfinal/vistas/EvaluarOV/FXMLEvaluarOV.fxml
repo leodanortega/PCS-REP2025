@@ -7,7 +7,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.geometry.Pos?>
 
-<AnchorPane prefHeight="600" prefWidth="600" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="construccionfinal.controladores.EvaluarOV.FXMLEvaluarOVController">
+<AnchorPane prefHeight="600" prefWidth="957.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="construccionfinal.controladores.EvaluarOV.FXMLEvaluarOVController">
    <children>
    
        <VBox alignment="CENTER" spacing="20" AnchorPane.bottomAnchor="20" AnchorPane.leftAnchor="20" AnchorPane.rightAnchor="20" AnchorPane.topAnchor="20">
@@ -16,10 +16,10 @@
                <Label style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #2C3E50;" text="Evaluación de Organización Vinculada" />
    
                <!-- Datos del estudiante, proyecto y organización -->
-               <GridPane hgap="15" vgap="15">
+               <GridPane hgap="15.0" prefHeight="195.0" prefWidth="816.0" vgap="15.0">
                    <columnConstraints>
-                       <ColumnConstraints halignment="RIGHT" maxWidth="229.0" minWidth="184.0" prefWidth="224.0" />
-                       <ColumnConstraints hgrow="ALWAYS" maxWidth="301.0" minWidth="256.0" prefWidth="261.0" />
+                       <ColumnConstraints halignment="RIGHT" maxWidth="345.0" minWidth="95.0" prefWidth="228.0" />
+                       <ColumnConstraints hgrow="ALWAYS" maxWidth="512.0" minWidth="200.0" prefWidth="447.0" />
                    </columnConstraints>
    
                    <children>

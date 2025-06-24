@@ -7,7 +7,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.geometry.Pos?>
 
-<AnchorPane prefHeight="350.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="construccionfinal.controladores.RegistrarOV.FXMLConfirmacionDatosController">
+<AnchorPane prefHeight="444.0" prefWidth="698.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="construccionfinal.controladores.RegistrarOV.FXMLConfirmacionDatosController">
    <children>
    
        <VBox alignment="CENTER" spacing="20" AnchorPane.bottomAnchor="20" AnchorPane.leftAnchor="20" AnchorPane.rightAnchor="20" AnchorPane.topAnchor="20">
@@ -29,8 +29,9 @@
                        <Label fx:id="lblCorreo" style="-fx-font-size: 16px; -fx-font-style: italic;" GridPane.columnIndex="1" GridPane.rowIndex="1" />
    
                        <Label style="-fx-font-size: 18px; -fx-font-weight: bold;" text="Descripción:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
-                       <Label fx:id="lblDescripcion" style="-fx-font-size: 16px; -fx-font-style: italic;" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-   
+                       <Label fx:id="lblDescripcion" maxWidth="Infinity" style="-fx-font-size: 16px; -fx-font-style: italic;" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+
+
                        <Label style="-fx-font-size: 18px; -fx-font-weight: bold;" text="RFC:" GridPane.columnIndex="0" GridPane.rowIndex="3" />
                        <Label fx:id="lblRFC" style="-fx-font-size: 16px; -fx-font-style: italic;" GridPane.columnIndex="1" GridPane.rowIndex="3" />
    

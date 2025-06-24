@@ -34,6 +34,7 @@ public class FXMLSeleccionarOrganizacionVinculadaController {
     private boolean fueCancelado = false;
     private OrganizacionVinculadaDAO organizacionDAO = new OrganizacionVinculadaDAO();
     private ResponsableProyecto responsableProyecto;
+    private Stage ventanaRegistrarResponsable;
 
     public void inicializarDatos(ResponsableProyecto responsableProyecto) {
         this.responsableProyecto = responsableProyecto;
@@ -85,16 +86,8 @@ public class FXMLSeleccionarOrganizacionVinculadaController {
 
     @FXML
     private void clicCancelar() {
-        Alert alerta = new Alert(Alert.AlertType.CONFIRMATION);
-        alerta.setTitle("Confirmación");
-        alerta.setHeaderText(null);
-        alerta.setContentText("¿Seguro que quieres cancelar la operación?");
-
-        if (alerta.showAndWait().orElse(ButtonType.CANCEL) == ButtonType.OK) {
-            fueCancelado = true;
-            Stage stage = (Stage) txtBuscar.getScene().getWindow();
-            stage.close();
-        }
+        fueCancelado = true;
+        cerrarVentana();
     }
 
     private void cerrarVentana() {
@@ -115,7 +108,9 @@ public class FXMLSeleccionarOrganizacionVinculadaController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(rutaFXML));
             Parent root = loader.load();
             FXMLConfirmarDatosController controller = loader.getController();
+
             controller.inicializarDatos(responsableProyecto);
+            controller.setVentanaRegistrarResponsable(ventanaRegistrarResponsable);
 
             Stage stage = new Stage();
             stage.setTitle(titulo);
@@ -125,5 +120,10 @@ public class FXMLSeleccionarOrganizacionVinculadaController {
             e.printStackTrace();
             System.err.println("No se pudo abrir la ventana: " + rutaFXML);
         }
+    }
+
+
+    public void setVentanaRegistrarResponsable(Stage stage) {
+        this.ventanaRegistrarResponsable = stage;
     }
 }

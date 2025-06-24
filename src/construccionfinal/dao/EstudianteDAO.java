@@ -191,11 +191,12 @@ public class EstudianteDAO {
         if (conexion != null) {
             try {
                 String consulta = "SELECT u.idUsuario, u.nombre, u.apePaterno, u.apeMaterno, u.correo, u.telefono, u.identificador " +
-                        "FROM usuario u " +
-                        "JOIN expediente e ON u.idUsuario = e.idEstudiante " +
-                        "WHERE u.rol = 'estudiante' AND e.idExpediente NOT IN (SELECT idExpediente FROM evaluacion_presentacion)";
-
-                PreparedStatement stmt = conexion.prepareStatement(consulta);
+                    "FROM usuario u " +
+                    "JOIN expediente e ON u.idUsuario = e.idEstudiante " +
+                    "WHERE u.rol = 'estudiante' " +
+                    "AND e.idExpediente NOT IN (SELECT idExpediente FROM evaluacion_presentacion) " +
+                    "AND CAST(e.horas AS UNSIGNED) > 120";
+            PreparedStatement stmt = conexion.prepareStatement(consulta);
                 ResultSet rs = stmt.executeQuery();
 
                 while (rs.next()) {
