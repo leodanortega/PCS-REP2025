@@ -229,7 +229,7 @@ public List<Proyecto> listar() {
     return lista;
 }
 
-    public boolean asignarEstudianteAProyecto(int idProyecto, int idEstudiante) {
+    /*public boolean asignarEstudianteAProyecto(int idProyecto, int idEstudiante) {
     String sql = "UPDATE proyecto SET idEstudiante = ? WHERE idProyecto = ? AND (idEstudiante IS NULL OR idEstudiante = 0)";
 
     try (Connection con = ConexionBD.abrirConexion();
@@ -244,7 +244,7 @@ public List<Proyecto> listar() {
         e.printStackTrace();
         return false;
     }
-}
+}*/
     
     public static List<Estudiante> listarEstudiantesNoAsignados() {
     List<Estudiante> lista = new ArrayList<>();

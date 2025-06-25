@@ -26,10 +26,11 @@ public class ExpedienteDAO {
                     expediente.setIdEstudiante(rs.getInt("idEstudiante"));
                     expediente.setIdGrupoEE(rs.getInt("idGrupoEE"));
                     expediente.setIdPeriodo(rs.getInt("idPeriodo"));
-                    expediente.setCalificaciones(rs.getString("califaciones"));
+                    expediente.setCalificaciones(rs.getString("calificaciones")); // corregido
                     expediente.setHoras(rs.getString("horas"));
                     expediente.setInforme(rs.getString("informe"));
                     expediente.setIdDocumentoInicial(rs.getInt("idDocumentoInicial"));
+                    expediente.setIdProyecto(rs.getInt("idProyecto")); // nuevo campo
                 }
             }
         } catch (SQLException e) {
@@ -63,34 +64,37 @@ public class ExpedienteDAO {
         return horas;
     }
 
-    public static int crearExpediente(int idEstudiante, int idGrupoEE, int idPeriodo,
-                                      String calificaciones, String horas, String informe, int idDocumentoInicial) {
-        int idExpediente = -1;
-        String sql = "INSERT INTO expediente (idEstudiante, idGrupoEE, idPeriodo, califaciones, horas, informe, idDocumentoInicial) " +
-                     "VALUES (?, ?, ?, ?, ?, ?, ?)";
+public static int crearExpediente(int idEstudiante, int idGrupoEE, int idPeriodo,
+                                  String calificaciones, String horas, String informe,
+                                  int idDocumentoInicial, int idProyecto) {
+    int idExpediente = -1;
+    String sql = "INSERT INTO expediente (idEstudiante, idGrupoEE, idPeriodo, califaciones, horas, informe, idDocumentoInicial, idProyecto) " +
+                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
-        try (Connection con = ConexionBD.abrirConexion();
-             PreparedStatement ps = con.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
+    try (Connection con = ConexionBD.abrirConexion();
+         PreparedStatement ps = con.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
 
-            ps.setInt(1, idEstudiante);
-            ps.setInt(2, idGrupoEE);
-            ps.setInt(3, idPeriodo);
-            ps.setString(4, calificaciones);
-            ps.setString(5, horas);
-            ps.setString(6, informe);
-            ps.setInt(7, idDocumentoInicial);
-            ps.executeUpdate();
+        ps.setInt(1, idEstudiante);
+        ps.setInt(2, idGrupoEE);
+        ps.setInt(3, idPeriodo);
+        ps.setString(4, calificaciones);
+        ps.setString(5, horas);
+        ps.setString(6, informe);
+        ps.setInt(7, idDocumentoInicial);
+        ps.setInt(8, idProyecto);
 
-            try (ResultSet generatedKeys = ps.getGeneratedKeys()) {
-                if (generatedKeys.next()) {
-                    idExpediente = generatedKeys.getInt(1);
-                }
+        ps.executeUpdate();
+
+        try (ResultSet generatedKeys = ps.getGeneratedKeys()) {
+            if (generatedKeys.next()) {
+                idExpediente = generatedKeys.getInt(1);
             }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
 
-        return idExpediente;
+    } catch (SQLException e) {
+        e.printStackTrace();
     }
+
+    return idExpediente;
+}
 }

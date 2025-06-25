@@ -9,10 +9,13 @@ public class Expediente {
     private String horas;
     private String informe;
     private int idDocumentoInicial;
+    private int idProyecto; // <-- NUEVO CAMPO
 
     public Expediente() {}
 
-    public Expediente(int idExpediente, int idEstudiante, int idGrupoEE, int idPeriodo, String calificaciones, String horas, String informe, int idDocumentoInicial) {
+    public Expediente(int idExpediente, int idEstudiante, int idGrupoEE, int idPeriodo,
+                      String calificaciones, String horas, String informe,
+                      int idDocumentoInicial, int idProyecto) {
         this.idExpediente = idExpediente;
         this.idEstudiante = idEstudiante;
         this.idGrupoEE = idGrupoEE;
@@ -21,6 +24,7 @@ public class Expediente {
         this.horas = horas;
         this.informe = informe;
         this.idDocumentoInicial = idDocumentoInicial;
+        this.idProyecto = idProyecto;
     }
 
     public int getIdExpediente() { return idExpediente; }
@@ -44,11 +48,9 @@ public class Expediente {
     public String getInforme() { return informe; }
     public void setInforme(String informe) { this.informe = informe; }
 
-    public int getIdDocumentoInicial() {
-        return idDocumentoInicial;
-    }
+    public int getIdDocumentoInicial() { return idDocumentoInicial; }
+    public void setIdDocumentoInicial(int idDocumentoInicial) { this.idDocumentoInicial = idDocumentoInicial; }
 
-    public void setIdDocumentoInicial(int idDocumentoInicial) {
-        this.idDocumentoInicial = idDocumentoInicial;
-    }
+    public int getIdProyecto() { return idProyecto; }
+    public void setIdProyecto(int idProyecto) { this.idProyecto = idProyecto; }
 }
