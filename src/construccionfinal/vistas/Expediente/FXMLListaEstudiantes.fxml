@@ -1,39 +1,61 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.geometry.Pos?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="construccionfinal.controladores.Expediente.FXMLListaEstudiantesController">
-   <top>
-      <Pane prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-         <children>
-            <Label layoutX="50.0" layoutY="40.0" text="Estudiantes" />
-         </children>
-      </Pane>
-   </top>
-   <left>
-      <Pane prefHeight="200.0" prefWidth="50.0" BorderPane.alignment="CENTER" />
-   </left>
-   <right>
-      <Pane prefHeight="200.0" prefWidth="50.0" BorderPane.alignment="CENTER" />
-   </right>
-   <bottom>
-      <Pane prefHeight="50.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
-   </bottom>
-   <center>
-      <ScrollPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-         <content>
-            <TableView fx:id="tvEstudiantes" prefHeight="570.0" prefWidth="1180.0">
-              <columns>
-                <TableColumn fx:id="tcMatricula" prefWidth="140.0" text="Matricula" />
-                <TableColumn fx:id="tcNombre" prefWidth="285.0" text="Nombre" />
-                  <TableColumn fx:id="tcCarrera" prefWidth="229.0" text="Carrera" />
-                  <TableColumn fx:id="tcCreditos" minWidth="0.0" prefWidth="66.0" text="Creditos" />
-                  <TableColumn fx:id="tcSemestre" prefWidth="191.0" text="Semestre" />
-                  <TableColumn fx:id="tcEstado" prefWidth="146.0" text="Estado" />
-                  <TableColumn fx:id="tcCalificacion" prefWidth="122.0" text="Calificacion" />
-              </columns>
-            </TableView>
-         </content>
-      </ScrollPane>
-   </center>
+<BorderPane prefHeight="720.0" prefWidth="1385.0" style="-fx-background-color: #f4f4f4;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="construccionfinal.controladores.Expediente.FXMLListaEstudiantesController">
+
+    <top>
+        <Pane prefHeight="100.0" BorderPane.alignment="CENTER">
+            <children>
+                <Label layoutX="50.0" layoutY="35.0" style="-fx-font-size: 26px; -fx-font-weight: bold; -fx-text-fill: #333;" text="Lista de Estudiantes" />
+            </children>
+        </Pane>
+    </top>
+
+    <center>
+        <VBox alignment="TOP_CENTER" spacing="10" BorderPane.alignment="CENTER">
+            <padding>
+                <Insets bottom="20" left="20" right="20" top="20" />
+            </padding>
+            <children>
+
+                <Label prefHeight="20.0" prefWidth="392.0" style="-fx-font-size: 14px; -fx-text-fill: #666;" text="Selecciona un estudiante para ver su expediente">
+               <font>
+                  <Font size="20.0" />
+               </font></Label>
+
+                <TableView fx:id="tvEstudiantes" prefHeight="570.0" prefWidth="1180.0" style="-fx-background-color: white; -fx-border-color: #ccc; -fx-border-radius: 8;">
+                    <columns>
+                        <TableColumn fx:id="tcMatricula" prefWidth="140.0" text="Matrícula" />
+                        <TableColumn fx:id="tcNombre" prefWidth="285.0" text="Nombre" />
+                        <TableColumn fx:id="tcCarrera" prefWidth="229.0" text="Carrera" />
+                        <TableColumn fx:id="tcCreditos" prefWidth="87.0" text="Créditos" />
+                        <TableColumn fx:id="tcSemestre" prefWidth="170.0" text="Semestre" />
+                        <TableColumn fx:id="tcEstado" prefWidth="146.0" text="Estado" />
+                        <TableColumn fx:id="tcCalificacion" prefWidth="186.0" text="Calificación" />
+                    </columns>
+                </TableView>
+
+            </children>
+        </VBox>
+    </center>
+
+    <left>
+        <Pane prefWidth="50.0" BorderPane.alignment="CENTER" />
+    </left>
+
+    <right>
+        <Pane prefWidth="50.0" BorderPane.alignment="CENTER" />
+    </right>
+
+    <bottom>
+        <Pane prefHeight="50.0" BorderPane.alignment="CENTER" />
+    </bottom>
+
 </BorderPane>

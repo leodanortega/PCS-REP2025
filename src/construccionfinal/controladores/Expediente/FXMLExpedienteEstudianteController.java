@@ -61,8 +61,8 @@ public class FXMLExpedienteEstudianteController implements Initializable {
         Expediente expediente = ExpedienteDAO.obtenerExpedientePorEstudiante(estudiante.getIdUsuario());
 
         if (expediente != null) {
-            lbCalificaciones.setText(expediente.getCalificaciones());
-            lbHoras.setText(expediente.getHoras());
+            lbCalificaciones.setText("Califcaciones: "+expediente.getCalificaciones());
+            lbHoras.setText("Horas:"+expediente.getHoras());
 
             cargarDocumentosIniciales(expediente.getIdExpediente());
         } else {

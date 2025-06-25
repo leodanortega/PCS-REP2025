@@ -1,84 +1,101 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="construccionfinal.controladores.Expediente.FXMLExpedienteEstudianteController">
-   <left>
-      <Pane prefHeight="200.0" prefWidth="50.0" BorderPane.alignment="CENTER" />
-   </left>
-   <bottom>
-      <Pane prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-         <children>
-            <Button layoutX="541.0" layoutY="35.0" mnemonicParsing="false" onAction="#clicSubirDocumentosIniciales" text="Subir Documentos Iniciales" />
-         </children></Pane>
-   </bottom>
-   <right>
-      <Pane prefHeight="200.0" prefWidth="50.0" BorderPane.alignment="CENTER" />
-   </right>
-   <center>
-      <ScrollPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-         <content>
-            <VBox prefHeight="520.0" prefWidth="1180.0">
-               <children>
-                  <Label text="Documentos Iniciales" />
-                  <TableView fx:id="tvDocumentosIniciales" prefHeight="200.0" prefWidth="200.0">
-                    <columns>
-                      <TableColumn fx:id="tcNombreDI" prefWidth="314.0" text="Nombre" />
-                      <TableColumn fx:id="tcEstadoDI" minWidth="0.0" prefWidth="170.0" text="Estado" />
-                        <TableColumn fx:id="tcTipoDI" minWidth="0.0" prefWidth="203.0" text="Tipo" />
-                        <TableColumn fx:id="tcFechaDI" prefWidth="283.0" text="Fecha" />
-                        <TableColumn fx:id="tcArchivoDI" prefWidth="209.0" text="Archivo" />
-                    </columns>
-                  </TableView>
-                  <Label text="Reportes" />
-                  <TableView fx:id="tvReportes" prefHeight="200.0" prefWidth="200.0">
-                    <columns>
-                      <TableColumn fx:id="tcNombreR" prefWidth="311.0" text="Nombre" />
-                      <TableColumn fx:id="tcHorasR" minWidth="0.0" prefWidth="100.0" text="Horas" />
-                        <TableColumn fx:id="tcEstadoR" prefWidth="143.0" text="Estado" />
-                        <TableColumn fx:id="tcCalificacionR" prefWidth="130.0" text="Calificacion" />
-                        <TableColumn fx:id="tcFechaR" prefWidth="338.0" text="Fecha" />
-                        <TableColumn fx:id="tcArchivoR" prefWidth="157.0" text="Archivo" />
-                    </columns>
-                  </TableView>
-                  <Label text="Documentos Finales" />
-                  <TableView fx:id="tvDocumentosFinales" prefHeight="200.0" prefWidth="200.0">
-                    <columns>
-                      <TableColumn prefWidth="307.0" text="Nombre" />
-                      <TableColumn prefWidth="165.0" text="Estado" />
-                        <TableColumn prefWidth="225.0" text="Tipo" />
-                        <TableColumn prefWidth="278.0" text="Fecha" />
-                        <TableColumn prefWidth="204.0" text="Archivo" />
-                    </columns>
-                  </TableView>
-               </children>
-            </VBox>
-         </content>
-      </ScrollPane>
-   </center>
-   <top>
-      <GridPane prefHeight="100.0" BorderPane.alignment="CENTER">
-        <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-        </columnConstraints>
-        <rowConstraints>
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-        </rowConstraints>
-         <children>
-            <Label fx:id="lbMatricula" GridPane.halignment="CENTER" />
-            <Label fx:id="lbNombre" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-            <Label fx:id="lbGrupo" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
-            <Label fx:id="lbPeriodo" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-            <Label fx:id="lbCalificaciones" GridPane.columnIndex="2" GridPane.halignment="CENTER" />
-            <Label fx:id="lbHoras" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-         </children>
-      </GridPane>
-   </top>
+<BorderPane prefHeight="720.0" prefWidth="1341.0" style="-fx-background-color: #f4f4f4;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="construccionfinal.controladores.Expediente.FXMLExpedienteEstudianteController">
+
+    <top>
+        <GridPane hgap="20" prefHeight="100.0" vgap="5" BorderPane.alignment="CENTER">
+            <padding>
+                <Insets bottom="20" left="40" right="40" top="20" />
+            </padding>
+            <columnConstraints>
+                <ColumnConstraints hgrow="ALWAYS" />
+                <ColumnConstraints hgrow="ALWAYS" />
+                <ColumnConstraints hgrow="ALWAYS" />
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints vgrow="SOMETIMES" />
+                <RowConstraints vgrow="SOMETIMES" />
+            </rowConstraints>
+            <children>
+                <Label fx:id="lbMatricula" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #333;" GridPane.halignment="CENTER" />
+                <Label fx:id="lbNombre" style="-fx-font-size: 16px; -fx-text-fill: #555;" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                <Label fx:id="lbGrupo" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #333;" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
+                <Label fx:id="lbPeriodo" style="-fx-font-size: 16px; -fx-text-fill: #555;" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                <Label fx:id="lbCalificaciones" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #333;" GridPane.columnIndex="2" GridPane.halignment="CENTER" />
+                <Label fx:id="lbHoras" style="-fx-font-size: 16px; -fx-text-fill: #555;" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+            </children>
+        </GridPane>
+    </top>
+
+    <center>
+        <ScrollPane fitToWidth="true" BorderPane.alignment="CENTER">
+            <content>
+                <VBox spacing="20">
+                    <padding>
+                        <Insets bottom="20" left="20" right="20" top="20" />
+                    </padding>
+                    <children>
+
+                        <Label style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #444;" text="Documentos Iniciales" />
+                        <TableView fx:id="tvDocumentosIniciales" prefHeight="200.0" style="-fx-background-color: white; -fx-border-color: #ccc; -fx-border-radius: 8;">
+                            <columns>
+                                <TableColumn fx:id="tcNombreDI" prefWidth="314.0" text="Nombre" />
+                                <TableColumn fx:id="tcEstadoDI" prefWidth="170.0" text="Estado" />
+                                <TableColumn fx:id="tcTipoDI" prefWidth="203.0" text="Tipo" />
+                                <TableColumn fx:id="tcFechaDI" prefWidth="283.0" text="Fecha" />
+                                <TableColumn fx:id="tcArchivoDI" prefWidth="209.0" text="Archivo" />
+                            </columns>
+                        </TableView>
+
+                        <Label style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #444;" text="Reportes" />
+                        <TableView fx:id="tvReportes" prefHeight="200.0" style="-fx-background-color: white; -fx-border-color: #ccc; -fx-border-radius: 8;">
+                            <columns>
+                                <TableColumn fx:id="tcNombreR" prefWidth="311.0" text="Nombre" />
+                                <TableColumn fx:id="tcHorasR" prefWidth="100.0" text="Horas" />
+                                <TableColumn fx:id="tcEstadoR" prefWidth="143.0" text="Estado" />
+                                <TableColumn fx:id="tcCalificacionR" prefWidth="130.0" text="Calificación" />
+                                <TableColumn fx:id="tcFechaR" prefWidth="338.0" text="Fecha" />
+                                <TableColumn fx:id="tcArchivoR" prefWidth="157.0" text="Archivo" />
+                            </columns>
+                        </TableView>
+
+                        <Label style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #444;" text="Documentos Finales" />
+                        <TableView fx:id="tvDocumentosFinales" prefHeight="200.0" style="-fx-background-color: white; -fx-border-color: #ccc; -fx-border-radius: 8;">
+                            <columns>
+                                <TableColumn prefWidth="307.0" text="Nombre" />
+                                <TableColumn prefWidth="165.0" text="Estado" />
+                                <TableColumn prefWidth="225.0" text="Tipo" />
+                                <TableColumn prefWidth="278.0" text="Fecha" />
+                                <TableColumn prefWidth="204.0" text="Archivo" />
+                            </columns>
+                        </TableView>
+
+                    </children>
+                </VBox>
+            </content>
+        </ScrollPane>
+    </center>
+
+    <left>
+        <Pane prefWidth="50.0" BorderPane.alignment="CENTER" />
+    </left>
+
+    <right>
+        <Pane prefWidth="50.0" BorderPane.alignment="CENTER" />
+    </right>
+
+    <bottom>
+        <Pane prefHeight="100.0" BorderPane.alignment="CENTER">
+            <children>
+                <Button layoutX="541.0" layoutY="35.0" mnemonicParsing="false" onAction="#clicSubirDocumentosIniciales" style="-fx-background-color: #007bff; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 16px; -fx-background-radius: 10;" text="Subir Documentos Iniciales" />
+            </children>
+        </Pane>
+    </bottom>
+
 </BorderPane>

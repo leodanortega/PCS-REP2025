@@ -8,5 +8,8 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="mysql-connector-j-9.2.4" level="project" />
+    <orderEntry type="library" name="fontbox-3.0.5" level="project" />
+    <orderEntry type="library" name="pdfa-7.2.5" level="project" />
+    <orderEntry type="library" name="lib" level="project" />
   </component>
 </module>

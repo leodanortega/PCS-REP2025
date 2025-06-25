@@ -86,8 +86,8 @@ public class FXMLRegistrarResponsableController {
             return;
         }
 
-        if (tfPuesto.getText().length() < 15) {
-            mostrarAlerta(Alert.AlertType.WARNING, "Puesto inválido", "El puesto debe tener mínimo 15 caracteres.");
+        if (tfPuesto.getText().length() < 5) {
+            mostrarAlerta(Alert.AlertType.WARNING, "Puesto inválido", "El puesto debe tener mínimo 5 caracteres.");
             return;
         }
 
