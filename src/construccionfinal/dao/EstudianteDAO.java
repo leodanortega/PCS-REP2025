@@ -149,40 +149,34 @@ public class EstudianteDAO {
         return lista;
     }
     
-    public static List<Estudiante> listarEstudiantesNoAsignados() {
+public static List<Estudiante> listarEstudiantesNoAsignados() {
     List<Estudiante> lista = new ArrayList<>();
-    Connection conexion = ConexionBD.abrirConexion();
+    String consulta = "SELECT u.idUsuario, u.nombre, u.apePaterno, u.apeMaterno, u.correo, u.telefono, u.identificador " +
+                      "FROM usuario u " +
+                      "WHERE u.rol = 'estudiante' " +
+                      "AND u.idUsuario NOT IN (SELECT idEstudiante FROM expediente WHERE idEstudiante IS NOT NULL)";
 
-    if (conexion != null) {
-        try {
-            String consulta = "SELECT u.idUsuario, u.nombre, u.apePaterno, u.apeMaterno, u.correo, u.telefono, u.identificador " +
-                              "FROM usuario u " +
-                              "WHERE u.rol = 'estudiante' AND u.idUsuario NOT IN (SELECT idEstudiante FROM proyecto WHERE idEstudiante IS NOT NULL)";
-            PreparedStatement stmt = conexion.prepareStatement(consulta);
-            ResultSet rs = stmt.executeQuery();
+    try (Connection conexion = ConexionBD.abrirConexion();
+         PreparedStatement stmt = conexion.prepareStatement(consulta);
+         ResultSet rs = stmt.executeQuery()) {
 
-            while (rs.next()) {
-                Estudiante estudiante = new Estudiante();
-                estudiante.setIdUsuario(rs.getInt("idUsuario"));
-                estudiante.setNombre(rs.getString("nombre"));
-                estudiante.setApePaterno(rs.getString("apePaterno"));
-                estudiante.setApeMaterno(rs.getString("apeMaterno"));
-                estudiante.setCorreo(rs.getString("correo"));
-                estudiante.setTelefono(rs.getString("telefono"));
-                estudiante.setIdentificador(rs.getString("identificador"));
-                lista.add(estudiante);
-            }
-
-            rs.close();
-            stmt.close();
-            conexion.close();
-        } catch (SQLException ex) {
-            ex.printStackTrace();
+        while (rs.next()) {
+            Estudiante estudiante = new Estudiante();
+            estudiante.setIdUsuario(rs.getInt("idUsuario"));
+            estudiante.setNombre(rs.getString("nombre"));
+            estudiante.setApePaterno(rs.getString("apePaterno"));
+            estudiante.setApeMaterno(rs.getString("apeMaterno"));
+            estudiante.setCorreo(rs.getString("correo"));
+            estudiante.setTelefono(rs.getString("telefono"));
+            estudiante.setIdentificador(rs.getString("identificador"));
+            lista.add(estudiante);
         }
+    } catch (SQLException ex) {
+        ex.printStackTrace();
     }
 
     return lista;
-    }
+}
 
     public static List<Estudiante> listarEstudiantesSinEvaluacion() {
         List<Estudiante> lista = new ArrayList<>();
