@@ -1,7 +1,9 @@
 package construccionfinal.controladores.EntregarDocumentosIniciales;
 
 import construccionfinal.dao.DocumentoInicialDAO;
+import construccionfinal.dao.EntregaDocumentoDAO;
 import construccionfinal.modelo.pojo.DocumentoInicial;
+import construccionfinal.modelo.pojo.EntregaDocumento;
 import construccionfinal.utilidades.Utilidad;
 
 import java.io.File;
@@ -10,6 +12,7 @@ import java.net.URL;
 import java.nio.file.Files;
 import java.sql.Date;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ResourceBundle;
 
 import javafx.event.ActionEvent;
@@ -34,15 +37,39 @@ public class FXMLEntregarDocumentoController implements Initializable {
     private File archivo1, archivo2, archivo3, archivo4, archivo5;
     private int idExpediente; 
     private static final String ESTADO_PENDIENTE = "Pendiente";
+    @FXML
+    private Label lbFechaInicio;
+    @FXML
+    private Label lbHoraInicio;
+    @FXML
+    private Label lbFechaFin;
+    @FXML
+    private Label lbHoraFin;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
+        mostrarRangoEntrega("Inicial");
     }
 
     public void setIdExpediente(int idExpediente) {
         this.idExpediente = idExpediente;
     }
+    
+    private void mostrarRangoEntrega(String tipoDocumento) {
+    EntregaDocumento rango = EntregaDocumentoDAO.obtenerRangoPorTipo(tipoDocumento);
+
+    if (rango != null) {
+        lbFechaInicio.setText(rango.getFechaInicio().toString());
+        lbHoraInicio.setText(rango.getHoraInicio().toString());
+        lbFechaFin.setText(rango.getFechaFin().toString());
+        lbHoraFin.setText(rango.getHoraFin().toString());
+    } else {
+        lbFechaInicio.setText("No configurado");
+        lbHoraInicio.setText("No configurado");
+        lbFechaFin.setText("No configurado");
+        lbHoraFin.setText("No configurado");
+    }
+}
 
     @FXML
     private void clicCancelar(ActionEvent event) {
@@ -122,33 +149,66 @@ public class FXMLEntregarDocumentoController implements Initializable {
         return file;
     }
 
-    private boolean guardarDocumento(File archivo, String tipoDocumento, DocumentoInicialDAO dao) {
-        if (archivo == null) return false;
+private boolean guardarDocumento(File archivo, String tipoDocumento, DocumentoInicialDAO dao) {
+    if (archivo == null) return false;
 
-        if (!archivo.getName().toLowerCase().endsWith(".pdf")) {
-            Utilidad.mostrarAlertaSimple(Alert.AlertType.ERROR, "Archivo inválido", "El archivo seleccionado para " + tipoDocumento + " no es un PDF válido.");
-            return false;
-        }
+    if (!archivo.getName().toLowerCase().endsWith(".pdf")) {
+        Utilidad.mostrarAlertaSimple(Alert.AlertType.ERROR, "Archivo inválido",
+                "El archivo seleccionado para " + tipoDocumento + " no es un PDF válido.");
+        return false;
+    }
 
-        try {
-            byte[] bytesArchivo = Files.readAllBytes(archivo.toPath());
-            DocumentoInicial doc = new DocumentoInicial(
-                0,
-                archivo.getName(),
-                ESTADO_PENDIENTE,
-                tipoDocumento,
-                Date.valueOf(LocalDate.now()),
-                bytesArchivo,
-                idExpediente
-            );
-            doc.setIdExpediente(idExpediente);
-            return dao.agregar(doc);
-        } catch (IOException e) {
-            e.printStackTrace();
-            Utilidad.mostrarAlertaSimple(Alert.AlertType.ERROR, "Error de archivo", "No se pudo leer el archivo: " + archivo.getName());
-            return false;
-        }
+    EntregaDocumento rango = EntregaDocumentoDAO.obtenerRangoPorTipo(tipoDocumento);
+
+    if (rango == null) {
+        Utilidad.mostrarAlertaSimple(Alert.AlertType.ERROR, "Sin configuración",
+                "No se ha configurado el rango de entrega para: " + tipoDocumento);
+        return false;
+    }
+
+    LocalDate hoy = LocalDate.now();
+    LocalTime ahora = LocalTime.now();
+
+    boolean dentroDeFecha = 
+        !hoy.isBefore(rango.getFechaInicio()) && !hoy.isAfter(rango.getFechaFin());
+
+    boolean dentroDeHora = true;
+
+    if (hoy.equals(rango.getFechaInicio()) && ahora.isBefore(rango.getHoraInicio())) {
+        dentroDeHora = false;
+    }
+
+    if (hoy.equals(rango.getFechaFin()) && ahora.isAfter(rango.getHoraFin())) {
+        dentroDeHora = false;
+    }
+
+    if (!dentroDeFecha || !dentroDeHora) {
+        Utilidad.mostrarAlertaSimple(Alert.AlertType.WARNING, "Fuera de horario",
+                "La entrega del documento '" + tipoDocumento + "' no está permitida en este momento.\n" +
+                "Periodo permitido:\n" +
+                rango.getFechaInicio() + " " + rango.getHoraInicio() + " a " +
+                rango.getFechaFin() + " " + rango.getHoraFin());
+        return false;
+    }
+
+    try {
+        byte[] bytesArchivo = Files.readAllBytes(archivo.toPath());
+        DocumentoInicial doc = new DocumentoInicial(
+            0,
+            archivo.getName(),
+            ESTADO_PENDIENTE,
+            tipoDocumento,
+            Date.valueOf(hoy),
+            bytesArchivo,
+            idExpediente
+        );
+        doc.setIdExpediente(idExpediente);
+        return dao.agregar(doc);
+    } catch (IOException e) {
+        e.printStackTrace();
+        Utilidad.mostrarAlertaSimple(Alert.AlertType.ERROR, "Error de archivo",
+                "No se pudo leer el archivo: " + archivo.getName());
+        return false;
     }
 }
-
-
+}

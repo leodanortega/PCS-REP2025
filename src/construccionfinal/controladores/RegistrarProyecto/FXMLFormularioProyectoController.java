@@ -143,8 +143,8 @@ public class FXMLFormularioProyectoController implements Initializable {
             return false;
         }
 
-        if (nombre.isEmpty() || nombre.length() < 3 || nombre.length() > 100) {
-            mostrarAlerta(Alert.AlertType.WARNING, "Nombre inválido", "El nombre debe tener entre 3 y 100 caracteres.");
+        if (nombre.isEmpty() || nombre.length() < 3 || nombre.length() > 50) {
+            mostrarAlerta(Alert.AlertType.WARNING, "Nombre inválido", "El nombre debe tener entre 1 y 50 caracteres.");
             return false;
         }
 
@@ -158,23 +158,23 @@ public class FXMLFormularioProyectoController implements Initializable {
             return false;
         }
 
-        if (departamento.isEmpty() || departamento.length() > 100) {
-            mostrarAlerta(Alert.AlertType.WARNING, "Departamento inválido", "Debe tener entre 1 y 100 caracteres.");
+        if (departamento.isEmpty() || departamento.length() > 50) {
+            mostrarAlerta(Alert.AlertType.WARNING, "Departamento inválido", "Debe tener entre 1 y 50 caracteres.");
             return false;
         }
         
-        if (descripcion.isEmpty() || descripcion.length() < 10 || descripcion.length() > 500) {
-            mostrarAlerta(Alert.AlertType.WARNING, "Descripción inválida", "Debe tener entre 10 y 500 caracteres.");
+        if (descripcion.isEmpty() || descripcion.length() < 5 || descripcion.length() > 200) {
+            mostrarAlerta(Alert.AlertType.WARNING, "Descripción inválida", "Debe tener entre 5 y 200 caracteres.");
             return false;
         }
 
-        if (metodologia.isEmpty() || metodologia.length() > 100) {
-            mostrarAlerta(Alert.AlertType.WARNING, "Metodología inválida", "Debe estar entre 1 y 100 caracteres.");
+        if (metodologia.isEmpty() || metodologia.length() > 50) {
+            mostrarAlerta(Alert.AlertType.WARNING, "Metodología inválida", "Debe estar entre 1 y 50 caracteres.");
             return false;
         }
 
         if(espaciosStr.isEmpty()){
-            mostrarAlerta(Alert.AlertType.WARNING, "Espacio vacio", "Debe ingresar un dígito");
+            mostrarAlerta(Alert.AlertType.WARNING, "Espacio vacio", "Debe ingresar un numero");
             return false;
         }
     
@@ -184,8 +184,8 @@ public class FXMLFormularioProyectoController implements Initializable {
         }
 
         int espacios = Integer.parseInt(espaciosStr);
-        if (espacios < 1 || espacios > 100) {
-            mostrarAlerta(Alert.AlertType.WARNING, "Espacio fuera de rango", "Debe estar entre 1 y 100.");
+        if (espacios < 1 || espacios > 50) {
+            mostrarAlerta(Alert.AlertType.WARNING, "Espacio fuera de rango", "Debe estar entre 1 y 50.");
             return false;
         }
 

@@ -6,73 +6,79 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane prefWidth="900.0" prefHeight="600.0"
-            xmlns="http://javafx.com/javafx/8"
-            xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="construccionfinal.controladores.EntregarDocumentosIniciales.FXMLEntregarDocumentoController"
-            style="-fx-background-color: #f9f9f9;">
+<BorderPane prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: #f9f9f9;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="construccionfinal.controladores.EntregarDocumentosIniciales.FXMLEntregarDocumentoController">
 
     <top>
-        <VBox alignment="CENTER" spacing="10" BorderPane.alignment="CENTER" style="-fx-padding: 20;">
+        <VBox alignment="CENTER" spacing="10" style="-fx-padding: 20;" BorderPane.alignment="CENTER">
             <children>
-                <Label text="Entrega de Documentos Iniciales"
-                       style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;" />
+                <Label style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;" text="Entrega de Documentos Iniciales" />
             </children>
         </VBox>
     </top>
 
     <center>
-        <GridPane hgap="20" vgap="15" BorderPane.alignment="CENTER" style="-fx-padding: 20;">
+        <GridPane alignment="TOP_CENTER" hgap="20" style="-fx-padding: 20;" vgap="15" BorderPane.alignment="CENTER">
             <columnConstraints>
-                <ColumnConstraints prefWidth="200"/>
-                <ColumnConstraints prefWidth="200"/>
-                <ColumnConstraints prefWidth="300"/>
+                <ColumnConstraints prefWidth="200" />
+                <ColumnConstraints prefWidth="200" />
+                <ColumnConstraints prefWidth="300" />
             </columnConstraints>
 
             <rowConstraints>
-                <RowConstraints prefHeight="40"/>
-                <RowConstraints prefHeight="40"/>
-                <RowConstraints prefHeight="40"/>
-                <RowConstraints prefHeight="40"/>
-                <RowConstraints prefHeight="40"/>
+            <RowConstraints />
+            <RowConstraints minHeight="10.0" prefHeight="40.0" />
+                <RowConstraints minHeight="10.0" prefHeight="40.0" />
+                <RowConstraints prefHeight="40.0" />
+                <RowConstraints prefHeight="40.0" />
+                <RowConstraints prefHeight="40.0" />
+                <RowConstraints prefHeight="40.0" />
+            <RowConstraints prefHeight="40.0" />
             </rowConstraints>
 
             <children>
-                <Label text="Oficio de Asignación" GridPane.rowIndex="0" />
-                <Button text="Seleccionar" onAction="#clicSeleccionarDocumento1" GridPane.columnIndex="1" GridPane.rowIndex="0"
-                        style="-fx-background-color: #3498db; -fx-text-fill: white; -fx-background-radius: 5;" />
-                <Label fx:id="lbDoc1" GridPane.columnIndex="2" GridPane.rowIndex="0"/>
+                <Label text="Oficio de Asignación" GridPane.rowIndex="2" />
+                <Button onAction="#clicSeleccionarDocumento1" style="-fx-background-color: #3498db; -fx-text-fill: white; -fx-background-radius: 5;" text="Seleccionar" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                <Label fx:id="lbDoc1" GridPane.columnIndex="2" GridPane.rowIndex="2" />
 
-                <Label text="Carta de Aceptación" GridPane.rowIndex="1"/>
-                <Button text="Seleccionar" onAction="#clicSeleccionarDocumento2" GridPane.columnIndex="1" GridPane.rowIndex="1"
-                        style="-fx-background-color: #3498db; -fx-text-fill: white;" />
-                <Label fx:id="lbDoc2" GridPane.columnIndex="2" GridPane.rowIndex="1"/>
+                <Label text="Carta de Aceptación" GridPane.rowIndex="3" />
+                <Button onAction="#clicSeleccionarDocumento2" style="-fx-background-color: #3498db; -fx-text-fill: white;" text="Seleccionar" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                <Label fx:id="lbDoc2" GridPane.columnIndex="2" GridPane.rowIndex="3" />
 
-                <Label text="Constancia de Seguro" GridPane.rowIndex="2"/>
-                <Button text="Seleccionar" onAction="#clicSeleccionarDocumento3" GridPane.columnIndex="1" GridPane.rowIndex="2"
-                        style="-fx-background-color: #3498db; -fx-text-fill: white;" />
-                <Label fx:id="lbDoc3" GridPane.columnIndex="2" GridPane.rowIndex="2"/>
+                <Label text="Constancia de Seguro" GridPane.rowIndex="4" />
+                <Button onAction="#clicSeleccionarDocumento3" style="-fx-background-color: #3498db; -fx-text-fill: white;" text="Seleccionar" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                <Label fx:id="lbDoc3" GridPane.columnIndex="2" GridPane.rowIndex="4" />
 
-                <Label text="Horario" GridPane.rowIndex="3"/>
-                <Button text="Seleccionar" onAction="#clicSeleccionarDocumento4" GridPane.columnIndex="1" GridPane.rowIndex="3"
-                        style="-fx-background-color: #3498db; -fx-text-fill: white;" />
-                <Label fx:id="lbDoc4" GridPane.columnIndex="2" GridPane.rowIndex="3"/>
+                <Label text="Horario" GridPane.rowIndex="5" />
+                <Button onAction="#clicSeleccionarDocumento4" style="-fx-background-color: #3498db; -fx-text-fill: white;" text="Seleccionar" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                <Label fx:id="lbDoc4" GridPane.columnIndex="2" GridPane.rowIndex="5" />
 
-                <Label text="Cronograma" GridPane.rowIndex="4"/>
-                <Button text="Seleccionar" onAction="#clicSeleccionarDocumento5" GridPane.columnIndex="1" GridPane.rowIndex="4"
-                        style="-fx-background-color: #3498db; -fx-text-fill: white;" />
-                <Label fx:id="lbDoc5" GridPane.columnIndex="2" GridPane.rowIndex="4"/>
+                <Label text="Cronograma" GridPane.rowIndex="6" />
+                <Button onAction="#clicSeleccionarDocumento5" style="-fx-background-color: #3498db; -fx-text-fill: white;" text="Seleccionar" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                <Label fx:id="lbDoc5" GridPane.columnIndex="2" GridPane.rowIndex="6" />
+            <Label contentDisplay="CENTER" text="Fecha de entrega:" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+            <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <children>
+                  <Label fx:id="lbFechaInicio" layoutX="-1.0" />
+                  <Label fx:id="lbHoraInicio" layoutX="-1.0" layoutY="19.0" />
+               </children>
+            </Pane>
+            <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
+               <children>
+                  <Label fx:id="lbFechaFin" />
+                  <Label fx:id="lbHoraFin" layoutY="21.0" />
+               </children>
+            </Pane>
+            <Label text="Inicio:" GridPane.columnIndex="1" />
+            <Label text="Fin" GridPane.columnIndex="2" />
             </children>
         </GridPane>
     </center>
 
     <bottom>
-        <HBox spacing="40" alignment="CENTER" BorderPane.alignment="CENTER" style="-fx-padding: 20;">
+        <HBox alignment="CENTER" spacing="40" style="-fx-padding: 20;" BorderPane.alignment="CENTER">
             <children>
-                <Button fx:id="btnCancelar" text="Cancelar" onAction="#clicCancelar"
-                        style="-fx-background-color: #e74c3c; -fx-text-fill: white; -fx-padding: 8 16; -fx-font-weight: bold;" />
-                <Button text="Guardar" onAction="#clicGuardar"
-                        style="-fx-background-color: #2ecc71; -fx-text-fill: white; -fx-padding: 8 16; -fx-font-weight: bold;" />
+                <Button fx:id="btnCancelar" onAction="#clicCancelar" style="-fx-background-color: #e74c3c; -fx-text-fill: white; -fx-padding: 8 16; -fx-font-weight: bold;" text="Cancelar" />
+                <Button onAction="#clicGuardar" style="-fx-background-color: #2ecc71; -fx-text-fill: white; -fx-padding: 8 16; -fx-font-weight: bold;" text="Guardar" />
             </children>
         </HBox>
     </bottom>
