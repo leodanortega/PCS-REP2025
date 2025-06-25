@@ -330,7 +330,7 @@ public List<Proyecto> listar() {
         return false;
     }
 
-    public boolean actualizarEspaciosProyecto(int idProyecto, int nuevosEspacios) {
+    /*public boolean actualizarEspaciosProyecto(int idProyecto, int nuevosEspacios) {
         String query = "UPDATE proyecto SET espacios = ? WHERE idProyecto = ?";
             try (Connection conn = ConexionBD.abrirConexion();
                 PreparedStatement stmt = conn.prepareStatement(query)) {
@@ -341,5 +341,21 @@ public List<Proyecto> listar() {
             e.printStackTrace();
             return false;
             }
+    }*/
+    
+    public boolean restarEspacio(int idProyecto) {
+    boolean resultado = false;
+    String query = "UPDATE proyecto SET espacios = espacios - 1 WHERE idProyecto = ? AND espacios > 0";
+
+    try (Connection conn = ConexionBD.abrirConexion();
+         PreparedStatement stmt = conn.prepareStatement(query)) {
+        stmt.setInt(1, idProyecto);
+        resultado = stmt.executeUpdate() > 0;
+    } catch (SQLException e) {
+        e.printStackTrace();
     }
+
+    return resultado;
+}
+
 }

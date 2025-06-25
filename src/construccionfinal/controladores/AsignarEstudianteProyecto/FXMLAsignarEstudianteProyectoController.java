@@ -65,7 +65,7 @@ public class FXMLAsignarEstudianteProyectoController implements Initializable {
         tvEstudiantes.setItems(listaEstudiantes);
     }
 
-    private void cargarProyectos() {
+    /*private void cargarProyectos() {
         ProyectoDAO dao = new ProyectoDAO();
         ObservableList<Proyecto> listaProyectos = FXCollections.observableArrayList(dao.listar());
 
@@ -86,7 +86,45 @@ public class FXMLAsignarEstudianteProyectoController implements Initializable {
         tcEspacios.setCellValueFactory(new PropertyValueFactory<>("espacios"));
 
         tvProyectos.setItems(listaProyectos);
+    }*/
+    
+private void cargarProyectos() {
+    ProyectoDAO dao = new ProyectoDAO();
+    List<Proyecto> todos = dao.listar();
+
+    // Filtrar proyectos que tengan al menos un espacio disponible
+    List<Proyecto> disponibles = new ArrayList<>();
+    for (Proyecto proyecto : todos) {
+        try {
+            int espacios = Integer.parseInt(proyecto.getEspacios());
+            if (espacios > 0) {
+                disponibles.add(proyecto);
+            }
+        } catch (NumberFormatException e) {
+            // Omitir proyectos con formato inválido
+        }
     }
+
+    ObservableList<Proyecto> listaProyectos = FXCollections.observableArrayList(disponibles);
+
+    tcProyecto.setCellValueFactory(new PropertyValueFactory<>("nombre"));
+
+    tcResponsable.setCellValueFactory(cellData -> {
+        Proyecto proyecto = cellData.getValue();
+        String nombreResponsable = proyecto.getResponsableProyecto().getNombre() + " "
+                + proyecto.getResponsableProyecto().getApePaterno() + " "
+                + proyecto.getResponsableProyecto().getApeMaterno();
+        return new SimpleStringProperty(nombreResponsable);
+    });
+
+    tcOrganizacion.setCellValueFactory(cellData ->
+            new SimpleStringProperty(proyectoNombreSeguro(cellData.getValue()))
+    );
+
+    tcEspacios.setCellValueFactory(new PropertyValueFactory<>("espacios"));
+
+    tvProyectos.setItems(listaProyectos);
+}
 
     private String proyectoNombreSeguro(Proyecto proyecto) {
         return proyecto.getOrganizacionVinculada() != null
@@ -101,51 +139,45 @@ public class FXMLAsignarEstudianteProyectoController implements Initializable {
         stage.close();
     }
 
-    @FXML
-    private void clicAsignar(ActionEvent event) {
-        Estudiante estudianteSeleccionado = tvEstudiantes.getSelectionModel().getSelectedItem();
-        Proyecto proyectoSeleccionado = tvProyectos.getSelectionModel().getSelectedItem();
+@FXML
+private void clicAsignar(ActionEvent event) {
+    Estudiante estudianteSeleccionado = tvEstudiantes.getSelectionModel().getSelectedItem();
+    Proyecto proyectoSeleccionado = tvProyectos.getSelectionModel().getSelectedItem();
 
-        // Validación: Se debe seleccionar un estudiante y un proyecto
-        if (estudianteSeleccionado == null || proyectoSeleccionado == null) {
-            mostrarAlerta("Debe seleccionar un estudiante y un proyecto.");
-            return;
-        }
-
-        // Validación: El proyecto no debe tener un estudiante asignado
-        if (proyectoSeleccionado.getIdEstudiante() > 0) {
-            mostrarAlerta("Este proyecto ya tiene un estudiante asignado.");
-            return;
-        }
-
-        ProyectoDAO dao = new ProyectoDAO();
-        boolean asignado = dao.asignarEstudianteAProyecto(proyectoSeleccionado.getIdProyecto(), estudianteSeleccionado.getIdUsuario());
-
-        if (asignado) {
-            mostrarAlerta("Estudiante asignado correctamente al proyecto.");
-            cargarProyectos();
-
-            // Llamar a la creación del expediente después de asignar el estudiante
-            int nuevoExpedienteId = crearExpediente(estudianteSeleccionado);
-
-            if (nuevoExpedienteId != -1) {
-                mostrarAlerta("Expediente creado correctamente para el estudiante.");
-            } else {
-                mostrarAlerta("No se pudo crear el expediente.");
-            }
-        } else {
-            mostrarAlerta("No se pudo asignar el estudiante al proyecto.");
-        }
+    if (estudianteSeleccionado == null || proyectoSeleccionado == null) {
+        mostrarAlerta("Debe seleccionar un estudiante y un proyecto.");
+        return;
     }
+
+    ProyectoDAO dao = new ProyectoDAO();
+    boolean asignado = dao.asignarEstudianteAProyecto(proyectoSeleccionado.getIdProyecto(), estudianteSeleccionado.getIdUsuario());
+
+    if (asignado) {
+        boolean espacioRestado = dao.restarEspacio(proyectoSeleccionado.getIdProyecto());
+
+        mostrarAlerta("Estudiante asignado correctamente al proyecto.");
+
+        int nuevoExpedienteId = crearExpediente(estudianteSeleccionado);
+        if (nuevoExpedienteId != -1) {
+            mostrarAlerta("Expediente creado correctamente para el estudiante.");
+        } else {
+            mostrarAlerta("No se pudo crear el expediente.");
+        }
+        cargarProyectos();
+        tvEstudiantes.getItems().remove(estudianteSeleccionado);
+    } else {
+        mostrarAlerta("No se pudo asignar el estudiante al proyecto.");
+    }
+}
 
     private int crearExpediente(Estudiante estudiante) {
         ExpedienteDAO daoExpediente = new ExpedienteDAO();
         
         int idGrupoEE = 12345;
         int idPeriodo = 1;
-        String calificaciones = "1";
-        String horas = "90";
-        String informe = "asd";
+        String calificaciones = "0";
+        String horas = "0";
+        String informe = "";
         int idDocumentoInicial = 1;
 
         return daoExpediente.crearExpediente(estudiante.getIdUsuario(), idGrupoEE, idPeriodo, calificaciones, horas, informe, idDocumentoInicial);
@@ -159,4 +191,3 @@ public class FXMLAsignarEstudianteProyectoController implements Initializable {
         alerta.showAndWait();
     }
 }
-
