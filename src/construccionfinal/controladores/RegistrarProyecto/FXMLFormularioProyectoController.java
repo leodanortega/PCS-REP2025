@@ -36,13 +36,8 @@ public class FXMLFormularioProyectoController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        cbResponsables.setDisable(true); // Se desactiva al inicio
         cargarOrganizaciones();
-        cbResponsables.setDisable(true);
-        btnGuardar.setDisable(true); // Desactivado al inicio
-
-        cbResponsables.setOnAction(event -> {
-            btnGuardar.setDisable(cbResponsables.getValue() == null);
-        });
     }
 
     private void cargarOrganizaciones() {
@@ -56,7 +51,6 @@ public class FXMLFormularioProyectoController implements Initializable {
             } else {
                 cbResponsables.getItems().clear();
                 cbResponsables.setDisable(true);
-                btnGuardar.setDisable(true);
             }
         });
     }
@@ -67,13 +61,11 @@ public class FXMLFormularioProyectoController implements Initializable {
 
         if (lista.isEmpty()) {
             mostrarAlerta(Alert.AlertType.WARNING, "Sin responsables",
-                "La organización seleccionada no tiene responsables registrados.");
+                    "La organización seleccionada no tiene responsables registrados.");
             cbResponsables.setDisable(true);
-            btnGuardar.setDisable(true);
         } else {
             cbResponsables.setItems(FXCollections.observableArrayList(lista));
             cbResponsables.setDisable(false);
-            btnGuardar.setDisable(true); // Se mantiene deshabilitado hasta que seleccionen un responsable
         }
     }
 
@@ -84,56 +76,54 @@ public class FXMLFormularioProyectoController implements Initializable {
         }
     }
 
-@FXML
-private void clicGuardar(ActionEvent event) {
-    if (!validarCampos()) return;
+    @FXML
+    private void clicGuardar(ActionEvent event) {
+        if (!validarCampos()) return;
 
-    Proyecto proyecto = new Proyecto();
-    proyecto.setNombre(tfNombre.getText().trim());
-    proyecto.setDescripcion(taDescripcion.getText().trim());
-    proyecto.setMetodologia(tfMetodologia.getText().trim());
-    proyecto.setEspacios(tfEspacios.getText().trim());
-    proyecto.setDepartamento(tfDepartamento.getText().trim());
+        Proyecto proyecto = new Proyecto();
+        proyecto.setNombre(tfNombre.getText().trim());
+        proyecto.setDescripcion(taDescripcion.getText().trim());
+        proyecto.setMetodologia(tfMetodologia.getText().trim());
+        proyecto.setEspacios(tfEspacios.getText().trim());
+        proyecto.setDepartamento(tfDepartamento.getText().trim());
 
-    OrganizacionVinculada ov = cbOrganizaciones.getValue();
-    ResponsableProyecto responsable = cbResponsables.getValue();
+        OrganizacionVinculada ov = cbOrganizaciones.getValue();
+        ResponsableProyecto responsable = cbResponsables.getValue();
 
-    proyecto.setIdOrganizacion(ov.getIdOrganizacion());
-    proyecto.setIdResponsable(responsable.getIdResponsable());
-    proyecto.setOrganizacionVinculada(ov);
-    proyecto.setResponsableProyecto(responsable);
+        proyecto.setIdOrganizacion(ov.getIdOrganizacion());
+        proyecto.setIdResponsable(responsable.getIdResponsable());
+        proyecto.setOrganizacionVinculada(ov);
+        proyecto.setResponsableProyecto(responsable);
 
-    try {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/construccionfinal/vistas/RegistrarProyecto/FXMLConfirmarDatosProyecto.fxml"));
-        Parent root = loader.load();
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/construccionfinal/vistas/RegistrarProyecto/FXMLConfirmarDatosProyecto.fxml"));
+            Parent root = loader.load();
 
-        FXMLConfirmarDatosProyectoController controller = loader.getController();
-        controller.setProyecto(proyecto);
+            FXMLConfirmarDatosProyectoController controller = loader.getController();
+            controller.setProyecto(proyecto);
 
-        Stage stage = new Stage();
-        stage.setTitle("Confirmar Proyecto");
-        stage.setScene(new Scene(root));
-        stage.initModality(Modality.APPLICATION_MODAL);
-        stage.showAndWait();
+            Stage stage = new Stage();
+            stage.setTitle("Confirmar Proyecto");
+            stage.setScene(new Scene(root));
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.showAndWait();
 
-        if (controller.isConfirmado()) {
-            boolean exito = new ProyectoDAO().agregar(proyecto);
-            mostrarAlerta(exito ? Alert.AlertType.INFORMATION : Alert.AlertType.ERROR,
-                exito ? "Registro exitoso" : "Error",
-                exito ? "El proyecto fue registrado exitosamente." : "No se pudo registrar el proyecto.");
-            
-            if (exito) {
-                limpiarCampos();
-                ((Stage) tfNombre.getScene().getWindow()).close(); // ← Cierra la ventana actual
+            if (controller.isConfirmado()) {
+                boolean exito = new ProyectoDAO().agregar(proyecto);
+                mostrarAlerta(exito ? Alert.AlertType.INFORMATION : Alert.AlertType.ERROR,
+                        exito ? "Registro exitoso" : "Error",
+                        exito ? "El proyecto fue registrado exitosamente." : "No se pudo registrar el proyecto.");
+
+                if (exito) {
+                    ((Stage) tfNombre.getScene().getWindow()).close(); // Cierra la ventana después de guardar
+                }
             }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            mostrarAlerta(Alert.AlertType.ERROR, "Error de carga", "No se pudo cargar la ventana de confirmación.");
         }
-
-    } catch (IOException e) {
-        e.printStackTrace();
-        mostrarAlerta(Alert.AlertType.ERROR, "Error de carga", "No se pudo cargar la ventana de confirmación.");
     }
-}
-
 
     private boolean validarCampos() {
         String nombre = tfNombre.getText().trim();
@@ -229,17 +219,5 @@ private void clicGuardar(ActionEvent event) {
         alerta.setHeaderText(null);
         alerta.setContentText(mensaje);
         return alerta.showAndWait().orElse(ButtonType.CANCEL) == ButtonType.OK;
-    }
-
-    private void limpiarCampos() {
-        tfNombre.clear();
-        taDescripcion.clear();
-        tfMetodologia.clear();
-        tfEspacios.clear();
-        tfDepartamento.clear();
-        cbOrganizaciones.getSelectionModel().clearSelection();
-        cbResponsables.getItems().clear();
-        cbResponsables.setDisable(true);
-        btnGuardar.setDisable(true);
     }
 }
