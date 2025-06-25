@@ -92,7 +92,6 @@ private void cargarProyectos() {
     ProyectoDAO dao = new ProyectoDAO();
     List<Proyecto> todos = dao.listar();
 
-    // Filtrar proyectos que tengan al menos un espacio disponible
     List<Proyecto> disponibles = new ArrayList<>();
     for (Proyecto proyecto : todos) {
         try {
@@ -101,7 +100,6 @@ private void cargarProyectos() {
                 disponibles.add(proyecto);
             }
         } catch (NumberFormatException e) {
-            // Omitir proyectos con formato inválido
         }
     }
 
