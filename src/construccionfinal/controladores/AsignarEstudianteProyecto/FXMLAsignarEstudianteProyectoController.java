@@ -67,7 +67,6 @@ public class FXMLAsignarEstudianteProyectoController implements Initializable {
                     disponibles.add(proyecto);
                 }
             } catch (NumberFormatException e) {
-                // Ignorar si espacios no es válido
             }
         }
 
@@ -115,19 +114,16 @@ public class FXMLAsignarEstudianteProyectoController implements Initializable {
             mostrarAlerta("Debe seleccionar un estudiante y un proyecto.");
             return;
         }
-
-        // Ya no asignamos directamente en proyecto (no existe ese campo para idEstudiante)
-        // Ahora solo creamos el expediente que vincula estudiante y proyecto
         ExpedienteDAO daoExpediente = new ExpedienteDAO();
         int nuevoExpedienteId = daoExpediente.crearExpediente(
             estudianteSeleccionado.getIdUsuario(),
-            12345,  // idGrupoEE ejemplo fijo
-            1,      // idPeriodo ejemplo fijo
-            "0",    // calificaciones iniciales
-            "0",    // horas iniciales
-            "",     // informe vacío
-            1,      // idDocumentoInicial ejemplo fijo
-            proyectoSeleccionado.getIdProyecto()  // aquí el vínculo con proyecto
+            12345,
+            1,
+            "0",
+            "0",
+            "",
+            1,
+            proyectoSeleccionado.getIdProyecto()
         );
 
         if (nuevoExpedienteId != -1) {
