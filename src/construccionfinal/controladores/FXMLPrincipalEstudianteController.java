@@ -5,13 +5,13 @@ import construccionfinal.controladores.Expediente.FXMLExpedienteEstudianteContro
 import construccionfinal.dao.*;
 import construccionfinal.modelo.pojo.*;
 import construccionfinal.utilidades.Utilidad;
+import construccionfinal.dao.ProyectoDAO;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import construccionfinal.utilidades.Utilidad;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -28,14 +28,17 @@ public class FXMLPrincipalEstudianteController implements Initializable {
     @FXML
     private Label lblNombreUsuario;
 
-    private Usuario usuario;
     @FXML
     private Button btnEvaluarOV;
+
     @FXML
     private Button btnExpediente;
 
+    private Usuario usuario;
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        // No se requiere inicialización aquí por ahora
     }
 
     public void setUsuario(Usuario usuarioSesion) {
@@ -52,7 +55,6 @@ public class FXMLPrincipalEstudianteController implements Initializable {
             FXMLEvaluarOVController controller = loader.getController();
 
             EstudianteDAO estudianteDAO = new EstudianteDAO();
-
             Estudiante estudiante = estudianteDAO.buscarPorId(usuario.getIdUsuario());
 
             if (estudiante == null) {
@@ -60,36 +62,44 @@ public class FXMLPrincipalEstudianteController implements Initializable {
                 return;
             }
 
-            ExpedienteDAO expedienteDAO= new ExpedienteDAO();
+            ExpedienteDAO expedienteDAO = new ExpedienteDAO();
             Expediente expediente = expedienteDAO.obtenerExpedientePorEstudiante(estudiante.getIdUsuario());
 
             if (expediente == null) {
-                Utilidad.mostrarAlertaSimple(Alert.AlertType.WARNING, "Aún no puedes realizar esta operación", "No tienes asignado un proyecto");
+                Utilidad.mostrarAlertaSimple(Alert.AlertType.WARNING, "Aún no puedes realizar esta operación", "No tienes asignado un proyecto.");
                 return;
             }
 
             int idExpediente = expediente.getIdExpediente();
             int horas = ExpedienteDAO.obtenerHorasPorExpediente(idExpediente);
+
             if (horas < 420) {
-                Utilidad.mostrarAlertaSimple(Alert.AlertType.WARNING, "Aún no puedes realizar esta operación", "No cumples 420 horas como mínimo para poder evaluar la organización .");
+                Utilidad.mostrarAlertaSimple(Alert.AlertType.WARNING, "Aún no puedes realizar esta operación", "No cumples 420 horas como mínimo para poder evaluar la organización.");
                 return;
             }
 
             if (EvaluacionOVDAO.tieneEvaluacionOrganizacion(idExpediente)) {
-                Utilidad.mostrarAlertaSimple(Alert.AlertType.WARNING, "Evaluación ya realizada", "Ya realizaste la evaluación");
+                Utilidad.mostrarAlertaSimple(Alert.AlertType.WARNING, "Evaluación ya realizada", "Ya realizaste la evaluación.");
                 return;
             }
 
             ProyectoDAO proyectoDAO = new ProyectoDAO();
-            Proyecto proyecto = proyectoDAO.buscarPorEstudiante(estudiante.getIdUsuario());
+            Proyecto proyecto = proyectoDAO.buscarPorId(expediente.getIdProyecto());
+
+            if (proyecto == null) {
+                System.err.println("No se encontró el proyecto con ID: " + expediente.getIdProyecto());
+                return;
+            }
 
             OrganizacionVinculadaDAO orgDAO = new OrganizacionVinculadaDAO();
-            OrganizacionVinculada org = orgDAO.buscarPorId(proyecto.getIdOrganizacion());
+            OrganizacionVinculada organizacion = orgDAO.buscarPorId(proyecto.getIdOrganizacion());
 
             ResponsableProyectoDAO responsableDAO = new ResponsableProyectoDAO();
             ResponsableProyecto responsable = responsableDAO.buscarPorId(proyecto.getIdResponsable());
+
             List<CriterioEvaluacion> criterios = CriterioEvaluacionOVDAO.obtenerTodos();
-            controller.setDatos(estudiante, proyecto, org, responsable, criterios);
+
+            controller.setDatos(estudiante, proyecto, organizacion, responsable, criterios);
 
             Stage stage = new Stage();
             stage.setTitle("Evaluar Organización Vinculada");
@@ -101,7 +111,6 @@ public class FXMLPrincipalEstudianteController implements Initializable {
             System.err.println("No se pudo abrir la ventana FXMLEvaluarOV.fxml");
         }
     }
-
 
     @FXML
     private void btnCerrarSesion(ActionEvent event) {
@@ -119,39 +128,23 @@ public class FXMLPrincipalEstudianteController implements Initializable {
             e.printStackTrace();
         }
     }
-    
-    private void abrirNuevaVentana(String rutaFXML, String titulo) {
+
+    private void abrirNuevaVentanaConEstudiante(Estudiante estudiante) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(rutaFXML));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/construccionfinal/vistas/Expediente/FXMLExpedienteEstudiante.fxml"));
             Parent root = loader.load();
+
+            FXMLExpedienteEstudianteController controller = loader.getController();
+            controller.inicializarDatos(estudiante);
+
             Stage stage = new Stage();
-            stage.setTitle(titulo);
+            stage.setTitle("Expediente del Estudiante");
             stage.setScene(new Scene(root));
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
-            System.err.println("No se pudo abrir la ventana: " + rutaFXML);
         }
     }
-
-    private void abrirNuevaVentanaConEstudiante(Estudiante estudiante) {
-    try {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/construccionfinal/vistas/Expediente/FXMLExpedienteEstudiante.fxml"));
-        Parent root = loader.load();
-
-        FXMLExpedienteEstudianteController controller = loader.getController();
-        controller.inicializarDatos(estudiante);
-
-        Stage stage = new Stage();
-        stage.setTitle("Expediente del Estudiante");
-        stage.setScene(new Scene(root));
-        stage.show();
-    } catch (IOException e) {
-        e.printStackTrace();
-    }
-}
-
-
 
     @FXML
     private void clicExpediente(ActionEvent event) {
@@ -160,14 +153,18 @@ public class FXMLPrincipalEstudianteController implements Initializable {
 
         Estudiante estudiante = estudianteDAO.buscarPorId(usuario.getIdUsuario());
 
+        if (estudiante == null) {
+            Utilidad.mostrarAlertaSimple(Alert.AlertType.WARNING, "Error", "No se encontró información del estudiante.");
+            return;
+        }
+
         Expediente expediente = expedienteDAO.obtenerExpedientePorEstudiante(estudiante.getIdUsuario());
 
         if (expediente == null) {
-            Utilidad.mostrarAlertaSimple(Alert.AlertType.WARNING, "Aún no puedes realizar esta operación", "Aún no puedes realizar esta operación");
+            Utilidad.mostrarAlertaSimple(Alert.AlertType.WARNING, "Aún no puedes realizar esta operación", "Aún no puedes realizar esta operación.");
             return;
         }
 
         abrirNuevaVentanaConEstudiante(estudiante);
     }
-
 }

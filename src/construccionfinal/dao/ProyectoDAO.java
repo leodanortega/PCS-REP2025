@@ -357,5 +357,44 @@ public List<Proyecto> listar() {
 
     return resultado;
 }
+    
+    public Proyecto buscarPorId(int idProyecto) {
+    Proyecto proyecto = null;
+    String sql = "SELECT * FROM proyecto WHERE idProyecto = ?";
+
+    try (Connection con = ConexionBD.abrirConexion();
+         PreparedStatement ps = con.prepareStatement(sql)) {
+
+        ps.setInt(1, idProyecto);
+
+        try (ResultSet rs = ps.executeQuery()) {
+            if (rs.next()) {
+                proyecto = new Proyecto();
+                proyecto.setIdProyecto(rs.getInt("idProyecto"));
+                proyecto.setNombre(rs.getString("nombre"));
+                proyecto.setDescripcion(rs.getString("descripcion"));
+                proyecto.setMetodologia(rs.getString("metodologia"));
+                proyecto.setEspacios(rs.getString("espacios"));
+                proyecto.setDepartamento(rs.getString("departamento"));
+                proyecto.setIdResponsable(rs.getInt("idResponsable"));
+                proyecto.setIdOrganizacion(rs.getInt("idOrganizacion"));
+
+                // Cargar objeto ResponsableProyecto
+                ResponsableProyecto responsable = ResponsableProyectoDAO.buscarPorId(proyecto.getIdResponsable());
+                proyecto.setResponsableProyecto(responsable);
+
+                // Cargar objeto OrganizacionVinculada
+                OrganizacionVinculada organizacion = OrganizacionVinculadaDAO.buscarPorId(proyecto.getIdOrganizacion());
+                proyecto.setOrganizacionVinculada(organizacion);
+            }
+        }
+
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+
+    return proyecto;
+}
+
 
 }
