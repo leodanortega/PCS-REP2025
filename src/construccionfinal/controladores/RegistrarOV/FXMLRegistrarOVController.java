@@ -128,7 +128,7 @@ public class FXMLRegistrarOVController {
 
     private boolean esEnteroPositivo(String texto) {
         try {
-            int valor = Integer.parseInt(texto);
+            long valor = Long.parseLong(texto);
             return valor > 0;
         } catch (NumberFormatException e) {
             return false;
@@ -157,12 +157,4 @@ public class FXMLRegistrarOVController {
         alerta.showAndWait();
     }
 
-    private void limpiarCampos() {
-        tfNombre.clear();
-        tfCorreo.clear();
-        tfDescripcion.clear();
-        tfRFC.clear();
-        tfTelefono.clear();
-        cbTipo.getSelectionModel().clearSelection();
-    }
 }

@@ -110,7 +110,10 @@ public class FXMLRegistrarResponsableController {
             mostrarAlerta(Alert.AlertType.WARNING, "Teléfono inválido", "El número de teléfono debe contener exactamente 10 dígitos numéricos.");
             return;
         }
-
+        if (!esEnteroPositivo(tfTelefono.getText())) {
+            mostrarAlerta(Alert.AlertType.WARNING, "Valor inválido", "El número de teléfono debe contener exactamente 10 dígitos numéricos.");
+            return;
+        }
 
         if (!ResponsableProyectoDAO.hayConexion()) {
             mostrarAlerta(Alert.AlertType.ERROR, "Sin conexión", "Error: No hay conexión con la base de datos");
@@ -179,5 +182,14 @@ public class FXMLRegistrarResponsableController {
         alerta.setHeaderText(null);
         alerta.setContentText(contenido);
         alerta.showAndWait();
+    }
+
+    private boolean esEnteroPositivo(String texto) {
+        try {
+            long valor = Long.parseLong(texto);
+            return valor > 0;
+        } catch (NumberFormatException e) {
+            return false;
+        }
     }
 }
