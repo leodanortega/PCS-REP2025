@@ -26,7 +26,7 @@ public class ExpedienteDAO {
                     expediente.setIdEstudiante(rs.getInt("idEstudiante"));
                     expediente.setIdGrupoEE(rs.getInt("idGrupoEE"));
                     expediente.setIdPeriodo(rs.getInt("idPeriodo"));
-                    expediente.setCalificaciones(rs.getString("calificaciones")); // corregido
+                    expediente.setCalificaciones(rs.getString("califaciones")); // corregido
                     expediente.setHoras(rs.getString("horas"));
                     expediente.setInforme(rs.getString("informe"));
                     expediente.setIdDocumentoInicial(rs.getInt("idDocumentoInicial"));

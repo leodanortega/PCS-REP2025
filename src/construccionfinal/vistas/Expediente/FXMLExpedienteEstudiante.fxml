@@ -93,7 +93,8 @@
     <bottom>
         <Pane prefHeight="100.0" BorderPane.alignment="CENTER">
             <children>
-                <Button layoutX="541.0" layoutY="35.0" mnemonicParsing="false" onAction="#clicSubirDocumentosIniciales" style="-fx-background-color: #007bff; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 16px; -fx-background-radius: 10;" text="Subir Documentos Iniciales" />
+                <Button layoutX="541.0" layoutY="35.0" mnemonicParsing="false" onAction="#clicSubirDocumentosIniciales" style="-fx-background-color: green; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 16px; -fx-background-radius: 10;" text="Subir Documentos Iniciales" />
+                <Button fx:id="btnRegresar" layoutX="1108.0" layoutY="27.0" onAction="#regresar" style="-fx-background-color: #007bff; -fx-text-fill: white; -fx-font-size: 18px; -fx-font-weight: bold; -fx-background-radius: 10; -fx-padding: 10 20;" text="⟵ Regresar" />
             </children>
         </Pane>
     </bottom>

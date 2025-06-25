@@ -21,7 +21,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
 public class FXMLListaEstudiantesController implements Initializable {
-
+    @FXML
+    private javafx.scene.control.Button btnRegresar;
     @FXML
     private TableView<Estudiante> tvEstudiantes;
     @FXML
@@ -83,5 +84,11 @@ public class FXMLListaEstudiantesController implements Initializable {
             e.printStackTrace();
             System.err.println("No se pudo abrir la ventana FXMLConsultarExpedienteEstudiante.fxml");
         }
+    }
+
+    @FXML
+    private void regresar(ActionEvent event) {
+        Stage stage = (Stage) btnRegresar.getScene().getWindow();
+        stage.close();
     }
 }

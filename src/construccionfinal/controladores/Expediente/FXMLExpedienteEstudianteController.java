@@ -30,7 +30,8 @@ import javafx.event.EventHandler;
 
 
 public class FXMLExpedienteEstudianteController implements Initializable {
-
+    @FXML
+    private javafx.scene.control.Button btnRegresar;
     @FXML private Label lbMatricula;
     @FXML private Label lbNombre;
     @FXML private Label lbGrupo;
@@ -163,5 +164,11 @@ public class FXMLExpedienteEstudianteController implements Initializable {
         alerta.setHeaderText(null);
         alerta.setContentText(mensaje);
         alerta.showAndWait();
+    }
+
+    @FXML
+    private void regresar(ActionEvent event) {
+        Stage stage = (Stage) btnRegresar.getScene().getWindow();
+        stage.close();
     }
 }
