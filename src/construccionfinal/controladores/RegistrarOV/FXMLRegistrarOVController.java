@@ -13,6 +13,13 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
+import java.time.format.DateTimeParseException;
+import java.time.format.ResolverStyle;
+import java.time.temporal.ChronoField;
+import java.util.Locale;
 
 public class FXMLRegistrarOVController {
 
@@ -58,11 +65,33 @@ public class FXMLRegistrarOVController {
             return;
         }
 
+        String rfc = tfRFC.getText().trim();
 
-        if (!tfRFC.getText().matches("^[A-ZÑ&]{3}[0-9]{6}[A-Z0-9]{3}$")) {
+        if (!rfc.matches("^[A-ZÑ&]{3}[0-9]{6}[A-Z0-9]{3}$")) {
             mostrarAlerta(Alert.AlertType.WARNING, "RFC inválido", "El RFC no tiene un formato válido.");
             return;
         }
+
+        try {
+            String fechaStr = rfc.substring(3, 9);
+            DateTimeFormatter formatter = new DateTimeFormatterBuilder()
+                    .parseStrict()
+                    .appendValueReduced(ChronoField.YEAR, 2, 2, 1900)
+                    .appendValue(ChronoField.MONTH_OF_YEAR, 2)
+                    .appendValue(ChronoField.DAY_OF_MONTH, 2)
+                    .toFormatter(Locale.US)
+                    .withResolverStyle(ResolverStyle.STRICT);
+
+            LocalDate fecha = LocalDate.parse(fechaStr, formatter);
+
+        } catch (DateTimeParseException e) {
+            mostrarAlerta(Alert.AlertType.WARNING, "RFC inválido", "La fecha de nacimiento del RFC no es válida.");
+            return;
+        } catch (StringIndexOutOfBoundsException e) {
+            mostrarAlerta(Alert.AlertType.WARNING, "RFC inválido", "El RFC es demasiado corto.");
+            return;
+        }
+
         if (!tfTelefono.getText().matches("\\d{10}")) {
             mostrarAlerta(Alert.AlertType.WARNING, "Teléfono inválido", "El número de teléfono debe contener exactamente 10 dígitos numéricos.");
             return;
