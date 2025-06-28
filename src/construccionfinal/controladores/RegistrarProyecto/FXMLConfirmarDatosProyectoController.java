@@ -5,6 +5,7 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
 
 public class FXMLConfirmarDatosProyectoController {
@@ -18,14 +19,15 @@ public class FXMLConfirmarDatosProyectoController {
     @FXML
     private Label lbDepartamento;
     @FXML
-    private Label lbDescripcion;
-    @FXML
     private Label lbMetodologia;
     @FXML
     private Label lbEspacios;
 
     private boolean confirmado = false;
     private Proyecto proyecto;
+
+    @FXML
+    private Label lbDescripcion;
 
     public void setProyecto(Proyecto proyecto) {
         this.proyecto = proyecto;
@@ -70,7 +72,7 @@ public class FXMLConfirmarDatosProyectoController {
         if (stage != null) {
             stage.close();
         } else {
-            System.err.println("Error: no se pudo cerrar la ventana, Stage es null.");
+            System.err.println("Error: no se pudo cerrar la ventana");
         }
     }
 }

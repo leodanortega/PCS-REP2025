@@ -151,25 +151,31 @@ public boolean agregar(DocumentoInicial doc) {
     return documentos;
     }
     
-    public static boolean existeDocumentoAprobado(int idExpediente, String tipoDocumento) {
+public static boolean existeDocumentoAprobado(int idExpediente, String tipoDocumento) {
+    String sql = "SELECT COUNT(*) FROM documento_inicial WHERE idExpediente = ? AND tipoDocumento = ? AND estado = 'Aprobado'";
     boolean existe = false;
-    Connection con = ConexionBD.abrirConexion();
-    if (con != null) {
-        try {
-            String sql = "SELECT COUNT(*) FROM documento_inicial WHERE idExpediente = ? AND tipoDocumento = ? AND estado = 'Aprobado'";
-            PreparedStatement stmt = con.prepareStatement(sql);
-            stmt.setInt(1, idExpediente);
-            stmt.setString(2, tipoDocumento);
-            ResultSet rs = stmt.executeQuery();
+
+    try (Connection con = ConexionBD.abrirConexion();
+         PreparedStatement ps = (con != null) ? con.prepareStatement(sql) : null) {
+
+        if (ps == null) {
+            System.err.println("Error: conexión nula en existeDocumentoAprobado");
+            return false;
+        }
+
+        ps.setInt(1, idExpediente);
+        ps.setString(2, tipoDocumento);
+
+        try (ResultSet rs = ps.executeQuery()) {
             if (rs.next()) {
                 existe = rs.getInt(1) > 0;
             }
-            con.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
+
+    } catch (SQLException e) {
+        e.printStackTrace();
     }
+
     return existe;
 }
-
 }

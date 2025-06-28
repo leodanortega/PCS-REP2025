@@ -4,6 +4,7 @@ import construccionfinal.controladores.EntregarDocumentosIniciales.FXMLEntregarD
 import construccionfinal.dao.DocumentoInicialDAO;
 import construccionfinal.dao.ExpedienteDAO;
 import construccionfinal.modelo.pojo.DocumentoInicial;
+import construccionfinal.modelo.pojo.EntregaDocumento;
 import construccionfinal.modelo.pojo.Estudiante;
 import construccionfinal.modelo.pojo.Expediente;
 
@@ -24,6 +25,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ResourceBundle;
 import javafx.util.Callback;
 import javafx.event.EventHandler;
@@ -131,32 +134,59 @@ public class FXMLExpedienteEstudianteController implements Initializable {
         }
     }
 
-    @FXML
-    private void clicSubirDocumentosIniciales(ActionEvent event) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/construccionfinal/vistas/EntregarDocumentosIniciales/FXMLEntregarDocumento.fxml"));
-            Parent root = loader.load();
+@FXML
+private void clicSubirDocumentosIniciales(ActionEvent event) {
+    Expediente expediente = ExpedienteDAO.obtenerExpedientePorEstudiante(estudiante.getIdUsuario());
 
-            FXMLEntregarDocumentoController controller = loader.getController();
-            Expediente expediente = ExpedienteDAO.obtenerExpedientePorEstudiante(estudiante.getIdUsuario());
-
-            if (expediente != null) {
-                controller.setIdExpediente(expediente.getIdExpediente());
-            } else {
-                mostrarAlerta("Aviso", "No se puede subir documentos porque el estudiante no tiene expediente registrado.", Alert.AlertType.WARNING);
-                return;
-            }
-
-            Stage stage = new Stage();
-            stage.setTitle("Entregar Documentos Iniciales");
-            stage.setScene(new Scene(root));
-            stage.setOnHiding(e -> cargarDocumentosIniciales(expediente.getIdExpediente()));
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-            mostrarAlerta("Error", "No se pudo abrir la ventana para subir documentos.", Alert.AlertType.ERROR);
-        }
+    if (expediente == null) {
+        mostrarAlerta("Aviso", "No se puede subir documentos porque el estudiante no tiene expediente registrado.", Alert.AlertType.WARNING);
+        return;
     }
+
+    EntregaDocumento rango = construccionfinal.dao.EntregaDocumentoDAO.obtenerRangoPorTipo("Inicial");
+    if (rango == null) {
+        mostrarAlerta("Configuración faltante", "No se ha configurado el periodo de entrega de documentos iniciales.", Alert.AlertType.WARNING);
+        return;
+    }
+
+    LocalDate hoy = LocalDate.now();
+    LocalTime ahora = LocalTime.now();
+
+    boolean dentroDeFecha = !hoy.isBefore(rango.getFechaInicio()) && !hoy.isAfter(rango.getFechaFin());
+    boolean dentroDeHora = true;
+
+    if (hoy.equals(rango.getFechaInicio()) && ahora.isBefore(rango.getHoraInicio())) {
+        dentroDeHora = false;
+    }
+    if (hoy.equals(rango.getFechaFin()) && ahora.isAfter(rango.getHoraFin())) {
+        dentroDeHora = false;
+    }
+
+    if (!dentroDeFecha || !dentroDeHora) {
+        mostrarAlerta("Entrega no disponible", "La entrega de documentos iniciales no está permitida en este momento.\n" +
+            "Periodo permitido:\n" +
+            rango.getFechaInicio() + " " + rango.getHoraInicio() + " a " +
+            rango.getFechaFin() + " " + rango.getHoraFin(), Alert.AlertType.INFORMATION);
+        return;
+    }
+
+    try {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/construccionfinal/vistas/EntregarDocumentosIniciales/FXMLEntregarDocumento.fxml"));
+        Parent root = loader.load();
+
+        FXMLEntregarDocumentoController controller = loader.getController();
+        controller.setIdExpediente(expediente.getIdExpediente());
+
+        Stage stage = new Stage();
+        stage.setTitle("Entregar Documentos Iniciales");
+        stage.setScene(new Scene(root));
+        stage.setOnHiding(e -> cargarDocumentosIniciales(expediente.getIdExpediente()));
+        stage.show();
+    } catch (IOException e) {
+        e.printStackTrace();
+        mostrarAlerta("Error", "Hubo un error al cargar la ventana de entrega de documentos.", Alert.AlertType.ERROR);
+    }
+}
 
     private void mostrarAlerta(String titulo, String mensaje, Alert.AlertType tipo) {
         Alert alerta = new Alert(tipo);

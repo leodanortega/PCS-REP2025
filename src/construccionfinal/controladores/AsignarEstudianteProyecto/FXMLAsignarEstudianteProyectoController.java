@@ -6,6 +6,7 @@ import construccionfinal.dao.ProyectoDAO;
 import construccionfinal.modelo.pojo.Estudiante;
 import construccionfinal.modelo.pojo.Proyecto;
 import construccionfinal.utilidades.Utilidad;
+import java.io.IOException;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -20,6 +21,10 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Modality;
 
 public class FXMLAsignarEstudianteProyectoController implements Initializable {
 
@@ -105,38 +110,56 @@ public class FXMLAsignarEstudianteProyectoController implements Initializable {
         }
     }
 
-    @FXML
-    private void clicAsignar(ActionEvent event) {
-        Estudiante estudianteSeleccionado = tvEstudiantes.getSelectionModel().getSelectedItem();
-        Proyecto proyectoSeleccionado = tvProyectos.getSelectionModel().getSelectedItem();
+@FXML
+private void clicAsignar(ActionEvent event) {
+    Estudiante estudianteSeleccionado = tvEstudiantes.getSelectionModel().getSelectedItem();
+    Proyecto proyectoSeleccionado = tvProyectos.getSelectionModel().getSelectedItem();
 
-        if (estudianteSeleccionado == null || proyectoSeleccionado == null) {
-            mostrarAlerta("Debe seleccionar un estudiante y un proyecto.");
-            return;
-        }
-        ExpedienteDAO daoExpediente = new ExpedienteDAO();
-        int nuevoExpedienteId = daoExpediente.crearExpediente(
-            estudianteSeleccionado.getIdUsuario(),
-            12345,
-            1,
-            "0",
-            "0",
-            "",
-            1,
-            proyectoSeleccionado.getIdProyecto()
-        );
-
-        if (nuevoExpedienteId != -1) {
-            // Restar espacio del proyecto
-            new ProyectoDAO().restarEspacio(proyectoSeleccionado.getIdProyecto());
-
-            mostrarAlerta("Estudiante asignado y expediente creado correctamente.");
-            cargarProyectos();
-            tvEstudiantes.getItems().remove(estudianteSeleccionado);
-        } else {
-            mostrarAlerta("No se pudo asignar el estudiante al proyecto.");
-        }
+    if (estudianteSeleccionado == null || proyectoSeleccionado == null) {
+        mostrarAlerta("Debe seleccionar un estudiante y un proyecto.");
+        return;
     }
+
+    try {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/construccionfinal/vistas/AsignarEstudianteProyecto/FXMLConfirmarAsignacion.fxml"));
+        Parent root = loader.load();
+
+        FXMLConfirmarAsignacionController controller = loader.getController();
+        controller.setDatos(estudianteSeleccionado, proyectoSeleccionado);
+
+        Stage stage = new Stage();
+        stage.setTitle("Confirmar asignación");
+        stage.setScene(new Scene(root));
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.showAndWait();
+
+        if (controller.isConfirmado()) {
+            ExpedienteDAO daoExpediente = new ExpedienteDAO();
+            int nuevoExpedienteId = daoExpediente.crearExpediente(
+                estudianteSeleccionado.getIdUsuario(),
+                12345,
+                1,
+                "0",
+                "0",
+                "",
+                1,
+                proyectoSeleccionado.getIdProyecto()
+            );
+
+            if (nuevoExpedienteId != -1) {
+                new ProyectoDAO().restarEspacio(proyectoSeleccionado.getIdProyecto());
+                mostrarAlerta("Estudiante asignado y expediente creado correctamente.");
+                cargarProyectos();
+                tvEstudiantes.getItems().remove(estudianteSeleccionado);
+            } else {
+                mostrarAlerta("No se pudo asignar el estudiante al proyecto.");
+            }
+        }
+    } catch (IOException e) {
+        e.printStackTrace();
+        mostrarAlerta("Error al cargar la ventana de confirmación.");
+    }
+}
 
     private void mostrarAlerta(String mensaje) {
         Alert alerta = new Alert(Alert.AlertType.INFORMATION);
