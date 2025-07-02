@@ -112,11 +112,10 @@ public class EstudianteDAO {
         ObservableList<Estudiante> lista = FXCollections.observableArrayList();
         String sql = "SELECT u.idUsuario, u.nombre, u.apePaterno, u.apeMaterno, u.identificador, u.correo, u.telefono " +
                 "FROM usuario u " +
-                "JOIN proyecto p ON u.idUsuario = p.idEstudiante " +
-                "JOIN expediente e ON p.idProyecto = e.idProyecto " +
-                "LEFT JOIN evaluacion ev ON e.idExpediente = ev.idExpediente " +
+                "JOIN expediente e ON u.idUsuario = e.idEstudiante " +
                 "WHERE u.rol = 'estudiante' " +
-                "AND ev.idEvaluacion IS NULL " +
+                "AND e.idExpediente NOT IN (SELECT idExpediente FROM evaluacion_presentacion) " +
+                "AND CAST(e.horas AS UNSIGNED) > 120 " +
                 "AND (u.nombre LIKE ? OR u.apePaterno LIKE ? OR u.apeMaterno LIKE ? OR u.identificador LIKE ?)";
 
         try (Connection con = ConexionBD.abrirConexion();
