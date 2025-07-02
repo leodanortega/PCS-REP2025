@@ -45,25 +45,36 @@ public class FXMLRegistrarOVController {
             return;
         }
 
-        if (!tfNombre.getText().matches("[A-Za-zÁÉÍÓÚáéíóúñÑ \\-()]+")) {
+        String nombre = tfNombre.getText().trim();
+        if (!nombre.matches("[A-Za-zÁÉÍÓÚáéíóúñÑ \\-()]+")) {
             mostrarAlerta(Alert.AlertType.WARNING, "Nombre inválido", "El nombre contiene caracteres no permitidos.");
             return;
         }
-
-        if (tfNombre.getText().trim().length() < 3){
-            mostrarAlerta(Alert.AlertType.WARNING, "Nombre inválido", "El nombre debe tener al menos 3 letras");
+        if (nombre.length() < 3) {
+            mostrarAlerta(Alert.AlertType.WARNING, "Nombre inválido", "El nombre debe tener al menos 3 letras.");
+            return;
+        }
+        if (nombre.length() > 45) {
+            mostrarAlerta(Alert.AlertType.WARNING, "Nombre inválido", "El nombre no puede exceder los 45 caracteres.");
             return;
         }
 
-        if (!tfCorreo.getText().matches("^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$")) {
+        String correo = tfCorreo.getText().trim();
+        if (!correo.matches("^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$")) {
             mostrarAlerta(Alert.AlertType.WARNING, "Correo inválido", "El correo electrónico no tiene un formato válido.");
             return;
         }
-
-        if (tfDescripcion.getText().trim().length() < 10 || tfDescripcion.getText().trim().length() > 30){
-            mostrarAlerta(Alert.AlertType.WARNING, "Descripción no válida", "La descripción debe tener de 10 a 30 caracteres");
+        if (correo.length() > 45) {
+            mostrarAlerta(Alert.AlertType.WARNING, "Correo inválido", "El correo no puede exceder los 45 caracteres.");
             return;
         }
+
+        String descripcion = tfDescripcion.getText().trim();
+        if (descripcion.length() < 10 || descripcion.length() > 45) {
+            mostrarAlerta(Alert.AlertType.WARNING, "Descripción no válida", "La descripción debe tener de 10 a 45 caracteres.");
+            return;
+        }
+
 
         String rfc = tfRFC.getText().trim();
 
@@ -71,6 +82,18 @@ public class FXMLRegistrarOVController {
             mostrarAlerta(Alert.AlertType.WARNING, "RFC inválido", "El RFC no tiene un formato válido.");
             return;
         }
+
+        if (rfc.length() == 12 && !esRFCCoherenteConNombre(nombre, rfc)) {
+            mostrarAlerta(Alert.AlertType.WARNING, "Nombre no coincide con RFC",
+                    "Las iniciales del nombre no coinciden con las del RFC.");
+            return;
+        }
+
+        if (cbTipo.getValue() == null) {
+            mostrarAlerta(Alert.AlertType.WARNING, "Tipo no seleccionado", "Debes seleccionar el tipo de organización (Privada o Pública).");
+            return;
+        }
+
 
         try {
             String fechaStr = rfc.substring(3, 9);
@@ -134,7 +157,12 @@ public class FXMLRegistrarOVController {
 
             Stage stage = new Stage();
             stage.setTitle("Confirmar Organización");
-            stage.setScene(new Scene(root));
+
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.sizeToScene();
+            stage.setResizable(true);
+
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.showAndWait();
 
@@ -142,7 +170,7 @@ public class FXMLRegistrarOVController {
                 boolean exito = dao.agregar(nueva);
                 if (exito) {
                     mostrarAlerta(Alert.AlertType.INFORMATION, "Registro exitoso", "La organización Vinculada se registró con éxito");
-                    Stage currentStage= (Stage) tfNombre.getScene().getWindow();
+                    Stage currentStage = (Stage) tfNombre.getScene().getWindow();
                     currentStage.close();
                 } else {
                     mostrarAlerta(Alert.AlertType.ERROR, "Error", "No se pudo registrar la organización.");
@@ -153,6 +181,7 @@ public class FXMLRegistrarOVController {
             e.printStackTrace();
             mostrarAlerta(Alert.AlertType.ERROR, "Error", "No se pudo abrir la ventana de confirmación.");
         }
+
     }
 
     private boolean esEnteroPositivo(String texto) {
@@ -163,6 +192,75 @@ public class FXMLRegistrarOVController {
             return false;
         }
     }
+
+    private boolean esRFCCoherenteConNombre(String nombre, String rfc) {
+        if (rfc == null || rfc.length() < 3) return false;
+
+        String[] palabrasIgnoradas = {"de", "del", "la", "las", "los", "y", "sa", "cv", "s", "rl", "s.", "s.a.", "s.a", "srl"};
+
+        // Convertir nombre a minúsculas y separar por espacios
+        String[] palabras = nombre.toLowerCase().split("\\s+");
+
+        // Filtrar palabras ignoradas
+        java.util.List<String> palabrasUtiles = new java.util.ArrayList<>();
+        for (String palabra : palabras) {
+            if (!esPalabraIgnorable(palabra, palabrasIgnoradas)) {
+                palabrasUtiles.add(palabra);
+            }
+        }
+
+        StringBuilder iniciales = new StringBuilder();
+
+        if (palabrasUtiles.size() >= 3) {
+            // Tomar la primera letra de las primeras 3 palabras útiles
+            for (int i = 0; i < 3; i++) {
+                iniciales.append(Character.toUpperCase(palabrasUtiles.get(i).charAt(0)));
+            }
+        } else if (palabrasUtiles.size() == 2) {
+            // Primera letra de la primera palabra
+            iniciales.append(Character.toUpperCase(palabrasUtiles.get(0).charAt(0)));
+
+            // Primera letra de la segunda palabra
+            iniciales.append(Character.toUpperCase(palabrasUtiles.get(1).charAt(0)));
+
+            // Primera consonante interna de la segunda palabra (ignorando la primera letra)
+            char primeraConsonante = buscarPrimeraConsonanteInterna(palabrasUtiles.get(1));
+            iniciales.append(Character.toUpperCase(primeraConsonante));
+        } else if (palabrasUtiles.size() == 1) {
+            // Tomar las primeras 3 letras de la única palabra útil (o las que tenga si son menos)
+            String palabra = palabrasUtiles.get(0);
+            for (int i = 0; i < 3 && i < palabra.length(); i++) {
+                iniciales.append(Character.toUpperCase(palabra.charAt(i)));
+            }
+        } else {
+            // No hay palabras útiles
+            return false;
+        }
+
+        String letrasRFC = rfc.substring(0, 3).toUpperCase();
+
+        return letrasRFC.equals(iniciales.toString());
+    }
+
+    private char buscarPrimeraConsonanteInterna(String palabra) {
+        String vocales = "aeiouáéíóú";
+        for (int i = 1; i < palabra.length(); i++) {
+            char c = palabra.charAt(i);
+            if (!vocales.contains(String.valueOf(c))) {
+                return c;
+            }
+        }
+        // Si no hay consonante interna, repetir la primera letra
+        return palabra.charAt(0);
+    }
+
+    private boolean esPalabraIgnorable(String palabra, String[] ignoradas) {
+        for (String ign : ignoradas) {
+            if (palabra.equals(ign)) return true;
+        }
+        return false;
+    }
+
 
 
     @FXML

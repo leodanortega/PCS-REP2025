@@ -41,50 +41,9 @@ public class FXMLRegistrarResponsableController {
             return;
         }
 
-        if (tfNombre.getText().length() < 3) {
-            mostrarAlerta(Alert.AlertType.WARNING, "Nombre inválido", "El nombre debe tener al menos 3 letras.");
-            return;
-        }
-
-        if (tfNombre.getText().length() > 45) {
-            mostrarAlerta(Alert.AlertType.WARNING, "Nombre inválido", "El nombre no puede exceder los 45 caracteres.");
-            return;
-        }
-
-        if (!tfNombre.getText().matches("[A-Za-zÁÉÍÓÚáéíóúñÑ \\-()]+")) {
-            mostrarAlerta(Alert.AlertType.WARNING, "Nombre inválido", "El nombre contiene caracteres no permitidos.");
-            return;
-        }
-
-        if (tfApePaterno.getText().length() < 3) {
-            mostrarAlerta(Alert.AlertType.WARNING, "Apellido paterno inválido", "Debe tener al menos 3 letras.");
-            return;
-        }
-
-        if (tfApePaterno.getText().length() > 45) {
-            mostrarAlerta(Alert.AlertType.WARNING, "Apellido paterno inválido", "No puede exceder los 45 caracteres.");
-            return;
-        }
-
-        if (!tfApePaterno.getText().matches("[A-Za-zÁÉÍÓÚáéíóúñÑ \\-()]+")) {
-            mostrarAlerta(Alert.AlertType.WARNING, "Apellido paterno inválido", "Contiene caracteres no permitidos.");
-            return;
-        }
-
-        if (tfApeMaterno.getText().length() < 3) {
-            mostrarAlerta(Alert.AlertType.WARNING, "Apellido materno inválido", "Debe tener al menos 3 letras.");
-            return;
-        }
-
-        if (tfApeMaterno.getText().length() > 45) {
-            mostrarAlerta(Alert.AlertType.WARNING, "Apellido materno inválido", "No puede exceder los 45 caracteres.");
-            return;
-        }
-
-        if (!tfApeMaterno.getText().matches("[A-Za-zÁÉÍÓÚáéíóúñÑ \\-()]+")) {
-            mostrarAlerta(Alert.AlertType.WARNING, "Apellido materno inválido", "Contiene caracteres no permitidos.");
-            return;
-        }
+        if (!validarNombreOApellido(tfNombre.getText(), "Nombre")) return;
+        if (!validarNombreOApellido(tfApePaterno.getText(), "Apellido paterno")) return;
+        if (!validarNombreOApellido(tfApeMaterno.getText(), "Apellido materno")) return;
 
         if (tfPuesto.getText().length() < 5) {
             mostrarAlerta(Alert.AlertType.WARNING, "Puesto inválido", "El puesto debe tener mínimo 5 caracteres.");
@@ -162,6 +121,50 @@ public class FXMLRegistrarResponsableController {
             e.printStackTrace();
         }
     }
+
+    private boolean validarNombreOApellido(String texto, String campo) {
+        texto = texto.trim();
+
+        // Validar que no esté vacío después de trim
+        if (texto.isEmpty()) {
+            mostrarAlerta(Alert.AlertType.WARNING, campo + " inválido", campo + " no puede estar vacío ni contener solo espacios.");
+            return false;
+        }
+
+        // Validar longitud mínima y máxima
+        if (texto.length() < 3) {
+            mostrarAlerta(Alert.AlertType.WARNING, campo + " inválido", campo + " debe tener al menos 3 letras.");
+            return false;
+        }
+        if (texto.length() > 45) {
+            mostrarAlerta(Alert.AlertType.WARNING, campo + " inválido", campo + " no puede exceder los 45 caracteres.");
+            return false;
+        }
+
+        // Validar caracteres permitidos: letras (mayúsculas y minúsculas), espacios simples, guiones y paréntesis
+        // No permitir números, ni caracteres especiales raros, ni espacios dobles consecutivos
+        if (!texto.matches("[A-Za-zÁÉÍÓÚáéíóúÑñ\\-() ]+")) {
+            mostrarAlerta(Alert.AlertType.WARNING, campo + " inválido", campo + " contiene caracteres no permitidos.");
+            return false;
+        }
+
+        // Validar que no tenga espacios dobles consecutivos
+        if (texto.contains("  ")) {
+            mostrarAlerta(Alert.AlertType.WARNING, campo + " inválido", campo + " no puede contener espacios dobles consecutivos.");
+            return false;
+        }
+
+        // Validar que no empiece ni termine con espacio, guion o paréntesis
+        if (texto.startsWith(" ") || texto.endsWith(" ") ||
+                texto.startsWith("-") || texto.endsWith("-") ||
+                texto.startsWith("(") || texto.endsWith(")")) {
+            mostrarAlerta(Alert.AlertType.WARNING, campo + " inválido", campo + " no puede comenzar ni terminar con espacios, guiones o paréntesis.");
+            return false;
+        }
+
+        return true;
+    }
+
 
     @FXML
     private void clicSalir() {

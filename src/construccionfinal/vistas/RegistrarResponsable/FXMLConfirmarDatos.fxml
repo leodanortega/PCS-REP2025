@@ -1,109 +1,105 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.geometry.Pos?>
 
-<AnchorPane xmlns:fx="http://javafx.com/fxml"
-            xmlns="http://javafx.com/javafx"
-            fx:controller="construccionfinal.controladores.RegistrarResponsable.FXMLConfirmarDatosController"
-            prefHeight="500.0" prefWidth="750.0">
+<AnchorPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="construccionfinal.controladores.RegistrarResponsable.FXMLConfirmarDatosController">
+    <children>
+        <VBox alignment="CENTER" spacing="20" AnchorPane.bottomAnchor="25" AnchorPane.leftAnchor="30" AnchorPane.rightAnchor="30" AnchorPane.topAnchor="25">
 
-    <VBox spacing="20" alignment="CENTER"
-          AnchorPane.topAnchor="25" AnchorPane.bottomAnchor="25"
-          AnchorPane.leftAnchor="30" AnchorPane.rightAnchor="30">
+            <children>
+                <Label style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #2C3E50;" text="¿Los datos ingresados son correctos?" />
 
-        <children>
-            <Label text="¿Los datos ingresados son correctos?"
-                   style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #2C3E50;" />
+                <Label style="-fx-font-size: 14px; -fx-font-style: italic; -fx-text-fill: #555;" text="El responsable será asignado a la organización vinculada seleccionada." wrapText="true" />
 
-            <Label text="El responsable será asignado a la organización vinculada seleccionada."
-                   wrapText="true"
-                   style="-fx-font-size: 14px; -fx-font-style: italic; -fx-text-fill: #555;" />
+                <HBox alignment="TOP_CENTER" spacing="50">
+                    <children>
 
-            <HBox spacing="50" alignment="TOP_CENTER">
-                <children>
+                        <!-- Grid: Responsable -->
+                        <GridPane hgap="15" vgap="12">
+                            <columnConstraints>
+                                <ColumnConstraints halignment="RIGHT" />
+                                <ColumnConstraints hgrow="ALWAYS" />
+                            </columnConstraints>
+                            <children>
+                                <Label text="Nombre:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                                <Label fx:id="lblNombre" style="-fx-font-style: italic;" wrapText="true" maxWidth="300" GridPane.columnIndex="1" GridPane.rowIndex="0" />
 
-                    <!-- Grid: Responsable -->
-                    <GridPane hgap="15" vgap="12">
-                        <columnConstraints>
-                            <ColumnConstraints halignment="RIGHT"/>
-                            <ColumnConstraints hgrow="ALWAYS"/>
-                        </columnConstraints>
-                        <children>
-                            <Label text="Nombre:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
-                            <Label fx:id="lblNombre" GridPane.rowIndex="0" GridPane.columnIndex="1"
-                                   style="-fx-font-style: italic;"/>
+                                <Label text="Apellido Paterno:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                                <Label fx:id="lblApePaterno" style="-fx-font-style: italic;" wrapText="true" maxWidth="300" GridPane.columnIndex="1" GridPane.rowIndex="1" />
 
-                            <Label text="Apellido Paterno:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
-                            <Label fx:id="lblApePaterno" GridPane.rowIndex="1" GridPane.columnIndex="1"
-                                   style="-fx-font-style: italic;"/>
+                                <Label text="Apellido Materno:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+                                <Label fx:id="lblApeMaterno" style="-fx-font-style: italic;" wrapText="true" maxWidth="300" GridPane.columnIndex="1" GridPane.rowIndex="2" />
 
-                            <Label text="Apellido Materno:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
-                            <Label fx:id="lblApeMaterno" GridPane.rowIndex="2" GridPane.columnIndex="1"
-                                   style="-fx-font-style: italic;"/>
+                                <Label text="Correo:" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+                                <Label fx:id="lblCorreoResponsable" style="-fx-font-style: italic;" wrapText="true" maxWidth="300" GridPane.columnIndex="1" GridPane.rowIndex="3" />
 
-                            <Label text="Correo:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
-                            <Label fx:id="lblCorreoResponsable" GridPane.rowIndex="3" GridPane.columnIndex="1"
-                                   style="-fx-font-style: italic;"/>
+                                <Label text="Teléfono:" GridPane.columnIndex="0" GridPane.rowIndex="4" />
+                                <Label fx:id="lblTelefonoResponsable" style="-fx-font-style: italic;" wrapText="true" maxWidth="300" GridPane.columnIndex="1" GridPane.rowIndex="4" />
 
-                            <Label text="Teléfono:" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
-                            <Label fx:id="lblTelefonoResponsable" GridPane.rowIndex="4" GridPane.columnIndex="1"
-                                   style="-fx-font-style: italic;"/>
+                                <Label text="Puesto:" GridPane.columnIndex="0" GridPane.rowIndex="5" />
+                                <Label fx:id="lblPuesto" style="-fx-font-style: italic;" wrapText="true" maxWidth="300" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                            </children>
+                            <rowConstraints>
+                                <RowConstraints vgrow="ALWAYS" />
+                                <RowConstraints vgrow="ALWAYS" />
+                                <RowConstraints vgrow="ALWAYS" />
+                                <RowConstraints vgrow="ALWAYS" />
+                                <RowConstraints vgrow="ALWAYS" />
+                                <RowConstraints vgrow="ALWAYS" />
+                            </rowConstraints>
+                        </GridPane>
 
-                            <Label text="Puesto:" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
-                            <Label fx:id="lblPuesto" GridPane.rowIndex="5" GridPane.columnIndex="1"
-                                   style="-fx-font-style: italic;"/>
-                        </children>
-                    </GridPane>
+                        <!-- Grid: Organización -->
+                        <GridPane hgap="15" vgap="12">
+                            <columnConstraints>
+                                <ColumnConstraints halignment="RIGHT" />
+                                <ColumnConstraints hgrow="ALWAYS" />
+                            </columnConstraints>
+                            <children>
+                                <Label text="Nombre:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                                <Label fx:id="lblNombreOrg" style="-fx-font-style: italic;" wrapText="true" maxWidth="300" GridPane.columnIndex="1" GridPane.rowIndex="0" />
 
-                    <!-- Grid: Organización -->
-                    <GridPane hgap="15" vgap="12">
-                        <columnConstraints>
-                            <ColumnConstraints halignment="RIGHT"/>
-                            <ColumnConstraints hgrow="ALWAYS"/>
-                        </columnConstraints>
-                        <children>
-                            <Label text="Nombre:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
-                            <Label fx:id="lblNombreOrg" GridPane.rowIndex="0" GridPane.columnIndex="1"
-                                   style="-fx-font-style: italic;"/>
+                                <Label text="Correo:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                                <Label fx:id="lblCorreoOrg" style="-fx-font-style: italic;" wrapText="true" maxWidth="300" GridPane.columnIndex="1" GridPane.rowIndex="1" />
 
-                            <Label text="Correo:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
-                            <Label fx:id="lblCorreoOrg" GridPane.rowIndex="1" GridPane.columnIndex="1"
-                                   style="-fx-font-style: italic;"/>
+                                <Label text="RFC:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+                                <Label fx:id="lblRFC" style="-fx-font-style: italic;" wrapText="true" maxWidth="300" GridPane.columnIndex="1" GridPane.rowIndex="2" />
 
-                            <Label text="RFC:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
-                            <Label fx:id="lblRFC" GridPane.rowIndex="2" GridPane.columnIndex="1"
-                                   style="-fx-font-style: italic;"/>
+                                <Label text="Teléfono:" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+                                <Label fx:id="lblTelefonoOrg" style="-fx-font-style: italic;" wrapText="true" maxWidth="300" GridPane.columnIndex="1" GridPane.rowIndex="3" />
 
-                            <Label text="Teléfono:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
-                            <Label fx:id="lblTelefonoOrg" GridPane.rowIndex="3" GridPane.columnIndex="1"
-                                   style="-fx-font-style: italic;"/>
+                                <Label text="Tipo:" GridPane.columnIndex="0" GridPane.rowIndex="4" />
+                                <Label fx:id="lblTipo" style="-fx-font-style: italic;" wrapText="true" maxWidth="300" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                            </children>
+                            <rowConstraints>
+                                <RowConstraints vgrow="ALWAYS" />
+                                <RowConstraints vgrow="ALWAYS" />
+                                <RowConstraints vgrow="ALWAYS" />
+                                <RowConstraints vgrow="ALWAYS" />
+                                <RowConstraints vgrow="ALWAYS" />
+                            </rowConstraints>
+                        </GridPane>
+                    </children>
+                </HBox>
 
-                            <Label text="Tipo:" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
-                            <Label fx:id="lblTipo" GridPane.rowIndex="4" GridPane.columnIndex="1"
-                                   style="-fx-font-style: italic;"/>
-                        </children>
-                    </GridPane>
-                </children>
-            </HBox>
+                <!-- Botones -->
+                <HBox alignment="CENTER" spacing="50">
+                    <children>
+                        <Button onAction="#clicAceptar" style="-fx-background-color: #28a745; -fx-text-fill: white; -fx-font-size: 16px; -fx-font-weight: bold; -fx-background-radius: 10; -fx-padding: 10 20;" text="✅ Aceptar" />
 
-            <!-- Botones -->
-            <HBox spacing="50" alignment="CENTER">
-                <children>
-                    <Button text="✅ Aceptar" onAction="#clicAceptar"
-                            style="-fx-background-color: #28a745; -fx-text-fill: white; -fx-font-size: 16px; -fx-font-weight: bold; -fx-background-radius: 10; -fx-padding: 10 20;"/>
+                        <Button onAction="#clicModificar" style="-fx-background-color: #007bff; -fx-text-fill: white; -fx-font-size: 16px; -fx-font-weight: bold; -fx-background-radius: 10; -fx-padding: 10 20;" text="✏️ Modificar" />
+                    </children>
+                </HBox>
+            </children>
 
-                    <Button text="✏️ Modificar" onAction="#clicModificar"
-                            style="-fx-background-color: #007bff; -fx-text-fill: white; -fx-font-size: 16px; -fx-font-weight: bold; -fx-background-radius: 10; -fx-padding: 10 20;"/>
-                </children>
-            </HBox>
-        </children>
-
-        <padding>
-            <Insets top="25" bottom="25" left="35" right="35"/>
-        </padding>
-    </VBox>
-
+            <padding>
+                <Insets bottom="25" left="35" right="35" top="25" />
+            </padding>
+        </VBox>
+    </children>
 </AnchorPane>
