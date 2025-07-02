@@ -17,11 +17,11 @@
         <TableView fx:id="tablaEvaluacion" layoutX="30.0" layoutY="70.0" prefHeight="470.0" prefWidth="1235.0" style="-fx-background-color: white; -fx-border-color: #ccc; -fx-border-radius: 8;">
             <columns>
                 <TableColumn fx:id="colCriterio" prefWidth="523.0" text="Criterio / Puntaje" />
-                <TableColumn fx:id="colCompetente" prefWidth="149.0" text="Competente (9-10)" />
-                <TableColumn fx:id="colIndependiente" prefWidth="167.0" text="Independiente (8-9)" />
-                <TableColumn fx:id="colBasicoAvanzado" prefWidth="139.0" text="Básico Avanzado (7-8)" />
-                <TableColumn fx:id="colBasicoUmbral" prefWidth="128.0" text="Básico (6-7)" />
-                <TableColumn fx:id="colNoCompetente" prefWidth="127.0" text="No Competente (5)" />
+                <TableColumn fx:id="colCompetente" prefWidth="149.0" text="Competente (5)" />
+                <TableColumn fx:id="colIndependiente" prefWidth="167.0" text="Independiente (4)" />
+                <TableColumn fx:id="colBasicoAvanzado" prefWidth="139.0" text="Básico Avanzado (3)" />
+                <TableColumn fx:id="colBasicoUmbral" prefWidth="128.0" text="Básico (2)" />
+                <TableColumn fx:id="colNoCompetente" prefWidth="127.0" text="No Competente (1)" />
             </columns>
         </TableView>
 

@@ -54,11 +54,11 @@ public class FXMLEvaluarEstudianteController {
     }
 
     private void configurarColumnasSeleccionables() {
-        configurarRadioButtonColumn(colCompetente, 10);
-        configurarRadioButtonColumn(colIndependiente, 9);
-        configurarRadioButtonColumn(colBasicoAvanzado, 8);
-        configurarRadioButtonColumn(colBasicoUmbral, 7);
-        configurarRadioButtonColumn(colNoCompetente, 5);
+        configurarRadioButtonColumn(colCompetente, 5);
+        configurarRadioButtonColumn(colIndependiente, 4);
+        configurarRadioButtonColumn(colBasicoAvanzado, 3);
+        configurarRadioButtonColumn(colBasicoUmbral, 2);
+        configurarRadioButtonColumn(colNoCompetente, 1);
     }
 
     private void configurarRadioButtonColumn(TableColumn<CriterioEvaluacionObservable, RadioButton> columna, int puntaje) {

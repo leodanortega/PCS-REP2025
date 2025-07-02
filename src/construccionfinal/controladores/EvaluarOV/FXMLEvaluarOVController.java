@@ -141,10 +141,18 @@ public class FXMLEvaluarOVController implements Initializable {
 
     @FXML
     private void btnCancelar() {
-        Stage stage = (Stage) btnCancelar.getScene().getWindow();
-        Utilidad.mostrarAlertaConfirmacion("Salir", "¿Estás seguro de que deseas cancelar la evaluación?");
-        stage.close();
+        Alert alerta = new Alert(Alert.AlertType.CONFIRMATION);
+        alerta.setTitle("Salir");
+        alerta.setHeaderText(null);
+        alerta.setContentText("¿Estás seguro de que deseas cancelar la evaluación?");
+
+        Optional<ButtonType> resultado = alerta.showAndWait();
+        if (resultado.isPresent() && resultado.get() == ButtonType.OK) {
+            Stage stage = (Stage) btnCancelar.getScene().getWindow();
+            stage.close();
+        }
     }
+
 
     private void mostrarAlerta(String mensaje) {
         Alert alerta = new Alert(Alert.AlertType.INFORMATION);
